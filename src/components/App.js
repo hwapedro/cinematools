@@ -1,12 +1,15 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
+import { Auth } from "./pages/auth";
+
 function App() {
   return (
     <div className="App">
       <Switch>
         <Route path="/" exact>123</Route>
-        <Route path="/t">234</Route>
+        <Route path="/login" component={Auth} />
+
       </Switch>
     </div>
   );
