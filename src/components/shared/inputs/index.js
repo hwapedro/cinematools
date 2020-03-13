@@ -1,22 +1,10 @@
 import React from "react";
 import { Field } from "react-final-form";
-import validator from "validator";
 
 export const Input = ({ label, validate }) => {
 
-  const validations = value => {
-    if (validate) {
-      if (validate.required && !value) {
-        return "required";
-      }
-      if (validate.email && !validator.isEmail(value)) {
-        return "uncorrect email";
-      }
-    }
-  };
-
   return (
-    <Field name={label || ""} validate={validations}>
+    <Field name={label || ""} >
       {({ input, meta }) => (
         <div>
           {label && <label>{label}</label>}
