@@ -1,82 +1,80 @@
-import axios from "axios";
+import axios from 'axios'
 
-import { API_URL } from "./constant";
+const API_URL = 'http://localhost:1312/'
 
-getToken = async () => {
-  const token = await localStorage.getItem("token");
-  if (token) {
-    this.token = token;
-  }
-};
+const getToken = async () => {
+  const token = await localStorage.getItem('token')
+  return token
+}
 
-getHeaders = async extendHeaders => {
+const getHeaders = async extendHeaders => {
   const headers = {
-    Accept: "application/json"
-  };
+    Accept: 'application/json'
+  }
 
   Object.keys(extendHeaders).forEach(key => {
-    headers[key] = extendHeaders[key];
-  });
+    headers[key] = extendHeaders[key]
+  })
 
-  await this.getToken();
+  const token = await getToken()
 
-  if (this.token) {
-    headers.Authorization = `Bearer ${this.token}`;
+  if (token) {
+    headers.Authorization = `Bearer ${token}`
   }
 
-  return headers;
-};
+  return headers
+}
 
-const get = async (endpoint = "/", query = {}) => {
+export const get = async (endpoint = '/', query = {}) => {
   try {
     const { data, headers } = await axios.get(`${API_URL}${endpoint}`, {
-      headers: await this.getHeaders(),
+      headers: await getHeaders(),
       params: { ...query }
-    });
-    return { data, headers };
+    })
+    return { data, headers }
   } catch (error) {
-    return error.response;
+    return error.response
   }
-};
+}
 
-const post = async (body, endpoint = "", extendHeaders = {}) => {
+export const post = async (body, endpoint = '', extendHeaders = {}) => {
   try {
     const response = await axios.post(`${API_URL}${endpoint}`, body, {
-      headers: await this.getHeaders(extendHeaders)
-    });
+      headers: await getHeaders(extendHeaders)
+    })
 
-    const { headers, data } = response;
-    resolve({ data, headers });
+    const { headers, data } = response
+    return { data, headers }
   } catch (error) {
-    reject(error.response);
+    return error.response
   }
-};
+}
 
-const put = async (body = {}, endpoint = "") => {
+export const put = async (body = {}, endpoint = '') => {
   try {
     const {
       headers,
       data: { data }
     } = await axios.put(`${API_URL}${endpoint}`, body, {
-      headers: await this.getHeaders()
-    });
-    resolve({ data, headers });
+      headers: await getHeaders()
+    })
+    return { data, headers }
   } catch (error) {
-    reject(error.response);
+    return error.response
   }
-};
+}
 
-const del = async (body = {}, endpoint = "") => {
+export const del = async (body = {}, endpoint = '') => {
   try {
     const {
       headers,
       data: { data }
     } = await axios.delete(`${API_URL}${endpoint}`, {
       data: body,
-      headers: await this.getHeaders()
-    });
-    resolve({ data, headers });
+      headers: await getHeaders()
+    })
+    return { data, headers }
   } catch (error) {
-    reject(error.response);
+    return error.response
   }
-};
+}

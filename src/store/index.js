@@ -1,15 +1,16 @@
-import { createStore, applyMiddleware } from 'redux'
+import { applyMiddleware, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
+import logger from 'redux-logger'
 
-// ...
-import { helloSaga } from './sagas'
+import createRootReducer from './reducer'
+import rootSaga from './saga'
 
 const sagaMiddleware = createSagaMiddleware()
-const store = createStore(
-  reducer,
-  applyMiddleware(sagaMiddleware)
-)
 
-sagaMiddleware.run(helloSaga)
+const middlewares = [sagaMiddleware, logger]
 
-const action = type => store.dispatch({type})
+const store = createStore(createRootReducer(), applyMiddleware(...middlewares))
+
+sagaMiddleware.run(rootSaga)
+
+export default store
