@@ -22,7 +22,7 @@
 
 .button {
   color: white;
-  padding: 12px 17px;
+  padding: 10px 5px;
   width: 40%;
   text-align: center;
   text-decoration: none;
@@ -52,8 +52,16 @@
   background-size: 300% 300%;
 }
 
-.button:hover {
-  animation: gradient 10s ease infinite;
+.button:disabled {
+  cursor: wait;
+}
+
+.button:disabled::after {
+  animation: gradient 1s ease infinite;
+}
+
+.button:hover::after {
+  animation: gradient 2s ease infinite;
 }
 
 .title {
@@ -63,7 +71,6 @@
   color: #000;
   font-weight: 300;
   background-clip: text;
-  text-fill-color: transparent;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradient 6s ease infinite;

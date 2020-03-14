@@ -8,9 +8,10 @@ import './auth.css'
 
 import { Input } from '../../shared/inputs'
 import { login } from '../../../sagas/auth/actions'
-
-const onSubmit = (values, dispatch) => {
-  dispatch(login(values))
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+const onSubmit = async (values, dispatch) => {
+  await sleep(22300)
+  await dispatch(login(values))
 }
 
 const schema = yup.object().shape({
@@ -51,18 +52,21 @@ export const Auth = () => {
         <Form
           onSubmit={values => onSubmit(values, dispatch)}
           validate={values => validate({ values, schema })}
-          render={({ handleSubmit, submitting, values }) => (
-            <form onSubmit={handleSubmit}>
-              <Input disabled={submitting} label="email" name="email" />
-              <Input disabled={submitting} label="password" name="password" />
+          render={({ handleSubmit, submitting, values }) => {
+            console.log(submitting)
+            return (
+              <form onSubmit={handleSubmit}>
+                <Input disabled={submitting} label="email" name="email" />
+                <Input disabled={submitting} label="password" name="password" />
 
-              <div className="button-container">
-                <button className="button" type="submit" disabled={submitting}>
-                  sign in
-                </button>
-              </div>
-            </form>
-          )}
+                <div className="button-container">
+                  <button className="button" type="submit" disabled={submitting}>
+                    sign in
+                  </button>
+                </div>
+              </form>
+            )
+          }}
         />
       </div>
     </div>
