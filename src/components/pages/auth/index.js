@@ -6,12 +6,13 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import './auth.css'
 
-import { getLoading } from '../../../sagas/auth/selectors'
+import { getLoading, getIsLogin } from '../../../sagas/auth/selectors'
 import { Input } from '../../shared/inputs'
 import { login } from '../../../sagas/auth/actions'
 
 const onSubmit = async (values, dispatch) => {
-  await dispatch(login(values))
+  const { email, password } = values
+  await dispatch(login(email, password))
 }
 
 const schema = yup.object().shape({
@@ -43,7 +44,9 @@ function validate({ values, schema }) {
 export const Auth = () => {
   const dispatch = useDispatch()
   const loading = useSelector(getLoading)
-  console.log('@', loading)
+  const isLogin = useSelector(getIsLogin)
+
+  console.log('@', loading, isLogin)
 
   return (
     <div className="container">
@@ -57,11 +60,11 @@ export const Auth = () => {
           render={({ handleSubmit, submitting, values }) => {
             return (
               <form onSubmit={handleSubmit}>
-                <Input disabled={submitting} label="email" name="email" />
-                <Input disabled={submitting} label="password" name="password" />
+                <Input disabled={loading} label="email" name="email" />
+                <Input disabled={loading} label="password" name="password" />
 
                 <div className="button-container">
-                  <button className="button" type="submit" disabled={submitting}>
+                  <button className="button" type="submit" disabled={loading}>
                     sign in
                   </button>
                 </div>
