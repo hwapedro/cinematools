@@ -1,2 +1,2 @@
-export const IN_LOGIN = 'auth/LOGIN_SUCCESS'
-export const LOGIN_FAILED = 'auth/LOGIN_FAILED'
+export const LOGIN = 'auth/LOGIN'
+export const SET_LOADING_LOGIN = 'auth/SET_LOADING_LOGIN'

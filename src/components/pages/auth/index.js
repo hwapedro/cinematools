@@ -2,15 +2,15 @@ import React from 'react'
 import { Form } from 'react-final-form'
 import * as yup from 'yup'
 import { setIn } from 'final-form'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import './auth.css'
 
+import { getLoading } from '../../../sagas/auth/selectors'
 import { Input } from '../../shared/inputs'
 import { login } from '../../../sagas/auth/actions'
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+
 const onSubmit = async (values, dispatch) => {
-  await sleep(22300)
   await dispatch(login(values))
 }
 
@@ -42,6 +42,8 @@ function validate({ values, schema }) {
 }
 export const Auth = () => {
   const dispatch = useDispatch()
+  const loading = useSelector(getLoading)
+  console.log('@', loading)
 
   return (
     <div className="container">
@@ -53,7 +55,6 @@ export const Auth = () => {
           onSubmit={values => onSubmit(values, dispatch)}
           validate={values => validate({ values, schema })}
           render={({ handleSubmit, submitting, values }) => {
-            console.log(submitting)
             return (
               <form onSubmit={handleSubmit}>
                 <Input disabled={submitting} label="email" name="email" />

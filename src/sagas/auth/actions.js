@@ -1,6 +1,11 @@
-import { IN_LOGIN } from './constants'
+import { LOGIN, SET_LOADING_LOGIN } from './constants'
 
 export const login = data => ({
-  type: IN_LOGIN,
+  type: LOGIN,
   payload: data
+})
+
+export const setLoading = isLoading => ({
+  type: SET_LOADING_LOGIN,
+  payload: isLoading
 })
