@@ -4,11 +4,12 @@ import * as yup from 'yup'
 import { setIn } from 'final-form'
 import { useDispatch, useSelector } from 'react-redux'
 
-import './auth.css'
 
-import { getLoading, getIsLogin } from '../../../sagas/auth/selectors'
+import { getLoading } from '../../../sagas/auth/selectors'
 import { Input } from '../../shared/inputs'
 import { login } from '../../../sagas/auth/actions'
+
+import './auth.css'
 
 const onSubmit = async (values, dispatch) => {
   const { email, password } = values
@@ -44,9 +45,7 @@ function validate({ values, schema }) {
 export const Auth = () => {
   const dispatch = useDispatch()
   const loading = useSelector(getLoading)
-  const isLogin = useSelector(getIsLogin)
 
-  console.log('@', loading, isLogin)
 
   return (
     <div className="container">

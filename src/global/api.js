@@ -25,11 +25,10 @@ const getHeaders = async extendHeaders => {
   return headers
 }
 
-export const get = async (endpoint = '/', query = {}) => {
+export const get = async (endpoint = '/', extendHeaders = {}) => {
   try {
     const { data, headers } = await axios.get(`${API_URL}${endpoint}`, {
-      headers: await getHeaders(),
-      params: { ...query }
+      headers: await getHeaders(extendHeaders)
     })
     return { data, headers }
   } catch (error) {
@@ -50,14 +49,13 @@ export const post = async (body, endpoint = '', extendHeaders = {}) => {
   }
 }
 
-export const put = async (body = {}, endpoint = '') => {
+export const put = async (body = {}, endpoint = '', extendHeaders = {}) => {
   try {
-    const {
-      headers,
-      data: { data }
-    } = await axios.put(`${API_URL}${endpoint}`, body, {
-      headers: await getHeaders()
+    const response = await axios.put(`${API_URL}${endpoint}`, body, {
+      headers: await getHeaders(extendHeaders)
     })
+
+    const { headers, data } = response
     return { data, headers }
   } catch (error) {
     return error.response

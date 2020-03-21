@@ -2,7 +2,7 @@ import { SET_LOADING_LOGIN, LOGIN, SET_LOGIN} from './constants'
 
 const initialState = {
   loading: false,
-  isLogin: false
+  isLogin: localStorage.getItem('token') ? true : false
 }
 
 export default (state = initialState, { type, payload }) => {
