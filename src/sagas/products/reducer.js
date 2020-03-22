@@ -1,4 +1,4 @@
-import { SET_PRODUCTS, SET_PRODUCT } from './constants'
+import { SET_ADD_PRODUCT, SET_ALL_PRODUCTS, SET_CHANGE_PRODUCT, SET_DELETE_PRODUCT } from './constants'
 
 const initialState = {
   products: []
@@ -6,17 +6,30 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case SET_PRODUCTS: {
+    case SET_ALL_PRODUCTS: {
       return { ...state, products: payload }
     }
 
-    case SET_PRODUCT: {
+    case SET_CHANGE_PRODUCT: {
       return {
         ...state,
         products: state.products.map(product => {
-          console.log(product._id, payload._id,product._id === payload._id ,product._id === payload._id ? payload : product)
           return product._id === payload._id ? payload : product
         })
+      }
+    }
+
+    case SET_DELETE_PRODUCT: {
+      return {
+        ...state,
+        products: state.products.filter(products => products._id !== payload._id)
+      }
+    }
+
+    case SET_ADD_PRODUCT: {
+      return {
+        ...state,
+        products: [...state.products, payload]
       }
     }
 

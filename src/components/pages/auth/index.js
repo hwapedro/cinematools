@@ -4,7 +4,6 @@ import * as yup from 'yup'
 import { setIn } from 'final-form'
 import { useDispatch, useSelector } from 'react-redux'
 
-
 import { getLoading } from '../../../sagas/auth/selectors'
 import { Input } from '../../shared/inputs'
 import { login } from '../../../sagas/auth/actions'
@@ -45,7 +44,6 @@ function validate({ values, schema }) {
 export const Auth = () => {
   const dispatch = useDispatch()
   const loading = useSelector(getLoading)
-
 
   return (
     <div className="container">

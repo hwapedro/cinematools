@@ -62,15 +62,13 @@ export const put = async (body = {}, endpoint = '', extendHeaders = {}) => {
   }
 }
 
-export const del = async (body = {}, endpoint = '') => {
+export const del = async (body = {}, endpoint = '', extendHeaders = {}) => {
   try {
-    const {
-      headers,
-      data: { data }
-    } = await axios.delete(`${API_URL}${endpoint}`, {
+    const response = await axios.delete(`${API_URL}${endpoint}`, {
       data: body,
-      headers: await getHeaders()
+      headers: await getHeaders(extendHeaders)
     })
+    const { headers, data } = response
     return { data, headers }
   } catch (error) {
     return error.response
