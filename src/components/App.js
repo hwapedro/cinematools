@@ -10,6 +10,9 @@ import { Main } from './pages/main/index'
 import { Products } from './pages/products/index'
 import { Actors } from './pages/actors/index'
 import { Menu } from './shared/menu/index'
+import { autoRoutes } from '../models'
+import { GeneralPage, createPage } from './pages/general'
+
 
 function App() {
   const isLogin = useSelector(getIsLogin)
@@ -20,12 +23,17 @@ function App() {
       <Route path="/" exact component={Main} />
       <Route path="/products" component={Products} />
       <Route path="/actors" component={Actors} />
+      {/* auto routes ahead */}
+      {Object.keys(autoRoutes).map(key => {
+        return (<Route key={key} path={autoRoutes[key].route} component={createPage(autoRoutes[key])} />)
+      })}
     </>
   )
   return (
     <div className="App">
       <Switch>
-        <Route path="/login" component={Auth} /> <AppLogin />
+        <Route path="/login" component={Auth} />
+        <AppLogin />
       </Switch>
     </div>
   )
