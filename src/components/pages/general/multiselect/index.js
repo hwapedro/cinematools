@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from 'react'
 
-export const MultiSelect = ({ keyName, keyValue, changeValue, listOfValues, valueTitle }) => {
+export const MultiSelect = ({ keyName, keyValue, changeValue, listOfValues, titleExtractor, keyExtractor }) => {
+  console.log(listOfValues)
   return (
-    <div>Me sleect multi</div>
+    <div>
+      <div>Me sleect multi</div>
+      {listOfValues && listOfValues.length && listOfValues.map(val => {
+        return (
+          <div key={keyExtractor(val)}>
+            <button>{titleExtractor(val)}</button>
+          </div>
+        );
+      })}
+    </div>
   );
 }

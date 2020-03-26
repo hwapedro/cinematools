@@ -1,3 +1,5 @@
+import { fetchProducts } from "../sagas/products/actions"
+
 export const Actor = {
   name: String,
   bio: String,
@@ -46,8 +48,13 @@ export const Shop = {
   description: String,
   items: ['Ref', {
     model: ShopItem,
-    selector: ['shopItems', state => state.products.products],
-    valueTitle: item => `${item.name}, ${(item.price / 100).toFixed(2)}`
+    selector: {
+      name: 'shopItems',
+      selector: state => state.products.products,
+      fetcher: () => fetchProducts()
+    },
+    titleExtractor: item => `${item.name}, ${(item.price / 100).toFixed(2)}`,
+    keyExtractor: item => item._id
   }],
   working: Boolean,
 }

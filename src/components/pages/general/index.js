@@ -4,10 +4,10 @@ import AddIcon from '@material-ui/icons/Add'
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import Button from '../../shared/buttons'
-import TextField from '../../shared/inputs/input'
+import { TextField } from '@material-ui/core'
 import { Checkbox } from '@material-ui/core/'
 import { MultiSelect } from './multiselect'
-import { useExtract } from './extractor'
+import { createExtractor } from './extractor'
 
 // import { useProductsFetcher } from './hooks/useProductsFetcher'
 // import { ShopItem } from './shopItem'
@@ -27,14 +27,31 @@ const useItemFetcher = () => {
 const capitalize = str => str[0].toUpperCase() + str.slice(1);
 
 
-const GeneralPageConstructor = ({ model, setEditMode, mode }) => {
+const GeneralPageConstructor = ({ model, extractor, setEditMode, mode }) => {
   const { register, handleSubmit, watch, errors, getValues } = useForm();
-  const { selectors, states } = useExtract(model);
+  const { selectors, states, fetchers } = extractor;
   const dispatch = useDispatch();
-  console.log(selectors, states);
+  console.log('selectors', selectors, 'useStates', states);
+
+  // call extractors once
+  useEffect(() => {
+    Object.keys(selectors).map(key => {
+      const fetcher = fetchers[key];
+      if (!fetcher)
+        return;
+      dispatch(fetcher());
+    });
+  }, [dispatch]);
+
   const onSubmit = (info) => {
     console.log('hehe xd', info);
     // depending on mode dispatch event
+    if (mode === 'ADD') {
+      // create
+
+    } else {
+      // save
+    }
   }
 
   return (
@@ -50,16 +67,16 @@ const GeneralPageConstructor = ({ model, setEditMode, mode }) => {
             // input
             return (
               <div key={key}>
-                <TextField autoComplete="off" name={key} label={capitalize(key)}
-                  type="text" innerRef={register} />
+                <TextField autoComplete="off" variant="outlined" name={key} label={capitalize(key)}
+                  type="text" inputRef={register} />
               </div>
             );
           } else if (keyType === Number) {
             // input type number
             return (
               <div key={key}>
-                <TextField autoComplete="off" name={key} label={capitalize(key)}
-                  type="number" innerRef={register} />
+                <TextField autoComplete="off" variant="outlined" name={key} label={capitalize(key)}
+                  type="number" inputRef={register} />
               </div>
             );
           } else if (keyType === Boolean) {
@@ -69,7 +86,7 @@ const GeneralPageConstructor = ({ model, setEditMode, mode }) => {
                 <Checkbox color="primary"
                   name={key}
                   title={capitalize(key)}
-                  innerRef={register}
+                  inputRef={register}
                 />
               </div>
             );
@@ -78,18 +95,19 @@ const GeneralPageConstructor = ({ model, setEditMode, mode }) => {
             const nestedType = keyType[0];
             if (nestedType === 'Ref') {
               // well, this is array of refs then
-              const { model, selector, titleField } = nestedType[1];
-              return (
+              const { model, selector, keyExtractor, titleExtractor } = keyType[1];
+              return selectors && selectors[selector.name] ? (
                 <div key={key}>
                   <MultiSelect
-                    keyName={capitalize(titleField)}
+                    keyName={capitalize(key)}
                     keyValue={states[key][0]}
-                    listOfValues={selectors[selector[0]]}
-                    valueTitle={valueTitle}
+                    listOfValues={selectors[selector.name]}
+                    titleExtractor={titleExtractor}
+                    keyExtractor={keyExtractor}
                     changeValue={states[key][1]}
                   />
                 </div>
-              );
+              ) : (<div key={key}></div>);
             } else if (nestedType !== Number && nestedType !== String && nestedType !== Boolean) {
             }
           }
@@ -118,13 +136,14 @@ const GeneralPageConstructor = ({ model, setEditMode, mode }) => {
 export const GeneralPage = ({ model }) => {
   // const products = useProductsFetcher()
   const [editMode, setEditMode] = useState(false)
+  const useExtractor = createExtractor(model);
 
   return (
     <div>
       <Fab color="primary" aria-label="add" onClick={() => setEditMode(true)}>
         <AddIcon />
       </Fab>
-      {model && <GeneralPageConstructor model={model} setEditMode={setEditMode} mode="ADD" />}
+      {model && <GeneralPageConstructor extractor={useExtractor()} model={model} setEditMode={setEditMode} mode="ADD" />}
       {/* {products.map(product => (
         <ShopItem key={product._id} product={product} />
       ))}
