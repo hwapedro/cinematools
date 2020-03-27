@@ -15,7 +15,6 @@ function* change({ payload }) {
   const body = payload
 
   const { data } = yield call(put, body, `actors/${id}`)
-  console.log(data.actor)
   yield putReducer(setActor(data.actor))
 }
 

@@ -11,7 +11,6 @@ export default (state = initialState, { type, payload }) => {
     }
 
     case SET_CHANGE_ACTOR: {
-      console.log(state.actors,payload._id, payload)
       return {
         ...state,
         actors: state.actors.map(actor => {

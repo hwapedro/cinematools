@@ -1,38 +1,44 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
-import Button from '../../../shared/buttons'
-import TextField from '../../../shared/inputs/input'
-import { changeActor, addActor } from '../../../../sagas/actors/actions'
-import models from './models'
+import { RHFInput as InputWrapper } from 'react-hook-form-input';
+import { Checkbox } from '@material-ui/core/'
 
 //smart fix
+import Button from '../../../shared/buttons'
+import TextField from '../../../shared/inputs/input'
 import { changeModel, addModel } from '../../../../sagas/smart//actions'
+import models from './models'
 
-export const SmartConstructor = ({ value, model, setEditMode, edittMode }) => {
+export const SmartConstructor = ({ value, model, setEditMode, editMode }) => {
     const dispatch = useDispatch()
 
     const modelItem = models[model]
     let defaultValues = {}
-    if (edittMode) {
+    if (editMode) {
         for (let i = 0; i < modelItem.length; i++) {
-            const defaultParametr = modelItem[i].type === 'field' ? value[modelItem[i].name] : ''
-            defaultValues[modelItem[i].name] = defaultParametr
+            defaultValues[modelItem[i].name] = value[modelItem[i].name]
         }
     }
 
-    const { register, handleSubmit } = useForm({ defaultValues });
+    const { register, handleSubmit, setValue } = useForm({ defaultValues });
 
 
     const onSubmit = data => {
-        alert(JSON.stringify(data));
+        if (editMode) {
+            dispatch(changeModel(model, value.id, data))
+            return
+        }
+        dispatch(addModel(model, data))
+        setEditMode(false)
     };
 
     const content = modelItem.map(el => {
         switch (el.type) {
             case "field":
-                console.log(el.name, el)
                 return <TextField autoComplete="off" name={el.name} label={el.name} inputRef={register} />
+            case "checkbox":
+                return <InputWrapper as={<Checkbox color='primary' />} type="checkbox" register={register} name={el.name} setValue={setValue} />
         }
     })
 
@@ -41,6 +47,13 @@ export const SmartConstructor = ({ value, model, setEditMode, edittMode }) => {
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>
                 {content}
+
+                <Button
+                    color="primary"
+                    text={editMode ? 'change' : 'add'}
+                    type='submit'
+                />
+
             </form>
         </div>
     )

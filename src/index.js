@@ -5,7 +5,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import App from './components/App'
-import {SmartConstructor} from './components/shared/smart/smartConstructor'
+import { SmartConstructor } from './components/shared/smart/smartConstructor'
 import store from './store'
 import theme from './theme/color'
 
@@ -14,7 +14,7 @@ ReactDOM.render(
     <Router>
       <ThemeProvider theme={theme}>
         <App />
-        <SmartConstructor model='actors' value={{name: 'asd'}} edittMode/>
+        <SmartConstructor model='actors' value={{ name: 'asd', inStock: true }} editMode />
       </ThemeProvider>
     </Router>
   </Provider>,

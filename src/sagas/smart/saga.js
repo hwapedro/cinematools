@@ -1,11 +1,13 @@
 import { call, takeLatest, put as putReducer } from 'redux-saga/effects'
 import { post, put, del } from '../../global/api'
 
-import { FETCH_ADD, FETCH_ALL, FETCH_CHANGE, FETCH_DELETE} from './constants'
+import { FETCH_ADD, FETCH_ALL, FETCH_CHANGE, FETCH_DELETE } from './constants'
 import { setAddModel, setAllModel, setDeleteModel, setChangeModel } from './actions'
 
 function* fetchAll({ payload }) {
+  const { model } = payload
   const query = payload
+
   const { data } = yield call(post, query, `${model}/query`)
   yield putReducer(setAllModel(model, data.actors))
 }
@@ -13,7 +15,6 @@ function* fetchAll({ payload }) {
 function* change({ payload }) {
   const { id, model } = payload
   const body = payload
-
   const { data } = yield call(put, body, `${model}/${id}`)
   yield putReducer(setAddModel(model, data.actor))
 }

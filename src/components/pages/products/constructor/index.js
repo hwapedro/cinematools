@@ -35,15 +35,15 @@ export const ProductConstructor = ({ product, setEditMode, mode }) => {
             }}
           />
         ) : (
-          <Button
-            color="primary"
-            text="save"
-            onClick={() => {
-              dispatch(changeProduct(product._id, productName, productPrice, isInStock))
-              setEditMode(false)
-            }}
-          />
-        )}
+            <Button
+              color="primary"
+              text="save"
+              onClick={() => {
+                dispatch(changeProduct(product._id, productName, productPrice, isInStock))
+                setEditMode(false)
+              }}
+            />
+          )}
 
         <Button color="primary" text="cancel" onClick={() => resetForm()} />
       </div>
