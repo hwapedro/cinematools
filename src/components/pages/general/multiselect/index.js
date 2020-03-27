@@ -8,7 +8,7 @@ export const MultiSelect = ({ keyName, keyValue, changeValue, listOfValues, titl
       {listOfValues && listOfValues.length && listOfValues.map(val => {
         return (
           <div key={keyExtractor(val)}>
-            <button>{titleExtractor(val)}</button>
+            <button type="button">{titleExtractor(val)}</button>
           </div>
         );
       })}
