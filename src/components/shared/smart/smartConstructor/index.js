@@ -7,7 +7,7 @@ import { Checkbox } from '@material-ui/core/'
 //smart fix
 import Button from '../../../shared/buttons'
 import TextField from '../../../shared/inputs/input'
-import { changeModel, addModel } from '../../../../sagas/smart//actions'
+import { changeModel, addModel } from '../../../../sagas/smart/actions'
 import models from './models'
 
 export const SmartConstructor = ({ value, model, setEditMode, editMode }) => {
