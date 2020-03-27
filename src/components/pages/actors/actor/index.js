@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import Button from '../../../shared/buttons'
-import { ActorConstructor } from '../constructor'
+import { SmartConstructor } from '../../../shared/smart/smartConstructor'
 import { deleteActor } from '../../../../sagas/actors/actions'
 
 export const ShopItem = ({ actor }) => {
@@ -19,7 +19,7 @@ export const ShopItem = ({ actor }) => {
       </div>
     </div>
   ) : (
-    <ActorConstructor actor={actor} setEditMode={setEditMode} mode="CHANGE" />
+    <SmartConstructor model="actors" id={actor._id} value={actor} setEditMode={setEditMode} />
   )
 
   return content

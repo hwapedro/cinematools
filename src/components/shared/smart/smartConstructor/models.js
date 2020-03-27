@@ -1,6 +1,12 @@
 export default {
     actors: [
         { name: 'name', type: 'field' },
-        { name: 'inStock', type: 'checkbox' }
+        { name: 'bio', type: 'field' }
+    ],
+    shopItems: [
+        { name: 'name', type: 'field' },
+        { name: 'price', type: 'number' },
+        { name: 'isStock', type: 'checkbox' },
+
     ]
 }

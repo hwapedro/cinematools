@@ -4,7 +4,7 @@ import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
 
 import { ShopItem } from './actor'
-import { ActorConstructor } from './constructor'
+import { SmartConstructor } from '../../shared/smart/smartConstructor'
 
 export const Actors = () => {
   const actors = useActorsFetcher()
@@ -18,7 +18,7 @@ export const Actors = () => {
       {actors.map(actor => (
         <ShopItem key={actor._id} actor={actor} />
       ))}
-      {editMode && <ActorConstructor setEditMode={setEditMode} mode="ADD" />}
+      {editMode && <SmartConstructor model="actors" setEditMode={setEditMode} />}
     </div>
   )
 }

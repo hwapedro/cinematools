@@ -7,12 +7,12 @@ export const fetchModel = (model, limit, skip) => ({
 
 export const addModel = (model, data) => ({
   type: FETCH_ADD,
-  payload: {model, data}
+  payload: { model, ...data }
 })
 
 export const changeModel = (model, id, data) => ({
   type: FETCH_CHANGE,
-  payload: { model, id, data }
+  payload: { model, id, ...data }
 })
 
 export const deleteModel = (model, id) => ({
@@ -20,23 +20,22 @@ export const deleteModel = (model, id) => ({
   payload: { model, id }
 })
 
-
 export const setAllModel = (model, data) => ({
-  type: `SET_ALL_${model.toUpperCase()}`,
+  type: `${model}/SET_ALL`,
   payload: data
 })
 
 export const setAddModel = (model, data) => ({
-  type: `SET_ADD_${model.toUpperCase()}`,
+  type: `${model}/SET_ADD`,
   payload: data
 })
 
 export const setDeleteModel = (model, id) => ({
-  type: `SET_DELETE_${model.toUpperCase()}`,
+  type: `${model}/SET_DELETE`,
   payload: { _id: id }
 })
 
 export const setChangeModel = (model, data) => ({
-  type: `SET_CHANGE_${model.toUpperCase()}`,
+  type: `${model}/SET_CHANGE`,
   payload: data
 })

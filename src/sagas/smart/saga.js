@@ -9,14 +9,15 @@ function* fetchAll({ payload }) {
   const query = payload
 
   const { data } = yield call(post, query, `${model}/query`)
-  yield putReducer(setAllModel(model, data.actors))
+  yield putReducer(setAllModel(model, data[`${model}`]))
 }
 
 function* change({ payload }) {
   const { id, model } = payload
   const body = payload
   const { data } = yield call(put, body, `${model}/${id}`)
-  yield putReducer(setAddModel(model, data.actor))
+  const singleModel = model.slice(0, -1)
+  yield putReducer(setChangeModel(model, data[`${singleModel}`]))
 }
 
 function* deleteItem({ payload }) {
@@ -30,9 +31,10 @@ function* deleteItem({ payload }) {
 function* add({ payload }) {
   const { model } = payload
   const body = payload
-  const { data } = yield call(post, body, `${model}/`)
 
-  yield putReducer(setChangeModel(model, data.actor))
+  const { data } = yield call(post, body, `${model}/`)
+  const singleModel = model.slice(0, -1)
+  yield putReducer(setAddModel(model, data[`${singleModel}`]))
 }
 
 export default function* productSaga() {
