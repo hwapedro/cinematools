@@ -5,6 +5,9 @@ import Button from '../../../shared/buttons'
 import TextField from '../../../shared/inputs/input'
 import { changeActor, addActor } from '../../../../sagas/actors/actions'
 
+//smart fix
+import { changeModel, addModel } from '../../../../sagas/smart//actions'
+
 export const ActorConstructor = ({ actor, setEditMode, mode }) => {
   const dispatch = useDispatch()
   const [actorName, setActorName] = useState(actor ? actor.name : '')
