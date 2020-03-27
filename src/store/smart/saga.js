@@ -11,6 +11,8 @@ function* fetchAll({ payload }) {
 
   const { data } = yield call(post, query, `${model}/query`);
   yield putReducer(smartActions[model].setAll(data[model]));
+  yield putReducer(smartActions[model].setHasMore(data.hasMore));
+  yield putReducer(smartActions[model].setTotal(data.total));
 }
 
 function* change({ payload }) {

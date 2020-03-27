@@ -5,28 +5,35 @@ export const crateSmartSlice = model => {
   const slice = createSlice({
     name: model,
     initialState: {
-      items: []
+      items: [],
+      hasMore: false,
+      total: 0,
     },
     reducers: {
-      [`all`]: (state, action) => { },
-      [`add`]: (state, action) => { },
-      [`change`]: (state, action) => { },
-      [`delete`]: (state, action) => { },
-      [`setAll`]: (state, { payload }) => {
+      all: (state, action) => { },
+      add: (state, action) => { },
+      change: (state, action) => { },
+      delete: (state, action) => { },
+      setAll: (state, { payload }) => {
         state.items = payload;
       },
-      [`setAdd`]: (state, { payload }) => {
-        state.items.push(payload);
+      setAdd: (state, { payload }) => {
+        state.items.splice(0, 0, payload);
       },
-      [`setDelete`]: (state, { payload }) => {
+      setDelete: (state, { payload }) => {
         state.items = state.items.filter(item => item._id !== payload._id);
       },
-      [`setChange`]: (state, { payload }) => {
-        console.log('setall', payload);
+      setChange: (state, { payload }) => {
         const pos = state.items.findIndex(item => item._id === payload._id);
         if (pos > -1)
           state.items[pos] = payload;
       },
+      setHasMore: (state, { payload }) => {
+        state.hasMore = payload;
+      },
+      setTotal: (state, { payload }) => {
+        state.total = payload;
+      }
     },
   });
   const actions = slice.actions;
