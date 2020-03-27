@@ -3,7 +3,7 @@ import { fork } from 'redux-saga/effects'
 import auth from '../sagas/auth/saga'
 import products from '../sagas/products/saga'
 import actors from '../sagas/actors/saga'
-import smart from '../sagas/smart/saga'
+import smart from './smart/saga'
 
 export default function* rootSaga() {
   yield fork(auth)

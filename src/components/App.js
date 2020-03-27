@@ -10,6 +10,7 @@ import { Main } from './pages/main/index'
 import { Products } from './pages/products/index'
 import { Actors } from './pages/actors/index'
 import { Menu } from './shared/menu/index'
+import { autoRoutes } from '../global/routes';
 
 function App() {
   const isLogin = useSelector(getIsLogin)
@@ -20,6 +21,9 @@ function App() {
       <Route path="/" exact component={Main} />
       <Route path="/products" component={Products} />
       <Route path="/actors" component={Actors} />
+      {autoRoutes.map(route => {
+        return (<Route key={route.name} path={route.route} render={route.render} />)
+      })}
     </>
   )
   return (
