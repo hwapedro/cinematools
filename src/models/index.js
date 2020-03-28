@@ -19,6 +19,10 @@ export default {
         { name: 'name', type: 'field' },
         { name: 'description', type: 'field' },
         { name: 'items', type: 'refsArray', model: 'shopItems'},
+    ],
+    halls: [
+        { name: 'name', type: 'field' },
+        { name: 'structure', type: 'hall'}
     ]
     //   export const News = {
     //     title: String,

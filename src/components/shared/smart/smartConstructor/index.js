@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { RHFInput as InputWrapper } from 'react-hook-form-input'
@@ -6,8 +6,9 @@ import { Checkbox } from '@material-ui/core/'
 
 import Button from '../../../shared/buttons'
 import TextField from '../../../shared/inputs/input'
+import { CustomHall } from 'components/custom/customHall/'
 import { smartActions } from 'store/smart/'
-import models from '../../../../models'
+import models from 'models'
 
 export const SmartConstructor = ({ id, value, model, setEditMode }) => {
   const dispatch = useDispatch()
@@ -22,8 +23,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode }) => {
 
   const { register, handleSubmit, setValue } = useForm({ defaultValues })
 
-  const onSubmit = data => 
-  {
+  const onSubmit = data => {
     if (value) {
       dispatch(smartActions[model].change(id, data))
     } else {
@@ -40,6 +40,8 @@ export const SmartConstructor = ({ id, value, model, setEditMode }) => {
         return <InputWrapper key={el.name} as={<Checkbox color="primary" />} type="checkbox" register={register} name={el.name} setValue={setValue} />
       case 'date':
         return <TextField key={el.name} type="date" name={el.name} label={el.name} inputRef={register} />
+      case 'hall':
+        return <CustomHall  />
       default:
         return
     }
