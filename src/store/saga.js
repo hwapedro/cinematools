@@ -7,7 +7,5 @@ import smart from './smart/saga'
 
 export default function* rootSaga() {
   yield fork(auth)
-  yield fork(products)
-  yield fork(actors)
   yield fork(smart)
 }

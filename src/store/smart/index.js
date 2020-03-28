@@ -1,77 +1,69 @@
 import { createSlice } from '@reduxjs/toolkit'
 import models from 'components/shared/smart/smartConstructor/models'
 
-export const crateSmartSlice = model => {
-  const slice = createSlice({
+export const createSmartSlice = model => {
+  return createSlice({
     name: model,
     initialState: {
       items: [],
       hasMore: false,
-      total: 0,
+      total: 0
     },
     reducers: {
-      all: (state, action) => { },
-      add: (state, action) => { },
-      change: (state, action) => { },
-      delete: (state, action) => { },
+      all: (state, action) => {},
+      add: (state, action) => {},
+      change: (state, action) => {},
+      delete: (state, action) => {},
       setAll: (state, { payload }) => {
-        state.items = payload;
+        state.items = payload
       },
       setAdd: (state, { payload }) => {
-        state.items.splice(0, 0, payload);
+        state.items = [payload, ...state.items]
       },
       setDelete: (state, { payload }) => {
-        state.items = state.items.filter(item => item._id !== payload._id);
+        state.items = state.items.filter(item => item._id !== payload._id)
       },
       setChange: (state, { payload }) => {
-        const pos = state.items.findIndex(item => item._id === payload._id);
-        if (pos > -1)
-          state.items[pos] = payload;
+        state.items = state.items.map(item => (item._id === payload._id ? payload : item))
       },
       setHasMore: (state, { payload }) => {
-        state.hasMore = payload;
+        state.hasMore = payload
       },
       setTotal: (state, { payload }) => {
-        state.total = payload;
+        state.total = payload
       }
-    },
-  });
-  const actions = slice.actions;
-  const reducer = slice.reducer;
-  return {
-    actions,
-    reducer
-  };
+    }
+  })
 }
 
-export const smartActions = {};
-export const smartReducers = {};
+export const smartActions = {}
+export const smartReducers = {}
 
-Object.keys(models)
-  .filter(model => (!['actors', 'products'].includes(model)))
-  .forEach(model => {
-    const { actions, reducer } = crateSmartSlice(model);
-    smartActions[model] = {};
-    Object.entries(actions).
-      forEach(([action, actionFn]) => {
-        if (action === 'all') {
-          smartActions[model][action] = (limit, skip, data = {}) => actionFn({ model, limit, skip, ...data });
-        } else if (action === 'add') {
-          smartActions[model][action] = (data) => actionFn({ model, ...data });
-        } else if (action === 'change') {
-          smartActions[model][action] = (id, data) => actionFn({ model, id, ...data });
-        } else if (action === 'delete') {
-          smartActions[model][action] = (id) => actionFn({ model, id, });
-        } else {
-          smartActions[model][action] = actionFn;
-        }
-        Object.defineProperty(smartActions[model][action], 'rawType', {
-          value: actionFn.type,
-        });
-      });
-    smartReducers[model] = reducer;
-    return reducer;
-  });
-console.log(smartActions);
+const modelsKeys = Object.keys(models)
 
-export default crateSmartSlice;
+modelsKeys.forEach(model => {
+  const { actions, reducer } = createSmartSlice(model)
+
+  smartActions[model] = {}
+  const arrayOfActions = Object.entries(actions).slice(0, 4)
+  const arrayOfSetters = Object.entries(actions).slice(4)
+
+  const [[alltype, all], [addtype, add], [changetype, change], [deltype, del]] = arrayOfActions
+  smartActions[model][alltype] = (limit, skip, data = {}) => all({ model, limit, skip, ...data })
+  smartActions[model][addtype] = data => add({ model, ...data })
+  smartActions[model][changetype] = (id, data) => change({ model, id, ...data })
+  smartActions[model][deltype] = id => del({ model, id })
+
+  arrayOfSetters.forEach(([type, action]) => {
+    smartActions[model][type] = action
+  })
+
+  arrayOfActions.forEach(([type, action]) => {
+    smartActions[model][type].rawType = action.type
+  })
+
+  smartReducers[model] = reducer
+  return reducer
+})
+
+export default createSmartSlice

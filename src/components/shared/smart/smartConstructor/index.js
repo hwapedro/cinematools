@@ -6,7 +6,7 @@ import { Checkbox } from '@material-ui/core/'
 
 import Button from '../../../shared/buttons'
 import TextField from '../../../shared/inputs/input'
-import smartActions from 'store/smart/actions';
+import { smartActions } from 'store/smart/'
 import models from './models'
 
 export const SmartConstructor = ({ id, value, model, setEditMode }) => {
@@ -16,20 +16,20 @@ export const SmartConstructor = ({ id, value, model, setEditMode }) => {
   let defaultValues = {}
   if (value) {
     for (let i = 0; i < modelItem.length; i++) {
-      defaultValues[modelItem[i].name] = value[modelItem[i].name];
+      defaultValues[modelItem[i].name] = value[modelItem[i].name]
     }
   }
 
-  const { register, handleSubmit, setValue } = useForm({ defaultValues });
+  const { register, handleSubmit, setValue } = useForm({ defaultValues })
 
-  const onSubmit = data => {
-    console.log(smartActions, model);
+  const onSubmit = data => 
+  {
     if (value) {
-      dispatch(smartActions[model].change(id, ...data));
+      dispatch(smartActions[model].change(id, data))
     } else {
-      dispatch(smartActions[model].add(data));
+      dispatch(smartActions[model].add(data))
     }
-    setEditMode(false);
+    setEditMode(false)
   }
 
   const content = modelItem.map(el => {
@@ -43,7 +43,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode }) => {
       default:
         return
     }
-  });
+  })
 
   return (
     <div>

@@ -18,7 +18,7 @@ export default {
     shops: [
         { name: 'name', type: 'field' },
         { name: 'description', type: 'field' },
-        { name: 'items', type: 'refsArray', model: 'shopItems' },
+        { name: 'items', type: 'refsArray', model: 'shopItems'},
     ]
     //   export const News = {
     //     title: String,

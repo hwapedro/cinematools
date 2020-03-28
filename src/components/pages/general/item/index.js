@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import smartActions from 'store/smart/actions';
+import { smartActions } from 'store/smart';
 import { SmartConstructor } from 'components/shared/smart/smartConstructor';
 import Button from 'components/shared/buttons';
 import models from 'components/shared/smart/smartConstructor/models';
@@ -8,6 +8,7 @@ import models from 'components/shared/smart/smartConstructor/models';
 export const GeneralItem = ({ item, model }) => {
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
+
   const fieldValues = Object.keys(item).map(field => {
     const fieldInModel = models[model].find(d => d.name === field);
     if (!fieldInModel)
