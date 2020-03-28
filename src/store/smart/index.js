@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import models from 'components/shared/smart/smartConstructor/models'
+import models from 'models'
 
 export const createSmartSlice = model => {
   return createSlice({
@@ -40,13 +40,13 @@ export const smartActions = {}
 export const smartReducers = {}
 
 const modelsKeys = Object.keys(models)
-
+const SAGA_ACTIONS = 4
 modelsKeys.forEach(model => {
   const { actions, reducer } = createSmartSlice(model)
 
   smartActions[model] = {}
-  const arrayOfActions = Object.entries(actions).slice(0, 4)
-  const arrayOfSetters = Object.entries(actions).slice(4)
+  const arrayOfActions = Object.entries(actions).slice(0, SAGA_ACTIONS)
+  const arrayOfSetters = Object.entries(actions).slice(SAGA_ACTIONS)
 
   const [[alltype, all], [addtype, add], [changetype, change], [deltype, del]] = arrayOfActions
   smartActions[model][alltype] = (limit, skip, data = {}) => all({ model, limit, skip, ...data })

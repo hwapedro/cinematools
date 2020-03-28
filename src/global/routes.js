@@ -1,12 +1,11 @@
-import { GeneralPage } from '../components/pages/general';
-import React from 'react';
+import React from 'react'
+import { GeneralPage } from 'components/shared/smart/smartContainer'
+import models from 'models'
 
-export const autoRoutes = [
-  {
-    plural: 'shops',
-    singular: 'shop',
-    route: '/shops',
-    render: () => <GeneralPage model='shops' />,
-    name: 'Shops'
-  }
-];
+export const autoRoutes = Object.keys(models).map(model => ({
+  plural: model,
+  singular: model.slice(0, -1),
+  route: `/${model}`,
+  render: () => <GeneralPage model={model} />,
+  name: model
+}))

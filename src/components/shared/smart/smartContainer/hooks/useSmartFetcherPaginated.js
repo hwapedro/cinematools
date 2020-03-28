@@ -1,12 +1,14 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { smartActions } from 'store/smart/'
+import { getItems, getHasMore, getTotal } from 'store/smart/selectors'
 
 export const useSmartFetcherPaginated = ({ model, limit }) => {
   const dispatch = useDispatch()
-  const items = useSelector(state => (state[model] ? state[model].items : []))
-  const hasMore = useSelector(state => (state[model] ? state[model].hasMore : false))
-  const total = useSelector(state => (state[model] ? state[model].total : false))
+  console.log(model)
+  const items = useSelector(state => getItems(state, model))
+  const hasMore = useSelector(state => getHasMore(state, model))
+  const total = useSelector(state => getTotal(state, model))
   const [skip, setSkip] = useState(0)
 
   useEffect(() => {

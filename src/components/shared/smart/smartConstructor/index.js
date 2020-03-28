@@ -7,7 +7,7 @@ import { Checkbox } from '@material-ui/core/'
 import Button from '../../../shared/buttons'
 import TextField from '../../../shared/inputs/input'
 import { smartActions } from 'store/smart/'
-import models from './models'
+import models from '../../../../models'
 
 export const SmartConstructor = ({ id, value, model, setEditMode }) => {
   const dispatch = useDispatch()

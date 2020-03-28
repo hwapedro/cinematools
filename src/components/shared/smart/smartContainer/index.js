@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react'
+import React, { useState } from 'react'
 import Fab from '@material-ui/core/Fab'
 import Box from '@material-ui/core/Box'
 import AddIcon from '@material-ui/icons/Add'
 
 import { useSmartFetcherPaginated } from './hooks/useSmartFetcherPaginated'
-import { SmartConstructor } from '../../shared/smart/smartConstructor'
+import { SmartConstructor } from '../smartConstructor'
 import { GeneralItem } from './item'
 import Button from 'components/shared/buttons'
 

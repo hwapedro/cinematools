@@ -7,22 +7,17 @@ import { useSelector } from 'react-redux'
 
 import { Auth } from './pages/auth'
 import { Main } from './pages/main/index'
-import { Products } from './pages/products/index'
-import { Actors } from './pages/actors/index'
 import { Menu } from './shared/menu/index'
-import { autoRoutes } from '../global/routes';
+import { autoRoutes } from '../global/routes'
 
 function App() {
   const isLogin = useSelector(getIsLogin)
-  console.log('@', isLogin)
   const AppLogin = () => (
     <>
       <Menu />
       <Route path="/" exact component={Main} />
-      <Route path="/products" component={Products} />
-      <Route path="/actors" component={Actors} />
       {autoRoutes.map(route => {
-        return (<Route key={route.name} path={route.route} render={route.render} />)
+        return <Route key={route.name} path={route.route} render={route.render} />
       })}
     </>
   )
