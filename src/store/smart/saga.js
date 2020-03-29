@@ -35,6 +35,16 @@ function* add({ payload }) {
   const { model } = payload
   const body = payload
 
+  // modify body in case there are images
+  if (body.image) {
+    const imageUploadBody = new FormData();
+    imageUploadBody.append('file', body.image[0]);
+    const { data: { _id, url } } = yield call(post, imageUploadBody, `images/upload`);
+    if (!url) {
+      throw new Error('Error on image upload');
+    }
+    body.image = url;
+  }
   const { data } = yield call(post, body, `${model}/`)
   const singleModel = getSingular(model)
   yield putReducer(smartActions[model].setAdd(data[singleModel]))

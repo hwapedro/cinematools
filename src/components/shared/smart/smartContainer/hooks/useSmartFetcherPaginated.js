@@ -5,7 +5,6 @@ import { getItems, getHasMore, getTotal } from 'store/smart/selectors'
 
 export const useSmartFetcherPaginated = ({ model, limit }) => {
   const dispatch = useDispatch()
-  console.log(model)
   const items = useSelector(state => getItems(state, model))
   const hasMore = useSelector(state => getHasMore(state, model))
   const total = useSelector(state => getTotal(state, model))
@@ -18,19 +17,20 @@ export const useSmartFetcherPaginated = ({ model, limit }) => {
   const next = useCallback(() => {
     setSkip(skip + limit)
     dispatch(smartActions[model].all(limit + skip, skip))
-  }, [])
+  }, [skip, limit, dispatch])
 
   const prev = useCallback(() => {
     setSkip(skip ? skip - limit : 0)
     dispatch(smartActions[model].all(limit, skip))
-  }, [])
+  }, [skip, limit, dispatch])
 
-  const page = useMemo(() => skip / limit + 1, [skip])
+  const page = useMemo(() => skip / limit + 1, [skip, limit])
 
   return {
     items,
     next,
     hasMore,
+    setSkip,
     total,
     page,
     prev
