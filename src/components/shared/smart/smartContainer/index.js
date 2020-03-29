@@ -10,7 +10,7 @@ import Button from 'components/shared/buttons'
 
 export const GeneralPage = ({ model }) => {
   const limit = 2
-  const { items, next, prev, page, hasMore, total } = useSmartFetcherPaginated({ model, limit })
+  const { items, next, prev, page, hasMore, total, setSkip } = useSmartFetcherPaginated({ model, limit })
   const [editMode, setEditMode] = useState(false)
 
   return (
@@ -31,7 +31,7 @@ export const GeneralPage = ({ model }) => {
         <Button type="button" color="primary" text=">" disabled={!hasMore} onClick={next} />
       </Box>
       <hr />
-      {editMode && <SmartConstructor model={model} setEditMode={setEditMode} />}
+      {editMode && <SmartConstructor resetPage={() => setSkip(0)} model={model} setEditMode={setEditMode} />}
     </div>
   )
 }

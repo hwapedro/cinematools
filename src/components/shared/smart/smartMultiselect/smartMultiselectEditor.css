@@ -1,0 +1,36 @@
+.smart-muliselect-editor {
+  z-index: 10000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.431);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row nowrap;
+}
+.sme-col {
+  height: 100%;
+  flex: 1;
+}
+.sme-col .header {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 0.5em 1em;
+}
+.sme-col .content {
+  height: 100%;
+}
+.sme-col-left .header {
+  background-color: rgb(177, 68, 68);
+}
+.sme-col-right .header {
+  background-color: rgb(98, 177, 68);
+}
+.sme-col-left .content {
+  border-right: 1.5px solid #000;
+}
+.sme-col-right .content {
+  border-left: 1.5px solid #000;
+}

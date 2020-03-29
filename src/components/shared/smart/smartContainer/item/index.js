@@ -35,6 +35,13 @@ export const GeneralItem = ({ item, model }) => {
             {fieldInModel.name}: {item[field].toString()}
           </div>
         )
+      case 'image':
+        return (
+          <div key={field}>
+            {fieldInModel.name}:<br />
+            <img src={item[field]} alt="image" />
+          </div>
+        )
       default:
         return
     }
@@ -49,8 +56,8 @@ export const GeneralItem = ({ item, model }) => {
       </div>
     </div>
   ) : (
-    <SmartConstructor model={model} id={item._id} value={item} setEditMode={setEditMode} />
-  )
+      <SmartConstructor model={model} id={item._id} value={item} setEditMode={setEditMode} />
+    )
 
   return content
 }
