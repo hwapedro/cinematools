@@ -5,17 +5,10 @@ import { RHFInput as InputWrapper } from 'react-hook-form-input'
 import { Checkbox } from '@material-ui/core/'
 import { DropzoneArea } from 'material-ui-dropzone'
 
-<<<<<<< HEAD
 import Button from '../../../shared/buttons'
 import TextField from '../../../shared/inputs/input'
 import { CustomHall } from 'components/custom/customHall/hallConstructor'
 import { smartActions } from 'store/smart/'
-=======
-import Button from 'components/shared/buttons'
-import TextField from 'components/shared/inputs/input'
-import { smartActions } from 'store/smart'
-import { CustomHall } from 'components/custom/customHall/'
->>>>>>> 4388406b5d3a78ce1afe773e02e885e26d4bba22
 import models from 'models'
 import { SmartMultiselect } from 'components/shared/smart/smartMultiselect'
 
@@ -35,15 +28,11 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
   const { register, handleSubmit, control, setValue } = useForm({ defaultValues })
 
   const onSubmit = data => {
-<<<<<<< HEAD
     console.log(structure)
-    if(model === 'halls'){
-      data = {...data, structure}
+    if (model === 'halls') {
+      data = { ...data, structure }
     }
 
-=======
-    console.log('Submitting', data);
->>>>>>> 4388406b5d3a78ce1afe773e02e885e26d4bba22
     if (value) {
       dispatch(smartActions[model].change(id, data))
     } else {
@@ -51,7 +40,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
     }
     setEditMode(false)
     if (resetPage) {
-      resetPage();
+      resetPage()
     }
   }
 
@@ -69,30 +58,22 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
       case 'date':
         return <TextField key={el.name} type="date" name={el.name} label={el.name} inputRef={register} />
       case 'hall':
-<<<<<<< HEAD
-        return <CustomHall  structure={structure} setHallStructure={setHallStructure}/>
-=======
-        return <CustomHall key={el.name} />
+        return <CustomHall key={el.name} structure={structure} setHallStructure={setHallStructure} />
       case 'image':
-        return <Controller
-          key={el.name}
-          as={DropzoneArea}
-          filesLimit={1}
-          showAlerts={false}
-          initialFiles={(value && value[el.name]) ? [value[el.name]] : []}
-          acceptedFiles={['image/*']}
-          name={el.name}
-          control={control}
-        />
+        return (
+          <Controller
+            key={el.name}
+            as={DropzoneArea}
+            filesLimit={1}
+            showAlerts={false}
+            initialFiles={value && value[el.name] ? [value[el.name]] : []}
+            acceptedFiles={['image/*']}
+            name={el.name}
+            control={control}
+          />
+        )
       case 'refsArray':
-        return <SmartMultiselect
-          key={el.name}
-          keyInfo={el}
-          model={model}
-          itemsModel={el.model}
-        />
-        break;
->>>>>>> 4388406b5d3a78ce1afe773e02e885e26d4bba22
+        return <SmartMultiselect key={el.name} keyInfo={el} model={model} itemsModel={el.model} />
       default:
         return
     }
