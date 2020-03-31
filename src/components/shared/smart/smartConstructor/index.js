@@ -6,15 +6,17 @@ import { Checkbox } from '@material-ui/core/'
 
 import Button from '../../../shared/buttons'
 import TextField from '../../../shared/inputs/input'
-import { CustomHall } from 'components/custom/customHall/'
+import { CustomHall } from 'components/custom/customHall/hallConstructor'
 import { smartActions } from 'store/smart/'
 import models from 'models'
 
 export const SmartConstructor = ({ id, value, model, setEditMode }) => {
   const dispatch = useDispatch()
+  const [structure, setHallStructure] = useState(value && model === 'halls' ? value.structure : [[0]])
 
   const modelItem = models[model]
   let defaultValues = {}
+
   if (value) {
     for (let i = 0; i < modelItem.length; i++) {
       defaultValues[modelItem[i].name] = value[modelItem[i].name]
@@ -24,6 +26,11 @@ export const SmartConstructor = ({ id, value, model, setEditMode }) => {
   const { register, handleSubmit, setValue } = useForm({ defaultValues })
 
   const onSubmit = data => {
+    console.log(structure)
+    if(model === 'halls'){
+      data = {...data, structure}
+    }
+
     if (value) {
       dispatch(smartActions[model].change(id, data))
     } else {
@@ -41,7 +48,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode }) => {
       case 'date':
         return <TextField key={el.name} type="date" name={el.name} label={el.name} inputRef={register} />
       case 'hall':
-        return <CustomHall  />
+        return <CustomHall  structure={structure} setHallStructure={setHallStructure}/>
       default:
         return
     }

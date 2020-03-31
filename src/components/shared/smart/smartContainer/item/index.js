@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { smartActions } from 'store/smart'
 import { SmartConstructor } from 'components/shared/smart/smartConstructor'
+import { HallItem } from 'components/custom/customHall/hallItem'
 import Button from 'components/shared/buttons'
 import models from '../../../../../models'
 
@@ -35,6 +36,8 @@ export const GeneralItem = ({ item, model }) => {
             {fieldInModel.name}: {item[field].toString()}
           </div>
         )
+      case 'hall':
+        return <HallItem structure={item.structure} />
       default:
         return
     }

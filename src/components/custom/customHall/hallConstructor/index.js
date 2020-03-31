@@ -1,19 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { HallItem } from 'components/custom/customHall/hallItem'
 
-export const CustomHall = ({ structure }) => {
-  const [hallStructure, sethallStructure] = useState(
-    structure
-      ? structure
-      : [
-          [0, 1, 1, 1],
-          [2, 2, 2, 2]
-        ]
-  )
-
+export const CustomHall = ({ structure, setHallStructure }) => {
   const MAX_LEVEL = 4
   const changePlaceLevel = (columnIndex, rowIndex, level) => {
     const levelUp = MAX_LEVEL === level ? 0 : level + 1
-    sethallStructure(prev => {
+    setHallStructure(prev => {
       return prev.map((column, prevColumnIndex) =>
         column.map((row, prevRowIndex) => {
           return prevColumnIndex === columnIndex && prevRowIndex === rowIndex ? levelUp : row
@@ -23,7 +15,7 @@ export const CustomHall = ({ structure }) => {
   }
 
   const addRow = () => {
-    sethallStructure(prev => {
+    setHallStructure(prev => {
       const newRow = []
       newRow.length = prev[0].length
       newRow.fill(0)
@@ -31,43 +23,36 @@ export const CustomHall = ({ structure }) => {
     })
   }
 
-  const hall = hallStructure.map((column, columnIndex) => {
-    return (
-      <div>
-        {column.map((row, rowIndex) => (
-          <>
-            <span style={{ marginRight: '10px' }} onClick={() => changePlaceLevel(columnIndex, rowIndex, row)} key={rowIndex}>
-              {row}
-            </span>
-          </>
-        ))}
-      </div>
-    )
-  })
+  const addColumn = () => {
+    setHallStructure(prev => {
+      const newRow = prev.map(el => [...el, 0])
+      return newRow
+    })
+  }
 
   return (
     <div>
       {
         <div>
-          {hallStructure.map((column, columnIndex) =>
-            hallStructure.length === columnIndex + 1 ? <div key={columnIndex}>-</div> : <div key={columnIndex}>0</div>
+          {structure.map((column, columnIndex) =>
+            structure.length === columnIndex + 1 ? <div key={columnIndex}>-</div> : <div key={columnIndex}>0</div>
           )}
           <div onClick={() => addRow()}>+</div>
         </div>
       }
       {
         <div>
-          {hallStructure.map((column, columnIndex) =>
+          {structure.map((column, columnIndex) =>
             column.map((row, rowIndex) => {
               if (columnIndex === 0) {
                 return column.length === rowIndex + 1 ? <span key={rowIndex}>-</span> : <span key={rowIndex}>0</span>
               }
             })
           )}
-          <span>+</span>
+          <span onClick={() => addColumn()}>+</span>
         </div>
       }
-      {hall}
+      <HallItem structure={structure} changePlaceLevel={changePlaceLevel} />
     </div>
   )
 }
