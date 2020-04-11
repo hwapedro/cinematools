@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { smartActions } from 'store/smart'
 import { SmartConstructor } from 'components/shared/smart/smartConstructor'
 import { HallItem } from 'components/custom/customHall/hallItem'
+import { MultiSelectItem } from 'components/custom/customSelect/selectItem'
 import Button from 'components/shared/buttons'
 import models from '../../../../../models'
 
@@ -10,8 +11,8 @@ export const GeneralItem = ({ item, model }) => {
   const dispatch = useDispatch()
   const [editMode, setEditMode] = useState(false)
 
-  const fieldValues = Object.keys(item).map(field => {
-    const fieldInModel = models[model].find(modelItem => modelItem.name === field)
+  const fieldValues = Object.keys(item).map((field) => {
+    const fieldInModel = models[model].find((modelItem) => modelItem.name === field)
 
     if (!fieldInModel) {
       return
@@ -38,6 +39,8 @@ export const GeneralItem = ({ item, model }) => {
         )
       case 'hall':
         return <HallItem structure={item.structure} />
+      case 'multi':
+        return <MultiSelectItem extractor={fieldInModel.extractor} itemsModelName={fieldInModel.name} multiSelect={item[fieldInModel.name]} />
       case 'image':
         return (
           <div key={field}>
@@ -59,8 +62,8 @@ export const GeneralItem = ({ item, model }) => {
       </div>
     </div>
   ) : (
-      <SmartConstructor model={model} id={item._id} value={item} setEditMode={setEditMode} />
-    )
+    <SmartConstructor model={model} id={item._id} value={item} setEditMode={setEditMode} />
+  )
 
   return content
 }

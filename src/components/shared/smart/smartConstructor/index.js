@@ -9,12 +9,14 @@ import Button from '../../../shared/buttons'
 import TextField from '../../../shared/inputs/input'
 import { CustomHall } from 'components/custom/customHall/hallConstructor'
 import { smartActions } from 'store/smart/'
+import { CustomMultiselect } from 'components/custom/customSelect/selectConstructor'
 import models from 'models'
-import { SmartMultiselect } from 'components/shared/smart/smartMultiselect'
 
 export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) => {
   const dispatch = useDispatch()
+
   const [structure, setHallStructure] = useState(value && model === 'halls' ? value.structure : [[0]])
+  const [multiSelect, setmultiSelect] = useState(value && model === 'shops' ? value.items : [])
 
   const modelItem = models[model]
   let defaultValues = {}
@@ -27,8 +29,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
 
   const { register, handleSubmit, control, setValue } = useForm({ defaultValues })
 
-  const onSubmit = data => {
-    console.log(structure)
+  const onSubmit = (data) => {
     if (model === 'halls') {
       data = { ...data, structure }
     }
@@ -44,7 +45,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
     }
   }
 
-  const content = modelItem.map(el => {
+  const content = modelItem.map((el) => {
     switch (el.type) {
       case 'field':
         return <TextField key={el.name} autoComplete="off" name={el.name} label={el.name} inputRef={register} />
@@ -72,10 +73,19 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
             control={control}
           />
         )
-      case 'refsArray':
-        return <SmartMultiselect key={el.name} keyInfo={el} model={model} itemsModel={el.model} />
+      case 'multi':
+        return (
+          <CustomMultiselect
+            key={el.name}
+            extractor={el.extractor}
+            multiSelect={multiSelect}
+            setmultiSelect={setmultiSelect}
+            itemsModelName={el.name}
+            itemsModel={el.model}
+          />
+        )
       default:
-        return
+        return null
     }
   })
 

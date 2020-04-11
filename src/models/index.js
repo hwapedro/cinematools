@@ -21,7 +21,7 @@ export default {
     { name: 'description', type: 'field' },
     {
       name: 'items',
-      type: 'refsArray',
+      type: 'multi',
       model: 'shopItems',
       extractor: {
         name: item => `${item.name}, $${(item.price / 100).toFixed(2)}`,
