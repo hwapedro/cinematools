@@ -17,6 +17,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
 
   const [structure, setHallStructure] = useState(value && model === 'halls' ? value.structure : [[0]])
   const [multiSelect, setmultiSelect] = useState(value && model === 'shops' ? value.items : [])
+  console.log(multiSelect)
 
   const modelItem = models[model]
   let defaultValues = {}
