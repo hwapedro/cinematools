@@ -21,7 +21,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
     models[model].map((el) => {
       if (el.type === 'multi') {
         el.arrays.map((el) => {
-          defaultValueMultiSelect = { ...defaultValueMultiSelect, [el.name]: value[el.name] }
+          defaultValueMultiSelect = value ? { ...defaultValueMultiSelect, [el.name]: value[el.name] } : { ...defaultValueMultiSelect, [el.name]: [] }
         })
       }
     })
@@ -45,7 +45,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
     if (model === 'halls') {
       data = { ...data, structure }
     }
-    
+
     if (isMultiSelectModel) {
       data = { ...data, ...multiSelect }
     }
@@ -90,7 +90,6 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
           />
         )
       case 'multi':
-        console.log(el)
         return <CustomMultiselect key={el.name} multiSelect={multiSelect} setmultiSelect={setmultiSelect} itemsModel={el.arrays} item={value} />
       default:
         return null
