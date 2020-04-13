@@ -14,9 +14,21 @@ import models from 'models'
 
 export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) => {
   const dispatch = useDispatch()
+
+  let defaultValueMultiSelect = {}
   const isMultiSelectModel = model === 'shops' || model === 'films'
+  if (isMultiSelectModel) {
+    models[model].map((el) => {
+      if (el.type === 'multi') {
+        el.arrays.map((el) => {
+          defaultValueMultiSelect = { ...defaultValueMultiSelect, [el.name]: value[el.name] }
+        })
+      }
+    })
+  }
+  const [multiSelect, setmultiSelect] = useState(defaultValueMultiSelect)
+
   const [structure, setHallStructure] = useState(value && model === 'halls' ? value.structure : [[0]])
-  const [multiSelect, setmultiSelect] = useState(value && isMultiSelectModel ? value.items : [])
 
   const modelItem = models[model]
   let defaultValues = {}
@@ -33,9 +45,9 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
     if (model === 'halls') {
       data = { ...data, structure }
     }
-    console.log(isMultiSelectModel, multiSelect)
+    
     if (isMultiSelectModel) {
-      data = { ...data, multiSelect }
+      data = { ...data, ...multiSelect }
     }
 
     if (value) {
@@ -78,16 +90,8 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
           />
         )
       case 'multi':
-        return (
-          <CustomMultiselect
-            key={el.name}
-            extractor={el.extractor}
-            multiSelect={multiSelect}
-            setmultiSelect={setmultiSelect}
-            itemsModelName={el.name}
-            itemsModel={el.model}
-          />
-        )
+        console.log(el)
+        return <CustomMultiselect key={el.name} multiSelect={multiSelect} setmultiSelect={setmultiSelect} itemsModel={el.arrays} item={value} />
       default:
         return null
     }

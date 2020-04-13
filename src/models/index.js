@@ -2,16 +2,14 @@ export default {
   actors: [
     { name: 'name', type: 'field' },
     { name: 'bio', type: 'field' },
-    { name: 'image', type: 'image' }
+    { name: 'image', type: 'image' },
   ],
   shopItems: [
     { name: 'name', type: 'field' },
     { name: 'price', type: 'number' },
     { name: 'inStock', type: 'checkbox' },
   ],
-  ageRules: [
-    { name: 'name', type: 'field', }
-  ],
+  ageRules: [{ name: 'name', type: 'field' }],
   comments: [
     { name: 'text', type: 'field' },
     { name: 'time', type: 'date' },
@@ -20,19 +18,23 @@ export default {
     { name: 'name', type: 'field' },
     { name: 'description', type: 'field' },
     {
-      name: 'items',
       type: 'multi',
-      model: 'shopItems',
-      extractor: {
-        name: item => `${item.name}, $${(item.price / 100).toFixed(2)}`,
-        key: item => item,
-      }
+      arrays: [
+        {
+          name: 'items',
+          model: 'shopItems',
+          extractor: {
+            name: (item) => `${item.name}, $${(item.price / 100).toFixed(2)}`,
+            key: (item) => item,
+          },
+        },
+      ],
     },
   ],
   halls: [
     { name: 'name', type: 'field' },
-    { name: 'structure', type: 'hall' }
-  ]
+    { name: 'structure', type: 'hall' },
+  ],
   //   export const News = {
   //     title: String,
   //     text: String,

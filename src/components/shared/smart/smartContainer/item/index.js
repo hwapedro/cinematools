@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { smartActions } from 'store/smart'
 import { SmartConstructor } from 'components/shared/smart/smartConstructor'
 import { HallItem } from 'components/custom/customHall/hallItem'
-import { MultiSelectItem } from 'components/custom/customSelect/selectItem'
+import { MultiSelectList } from 'components/custom/customSelect/selectList'
 import Button from 'components/shared/buttons'
 import models from '../../../../../models'
 
@@ -11,8 +11,17 @@ export const GeneralItem = ({ item, model }) => {
   const dispatch = useDispatch()
   const [editMode, setEditMode] = useState(false)
 
-  const fieldValues = Object.keys(item).map((field) => {
-    const fieldInModel = models[model].find((modelItem) => modelItem.name === field)
+  const fieldValues = Object.keys(item).map((field, index) => {
+    const isMultiSelectFields = field === 'items'
+
+    const fieldInModel = models[model].find((modelItem, index) => {
+      if (modelItem.type === 'multi' && isMultiSelectFields) {
+        return modelItem
+      }
+      if (modelItem.name === field) {
+        return modelItem
+      }
+    })
 
     if (!fieldInModel) {
       return
@@ -40,7 +49,7 @@ export const GeneralItem = ({ item, model }) => {
       case 'hall':
         return <HallItem structure={item.structure} />
       case 'multi':
-        return <MultiSelectItem extractor={fieldInModel.extractor} itemsModelName={fieldInModel.name} multiSelect={item[fieldInModel.name]} />
+        return <MultiSelectList multiSelectList={fieldInModel.arrays} item={item} />
       case 'image':
         return (
           <div key={field}>
