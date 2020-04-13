@@ -21,7 +21,6 @@ const SmartMultiselectEditor = ({ items, model, setmultiSelect }) => {
           if (result.source.droppableId === result.destination.droppableId) {
             if (result.source.droppableId === 'column-1' && result.destination.droppableId === 'column-1') {
               const dragCard = allItemsWithoSelected[result.source.index - 1]
-              console.log(allItemsWithoSelected, dragCard, result.source.index)
               allItemsWithoSelected.splice(result.source.index - 1, 1)
               allItemsWithoSelected.splice(result.destination.index - 1, 0, dragCard)
             }

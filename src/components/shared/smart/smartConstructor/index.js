@@ -14,10 +14,9 @@ import models from 'models'
 
 export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) => {
   const dispatch = useDispatch()
-
+  const isMultiSelectModel = model === 'shops' || model === 'films'
   const [structure, setHallStructure] = useState(value && model === 'halls' ? value.structure : [[0]])
-  const [multiSelect, setmultiSelect] = useState(value && model === 'shops' ? value.items : [])
-  console.log(multiSelect)
+  const [multiSelect, setmultiSelect] = useState(value && isMultiSelectModel ? value.items : [])
 
   const modelItem = models[model]
   let defaultValues = {}
@@ -33,6 +32,10 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
   const onSubmit = (data) => {
     if (model === 'halls') {
       data = { ...data, structure }
+    }
+    console.log(isMultiSelectModel, multiSelect)
+    if (isMultiSelectModel) {
+      data = { ...data, multiSelect }
     }
 
     if (value) {
