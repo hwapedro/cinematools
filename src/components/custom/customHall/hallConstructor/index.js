@@ -1,11 +1,14 @@
 import React from 'react'
 import { HallItem } from 'components/custom/customHall/hallItem'
+import { useHallCellFetcher } from './hooks/useHallCellFetcher'
 
 export const CustomHall = ({ structure, setHallStructure }) => {
-  const MAX_LEVEL = 4
+  const hallCells = useHallCellFetcher()
+
+  const MAX_LEVEL = hallCells.length
   const changePlaceLevel = (columnIndex, rowIndex, level) => {
     const levelUp = MAX_LEVEL === level ? 0 : level + 1
-    setHallStructure(prev => {
+    setHallStructure((prev) => {
       return prev.map((column, prevColumnIndex) =>
         column.map((row, prevRowIndex) => {
           return prevColumnIndex === columnIndex && prevRowIndex === rowIndex ? levelUp : row
@@ -15,7 +18,7 @@ export const CustomHall = ({ structure, setHallStructure }) => {
   }
 
   const addRow = () => {
-    setHallStructure(prev => {
+    setHallStructure((prev) => {
       const newRow = []
       newRow.length = prev[0].length
       newRow.fill(0)
@@ -24,14 +27,19 @@ export const CustomHall = ({ structure, setHallStructure }) => {
   }
 
   const addColumn = () => {
-    setHallStructure(prev => {
-      const newRow = prev.map(el => [...el, 0])
+    setHallStructure((prev) => {
+      const newRow = prev.map((el) => [...el, 0])
       return newRow
     })
   }
 
   return (
     <div>
+      {hallCells.map((el) => (
+        <div>
+          {el.index} {el.name} {el.price}
+        </div>
+      ))}
       {
         <div>
           {structure.map((column, columnIndex) =>

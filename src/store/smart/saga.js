@@ -6,10 +6,9 @@ import { smartActions } from '../smart'
 const getSingular = model => (model === 'news' ? model : model.slice(0, -1))
 
 function* fetchAll({ payload }) {
-  const { model } = payload
-  const query = payload
+  const { model, limit, skip } = payload
 
-  const { data } = yield call(post, query, `${model}/query`)
+  const { data } = yield call(post, {limit, skip}, `${model}/query`)
   yield putReducer(smartActions[model].setAll(data[model]))
   yield putReducer(smartActions[model].setHasMore(data.hasMore))
   yield putReducer(smartActions[model].setTotal(data.total))

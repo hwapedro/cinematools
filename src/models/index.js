@@ -14,6 +14,11 @@ export default {
     { name: 'text', type: 'field' },
     { name: 'time', type: 'date' },
   ],
+  hallCells: [
+    { name: 'name', type: 'field' },
+    { name: 'price', type: 'number' },
+    { name: 'index', type: 'number' }
+  ],
   shops: [
     { name: 'name', type: 'field' },
     { name: 'description', type: 'field' },

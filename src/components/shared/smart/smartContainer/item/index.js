@@ -34,6 +34,12 @@ export const GeneralItem = ({ item, model }) => {
             {fieldInModel.name}: {item[field].toString()}
           </div>
         )
+      case 'number':
+        return (
+          <div key={field}>
+            {fieldInModel.name}: {item[field].toString()}
+          </div>
+        )
       case 'checkbox':
         return (
           <div key={field}>

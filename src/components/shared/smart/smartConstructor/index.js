@@ -46,7 +46,12 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
       data = { ...data, structure }
     }
 
+  
     if (isMultiSelectModel) {
+      for (let prop in multiSelect) {
+        multiSelect[prop] =  multiSelect[prop].map(el => el._id) 
+      }
+      console.log(multiSelect)
       data = { ...data, ...multiSelect }
     }
 
@@ -64,7 +69,9 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
   const content = modelItem.map((el) => {
     switch (el.type) {
       case 'field':
-        return <TextField key={el.name} autoComplete="off" name={el.name} label={el.name} inputRef={register} />
+        return <TextField type='text' key={el.name} autoComplete="off" name={el.name} label={el.name} inputRef={register} />
+      case 'number':
+          return <TextField type='number' key={el.name} autoComplete="off" name={el.name} label={el.name} inputRef={register} />
       case 'checkbox':
         return (
           <label key={el.name} htmlFor={el.name}>
