@@ -5,19 +5,16 @@ import { SmartConstructor } from 'components/shared/smart/smartConstructor'
 import { HallItem } from 'components/custom/customHall/hallItem'
 import { MultiSelectList } from 'components/custom/customSelect/selectList'
 import Button from 'components/shared/buttons'
-import models from '../../../../../models'
+import models from 'models'
 
 export const GeneralItem = ({ item, model }) => {
   const dispatch = useDispatch()
   const [editMode, setEditMode] = useState(false)
 
   const fieldValues = Object.keys(item).map((field, index) => {
-    const isMultiSelectFields = field === 'items'
+    console.log(field)
 
     const fieldInModel = models[model].find((modelItem, index) => {
-      if (modelItem.type === 'multi' && isMultiSelectFields) {
-        return modelItem
-      }
       if (modelItem.name === field) {
         return modelItem
       }
@@ -54,8 +51,6 @@ export const GeneralItem = ({ item, model }) => {
         )
       case 'hall':
         return <HallItem structure={item.structure} />
-      case 'multi':
-        return <MultiSelectList multiSelectList={fieldInModel.arrays} item={item} />
       case 'image':
         return (
           <div key={field}>
@@ -68,9 +63,16 @@ export const GeneralItem = ({ item, model }) => {
     }
   })
 
+  const multiField = models[model].find((modelItem, index) => {
+    if (modelItem.type === 'multi') {
+      return modelItem
+    }
+  })
+
   const content = !editMode ? (
     <div>
       {fieldValues}
+      <MultiSelectList multiSelectList={multiField.arrays} item={item} />
       <div>
         <Button type="button" color="primary" text="edit" onClick={() => setEditMode(true)} />
         <Button type="button" color="secondary" text="delete" onClick={() => dispatch(smartActions[model].delete(item._id))} />

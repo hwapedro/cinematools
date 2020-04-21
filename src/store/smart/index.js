@@ -5,12 +5,14 @@ export const createSmartSlice = model => {
   return createSlice({
     name: model,
     initialState: {
+      item: {},
       items: [],
       hasMore: false,
       total: 0
     },
     reducers: {
       all: (state, action) => {},
+      one: (state, action) => {},
       add: (state, action) => {},
       change: (state, action) => {},
       delete: (state, action) => {},
@@ -19,6 +21,9 @@ export const createSmartSlice = model => {
       },
       setAdd: (state, { payload }) => {
         state.items = [payload, ...state.items]
+      },
+      setOne: (state, { payload }) => {
+        state.item = {...payload}
       },
       setDelete: (state, { payload }) => {
         state.items = state.items.filter(item => item._id !== payload._id)
@@ -40,7 +45,7 @@ export const smartActions = {}
 export const smartReducers = {}
 
 const modelsKeys = Object.keys(models)
-const SAGA_ACTIONS = 4
+const SAGA_ACTIONS = 5
 modelsKeys.forEach(model => {
   const { actions, reducer } = createSmartSlice(model)
 
@@ -48,8 +53,9 @@ modelsKeys.forEach(model => {
   const arrayOfActions = Object.entries(actions).slice(0, SAGA_ACTIONS)
   const arrayOfSetters = Object.entries(actions).slice(SAGA_ACTIONS)
 
-  const [[alltype, all], [addtype, add], [changetype, change], [deltype, del]] = arrayOfActions
+  const [[alltype, all], [onetype, one], [addtype, add], [changetype, change], [deltype, del]] = arrayOfActions
   smartActions[model][alltype] = (limit, skip, data = {}) => all({ model, limit, skip, ...data })
+  smartActions[model][onetype] = (id) => one({ model, id })
   smartActions[model][addtype] = data => add({ model, ...data })
   smartActions[model][changetype] = (id, data) => change({ model, id, ...data })
   smartActions[model][deltype] = id => del({ model, id })

@@ -1,9 +1,12 @@
+import React from 'react'
+
 export default {
   actors: [
     { name: 'name', type: 'field' },
     { name: 'bio', type: 'field' },
     { name: 'image', type: 'image' },
   ],
+  showtimes: [],
   shopItems: [
     { name: 'name', type: 'field' },
     { name: 'price', type: 'number' },
@@ -17,7 +20,41 @@ export default {
   hallCells: [
     { name: 'name', type: 'field' },
     { name: 'price', type: 'number' },
-    { name: 'index', type: 'number' }
+    { name: 'index', type: 'number' },
+  ],
+  films: [{ name: 'name', type: 'field' }],
+  cinemas: [
+    { name: 'name', type: 'field' },
+    { name: 'address', type: 'field' },
+    {
+      type: 'multi',
+      arrays: [
+        {
+          name: 'shops',
+          model: 'shops',
+          extractor: {
+            name: (item) => `${item.name}`,
+            key: (item) => item,
+          },
+        },
+        {
+          name: 'halls',
+          model: 'halls',
+          extractor: {
+            name: (item) => `${item.name}`,
+            key: (item) => item,
+          },
+        },
+        {
+          name: 'films',
+          model: 'films',
+          extractor: {
+            name: (item, history, modelId, itemId) => <div onClick={() => history.push(`/film/${modelId}/${itemId}`)}>`${item.name}`</div>,
+            key: (item) => item,
+          },
+        },
+      ],
+    },
   ],
   shops: [
     { name: 'name', type: 'field' },

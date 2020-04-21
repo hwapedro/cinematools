@@ -8,9 +8,10 @@ export const MultiSelectList = ({ multiSelectList, item }) => {
         return (
           <>
             <span>{fieldInModel.name}</span>
-            {item && item[fieldInModel.name].map((el) => {
-              return <MultiSelectItem extractor={fieldInModel.extractor} itemsModelName={fieldInModel.name} item={el} />
-            })}
+            {item &&
+              item[fieldInModel.name].map((el) => {
+                return <MultiSelectItem extractor={fieldInModel.extractor} itemsModelName={fieldInModel.name} item={el} modelId={item._id} />
+              })}
           </>
         )
       })}

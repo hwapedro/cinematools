@@ -9,7 +9,7 @@ import { GeneralItem } from './item'
 import Button from 'components/shared/buttons'
 
 export const GeneralPage = ({ model }) => {
-  const limit = 2
+  const limit = 4
   const { items, next, prev, page, hasMore, total, setSkip } = useSmartFetcherPaginated({ model, limit })
   const [editMode, setEditMode] = useState(false)
 

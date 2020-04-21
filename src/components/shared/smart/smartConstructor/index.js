@@ -11,12 +11,14 @@ import { CustomHall } from 'components/custom/customHall/hallConstructor'
 import { smartActions } from 'store/smart/'
 import { CustomMultiselect } from 'components/custom/customSelect/selectConstructor'
 import models from 'models'
+import {checkMultiSelectModel} from 'utils'
 
 export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) => {
   const dispatch = useDispatch()
 
   let defaultValueMultiSelect = {}
-  const isMultiSelectModel = model === 'shops' || model === 'films'
+  const isMultiSelectModel = checkMultiSelectModel(model)
+
   if (isMultiSelectModel) {
     models[model].map((el) => {
       if (el.type === 'multi') {
@@ -27,7 +29,6 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
     })
   }
   const [multiSelect, setmultiSelect] = useState(defaultValueMultiSelect)
-
   const [structure, setHallStructure] = useState(value && model === 'halls' ? value.structure : [[0]])
 
   const modelItem = models[model]

@@ -5,6 +5,7 @@ import { SelectItem } from './selectItem'
 export const SelectColumn = ({ items, droppableId }) => (
   <div>
     <span>column </span>
+    {console.log(droppableId)}
     <Droppable droppableId={droppableId}>
       {(provided, snapshot) => (
         <div ref={provided.innerRef} {...provided.droppableProps} isDraggingOver={snapshot.isDraggingOver}>

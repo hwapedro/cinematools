@@ -6,19 +6,20 @@ import { getIsLogin } from '../sagas/auth/selectors'
 import { useSelector } from 'react-redux'
 
 import { Auth } from './pages/auth'
+import { FilmPage } from './pages/film'
 import { Main } from './pages/main/index'
-import { Menu } from './shared/menu/index'
+
 import { autoRoutes } from '../global/routes'
 
 function App() {
   const isLogin = useSelector(getIsLogin)
   const AppLogin = () => (
     <>
-      <Menu />
       <Route path="/" exact component={Main} />
-      {autoRoutes.map(route => {
-        return <Route key={route.name} path={route.route} render={route.render} />
-      })}
+      {autoRoutes.map((route) => (
+        <Route key={route.name} path={route.route} render={route.render} />
+      ))}
+      <Route path="/film/:cinemaId/:filmId" exact component={FilmPage} />
     </>
   )
   return (

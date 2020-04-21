@@ -1,18 +1,27 @@
 import { call, takeLatest, put as putReducer, all, fork } from 'redux-saga/effects'
-import { post, put, del } from '../../global/api'
+import { get, post, put, del } from '../../global/api'
 
 import { smartActions } from '../smart'
 
 const getSingular = model => (model === 'news' ? model : model.slice(0, -1))
 
 function* fetchAll({ payload }) {
-  const { model, limit, skip } = payload
-
-  const { data } = yield call(post, {limit, skip}, `${model}/query`)
+  const { model, limit, skip, ...conditions} = payload
+  
+  const { data } = yield call(post, {limit, skip, conditions}, `${model}/query`)
   yield putReducer(smartActions[model].setAll(data[model]))
   yield putReducer(smartActions[model].setHasMore(data.hasMore))
   yield putReducer(smartActions[model].setTotal(data.total))
 }
+
+function* fetchOne({ payload }) {
+  const { model, id } = payload
+
+  const { data } = yield call(get, `${model}/${id}`)
+  const singleModel = getSingular(model)
+  yield putReducer(smartActions[model].setOne(data[singleModel]))
+}
+
 
 function* change({ payload }) {
   const { id, model } = payload
@@ -52,6 +61,7 @@ function* add({ payload }) {
 export default function* smartSaga() {
   for (const model of Object.keys(smartActions)) {
     yield takeLatest(smartActions[model].all.rawType, fetchAll)
+    yield takeLatest(smartActions[model].one.rawType, fetchOne)
     yield takeLatest(smartActions[model].change.rawType, change)
     yield takeLatest(smartActions[model].delete.rawType, deleteItem)
     yield takeLatest(smartActions[model].add.rawType, add)
