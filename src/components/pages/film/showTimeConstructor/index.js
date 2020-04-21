@@ -14,14 +14,14 @@ export const ShowTimeConstructor = ({ filmId, cinemaId, value, setEditMode, hall
   const optionsHalls = halls.map((hall) => ({ value: hall._id, label: hall.name }))
   const [selectedDate, handleDateChange] = useState(new Date())
   const [selectedHall, setHall] = useState(null)
-
+    console.log(selectedDate.toISOString())
   const onSubmit = () => {
     dispatch(
       smartActions['showtimes'].add({
         film: filmId,
         cinema: cinemaId,
         hall: selectedHall.value,
-        data: moment(selectedDate).format('YYYY-MM-DDThh:mm:ssZ'),
+        time: moment(selectedDate).format('YYYY-MM-DDThh:mm:ssZ'),
       })
     )
     setEditMode(false)
