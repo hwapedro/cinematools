@@ -1,28 +1,171 @@
 import React from 'react'
 
 export default {
-  actors: [
-    { name: 'name', type: 'field' },
-    { name: 'bio', type: 'textarea' },
-    { name: 'image', type: 'image' },
+  news: [
+    {
+      name: 'title',
+      type: 'field'
+    },
+    {
+      name: 'text',
+      type: 'field'
+    },
+    {
+      name: 'date',
+      type: 'date'
+    },
+    {
+      name: 'comments',
+      type: 'multi',
+      arrays: [
+        {
+          name: 'comments',
+          model: 'comments',
+          extractor: {
+            name: (item, history, modelId, itemId) => `${item.name}`,
+            key: (item) => item,
+          },
+        }
+      ],
+    },
   ],
-  showtimes: [],
+  users: [
+    {
+      name: 'name',
+      type: 'field'
+    },
+    {
+      name: 'email',
+      type: 'field'
+    },
+    {
+      name: 'password',
+      type: 'field'
+    },
+  ],
   shopItems: [
-    { name: 'name', type: 'field' },
-    { name: 'price', type: 'number' },
-    { name: 'inStock', type: 'checkbox' },
+    {
+      name: 'name',
+      type: 'field'
+    },
+    {
+      name: 'price',
+      type: 'number'
+    },
+    {
+      name: 'inStock',
+      type: 'checkbox'
+    },
   ],
-  ageRules: [{ name: 'name', type: 'field' }],
-  comments: [
-    { name: 'text', type: 'field' },
-    { name: 'time', type: 'date' },
+  halls: [
+    {
+      name: 'name',
+      type: 'field'
+    },
   ],
   hallCells: [
-    { name: 'name', type: 'field' },
-    { name: 'price', type: 'number' },
-    { name: 'index', type: 'number' },
+    {
+      name: 'name',
+      type: 'field'
+    },
+    {
+      name: 'price',
+      type: 'number'
+    },
+    {
+      name: 'index',
+      type: 'number'
+    },
   ],
-  films: [{ name: 'name', type: 'field' }],
+  genres: [
+    {
+      name: 'name',
+      type: 'field'
+    },
+  ],
+  films: [
+    {
+      name: 'name',
+      type: 'field'
+    },
+    {
+      name: 'description',
+      type: 'field'
+    },
+    {
+      name: 'duration',
+      type: 'number'
+    },
+    {
+      name: 'ageRule',
+      model: 'ageRules',
+      extractor: {
+        name: (item, history, modelId, itemId) => `${item.name}`,
+        key: (item) => item,
+      },
+    },
+    {
+      name: 'releaseDate',
+      type: 'date'
+    },
+    {
+      name: 'distributionStartDate',
+      type: 'date'
+    },
+    {
+      name: 'distributionEndDate',
+      type: 'date'
+    },
+    {
+      name: 'actors',
+      type: 'multi',
+      arrays: [
+        {
+          name: 'actors',
+          model: 'actors',
+          extractor: {
+            name: (item, history, modelId, itemId) => `${item.name}`,
+            key: (item) => item,
+          },
+        }
+      ],
+    },
+    {
+      name: 'genres',
+      type: 'multi',
+      arrays: [
+        {
+          name: 'genres',
+          model: 'genres',
+          extractor: {
+            name: (item, history, modelId, itemId) => `${item.name}`,
+            key: (item) => item,
+          },
+        }
+      ],
+    },
+  ],
+  ageRules: [
+    {
+      name: 'name',
+      type: 'field'
+    },
+  ],
+  actors: [
+    {
+      name: 'name',
+      type: 'field'
+    },
+    {
+      name: 'bio',
+      type: 'textarea'
+    },
+    {
+      name: 'image',
+      type: 'image'
+    },
+  ],
+  showtimes: [],
   cinemas: [
     { name: 'name', type: 'field' },
     { name: 'address', type: 'field' },
@@ -76,86 +219,5 @@ export default {
   halls: [
     { name: 'name', type: 'field' },
     { name: 'structure', type: 'hall' },
-  ],
-  //   export const News = {
-  //     title: String,
-  //     text: String,
-  //     date: Date,
-  //     comments: [Comment],
-  // }
-
-  //   export const Genre = {
-  //     name: String,
-  // }
-
-  //   export const HallCell = {
-  //     EMPTY: 0,
-  //     STANDARD: 1,
-  //     PREMIUM: 2,
-  //     VIP: 3
-  // }
-
-  //   export const Hall = {
-  //     name: String,
-  //     structure: [[Number]],
-  // }
-
-  //   export const ShopItem = {
-  //     name: String,
-  //     price: Number,
-  //     inStock: Boolean,
-  // }
-
-  //   export const Shop = {
-  //     name: String,
-  //     description: String,
-  //     items: ['Ref', {
-  //         model: ShopItem,
-  //         selector: {
-  //             name: 'shopItems',
-  //             selector: state => state.products.products,
-  //             fetcher: () => fetchProducts()
-  //         },
-  //         titleExtractor: item => `${item.name}, ${(item.price / 100).toFixed(2)}`,
-  //         keyExtractor: item => item._id
-  //     }],
-  //     working: Boolean,
-  // }
-
-  //   export const Seat = {
-  //     row: Number,
-  //     number: Number,
-  //     type: Number,
-  // }
-
-  //   export const Film = {
-  //     name: String,
-  //     description: String,
-  //     // in minutes
-  //     duration: Number,
-  //     ageRule: AgeRule,
-  //     releaseDate: Date,
-  //     distributionStartDate: Date,
-  //     distributionEndDate: Date,
-  //     actors: [Actor],
-  //     genres: [Genre],
-  // }
-
-  //   export const Showtime = {
-  //     time: Date,
-  //     film: Film,
-  //     halls: [Hall],
-  // }
-
-  //   export const Cinema = {
-  //     name: String,
-  //     address: String,
-
-  //     halls: [Hall],
-
-  //     shops: [Shop],
-  //     films: [Film],
-
-  //     showtimes: [Showtime],
-  // }
+  ]
 }
