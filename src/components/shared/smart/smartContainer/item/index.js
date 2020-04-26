@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { smartActions } from 'store/smart'
-import { SmartConstructor } from 'components/shared/smart/smartConstructor'
-import { HallItem } from 'components/custom/customHall/hallItem'
-import { MultiSelectList } from 'components/custom/customSelect/selectList'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
 import CreateIcon from '@material-ui/icons/Create'
+import CloseIcon from '@material-ui/icons/Close'
+import CheckIcon from '@material-ui/icons/Check'
+import { green, red } from '@material-ui/core/colors'
 
+import { SmartConstructor } from 'components/shared/smart/smartConstructor'
+import { HallItem } from 'components/custom/customHall/hallItem'
+import { MultiSelectList } from 'components/custom/customSelect/selectList'
 import Button from 'components/shared/buttons'
 import models from 'models'
 
@@ -33,22 +36,25 @@ export const GeneralItem = ({ item, model }) => {
     switch (fieldInModel.type) {
       case 'field':
         return (
-          <div className={`${field}-${model}`} key={field}>
-            <span className={`field-title field-title-${model}`}>{fieldInModel.name}</span>{' '}
+          <div className={`field ${field}-${model}`} key={field}>
+            <span className={`field-title field-title-${model}`}>{fieldInModel.name}</span>
             <span className={`field-value field-value-${model}`}>{item[field].toString()}</span>
           </div>
         )
       case 'number':
         return (
-          <div className={`${field}-${model}`} key={field}>
-            <span className={`number-title number-title-${model}`}>{fieldInModel.name}</span>{' '}
+          <div className={`number ${field}-${model}`} key={field}>
+            <span className={`number-title number-title-${model}`}>{fieldInModel.name}</span>
             <span className={`number-value number-value-${model}`}>{item[field].toString()}</span>
           </div>
         )
       case 'checkbox':
         return (
-          <div key={field}>
-            {fieldInModel.name}: {item[field] ? 'yes' : 'no'}
+          <div className={`checkbox ${field}-${model}`} key={field}>
+            <span className={`checkbox-title checkbox-title-${model}`}>{fieldInModel.name}</span>
+            <span className={`checkbox-value checkbox-value-${model}`}>
+              {item[field] ? <CheckIcon style={{ color: green[500] }} /> : <CloseIcon style={{ color: red[500] }} />}
+            </span>
           </div>
         )
       case 'date':

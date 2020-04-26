@@ -5,17 +5,27 @@
   padding: 10px 20px;
 }
 
+.field,
+.number,
+.checkbox {
+  margin-bottom: 4px;
+}
 .number-title,
-.field-title {
+.field-title,
+.checkbox-title {
   font-size: 13px;
   font-weight: 500;
+  margin-right: 5px;
 }
 
 .number-value,
 .field-value {
-  margin-left: 5px;
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 300;
+}
+
+.checkbox-value svg {
+  vertical-align: top;
 }
 
 .buttons-container {
