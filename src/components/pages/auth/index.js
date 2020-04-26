@@ -46,7 +46,7 @@ export const Auth = () => {
   const loading = useSelector(getLoading)
 
   return (
-    <div className="container">
+    <div className="container-auth">
       <div>
         <h1 className="title">icinematools</h1>
       </div>

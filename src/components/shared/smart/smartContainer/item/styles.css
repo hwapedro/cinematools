@@ -1,0 +1,23 @@
+.container-item {
+  width: 250px;
+  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.2);
+  margin-right: 10px;
+  padding: 10px 20px;
+}
+
+.number-title,
+.field-title {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.number-value,
+.field-value {
+  margin-left: 5px;
+  font-size: 19px;
+  font-weight: 300;
+}
+
+.buttons-container {
+  float: right;
+}

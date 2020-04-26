@@ -1,18 +1,19 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { autoRoutes } from 'global/routes'
-import modelStyles from './styles/models.style'
-import styles from './styles/styles'
+
+import './styles.css'
 
 export const Menu = () => {
+  const history = useHistory()
 
   return (
-    <div>
-      {autoRoutes.map(route => {
+    <div className="menu">
+      <div className="menu-title">Cinematools</div>
+      {autoRoutes.map((route) => {
         return (
-          <Link style={{ ...styles,  ...modelStyles[route.name] }} key={route.name} to={route.route}>
-            {route.name}
-            <br />
+          <Link key={route.name} to={route.route}>
+            <div className={`tab ${route.route === history.location.pathname ? 'tab-active' : ''}`}>{route.name}</div>{' '}
           </Link>
         )
       })}

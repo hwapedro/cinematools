@@ -1,0 +1,34 @@
+.menu {
+  padding: 15px 30px 15px 30px;
+  height: 1000px;
+  width: 210px;
+  background-color: rgb(7, 71, 166);
+}
+
+.menu a {
+  font-size: 18px;
+  color: white;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.tab {
+  padding: 7px 15px;
+}
+
+.tab:hover {
+  background-color: #206fc8;
+}
+
+.tab-active:hover {
+  background-color: rgb(5, 54, 127);
+}
+.tab-active {
+  background-color: rgb(5, 54, 127);
+}
+
+.menu-title {
+  font-size: 20px;
+  color: white;
+  margin-bottom: 30px;
+}

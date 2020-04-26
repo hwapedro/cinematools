@@ -20,6 +20,9 @@ const SmartMultiselectEditor = ({ items, allItems, setmultiSelect, itemsModelNam
     <>
       <DragDropContext
         onDragEnd={(result) => {
+          if(!result.destination){
+            return
+          }
           if (result.source.droppableId === result.destination.droppableId) {
             if (result.source.droppableId === 'column-1' && result.destination.droppableId === 'column-1') {
               const dragCard = allItemsWithoutSelected[result.source.index - 1]

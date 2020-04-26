@@ -1,0 +1,50 @@
+.content-container {
+  margin: 0 auto;
+  width: 64%;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.main {
+  font-weight: 300;
+  font-size: 27px;
+  margin: 10px 0;
+}
+
+.main-title {
+  font-weight: 300;
+  font-size: 27px;
+  margin-right: 15px;
+}
+
+.constructor-container {
+  padding: 35px 25px;
+  position: relative;
+  width: 600px;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background-color: white;
+  z-index: 101;
+  position: fixed;
+}
+
+.close-constructur {
+  position: absolute;
+  left: -20px;
+  top: 50%;
+}
+
+.dark-ground {
+  background: #000;
+  height: 100%;
+  opacity: 0.5;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  top: 0;
+  left: 0;
+}

@@ -4,8 +4,14 @@ import { smartActions } from 'store/smart'
 import { SmartConstructor } from 'components/shared/smart/smartConstructor'
 import { HallItem } from 'components/custom/customHall/hallItem'
 import { MultiSelectList } from 'components/custom/customSelect/selectList'
+import IconButton from '@material-ui/core/IconButton'
+import DeleteIcon from '@material-ui/icons/Delete'
+import CreateIcon from '@material-ui/icons/Create'
+
 import Button from 'components/shared/buttons'
 import models from 'models'
+
+import './styles.css'
 
 export const GeneralItem = ({ item, model }) => {
   const dispatch = useDispatch()
@@ -27,14 +33,16 @@ export const GeneralItem = ({ item, model }) => {
     switch (fieldInModel.type) {
       case 'field':
         return (
-          <div key={field}>
-            {fieldInModel.name}: {item[field].toString()}
+          <div className={`${field}-${model}`} key={field}>
+            <span className={`field-title field-title-${model}`}>{fieldInModel.name}</span>{' '}
+            <span className={`field-value field-value-${model}`}>{item[field].toString()}</span>
           </div>
         )
       case 'number':
         return (
-          <div key={field}>
-            {fieldInModel.name}: {item[field].toString()}
+          <div className={`${field}-${model}`} key={field}>
+            <span className={`number-title number-title-${model}`}>{fieldInModel.name}</span>{' '}
+            <span className={`number-value number-value-${model}`}>{item[field].toString()}</span>
           </div>
         )
       case 'checkbox':
@@ -70,12 +78,17 @@ export const GeneralItem = ({ item, model }) => {
   })
 
   const content = !editMode ? (
-    <div>
+    <div className={`container-item container-item-${model}`}>
       {fieldValues}
-      <MultiSelectList multiSelectList={multiField.arrays} item={item} />
-      <div>
-        <Button type="button" color="primary" text="edit" onClick={() => setEditMode(true)} />
-        <Button type="button" color="secondary" text="delete" onClick={() => dispatch(smartActions[model].delete(item._id))} />
+      {multiField && <MultiSelectList multiSelectList={multiField.arrays} item={item} />}
+      <div className={`buttons-container buttons-container-${model}`}>
+        <IconButton type="button" color="primary" text="edit" onClick={() => setEditMode(true)}>
+          <CreateIcon />
+        </IconButton>
+
+        <IconButton type="button" color="secondary" onClick={() => dispatch(smartActions[model].delete(item._id))}>
+          <DeleteIcon />
+        </IconButton>
       </div>
     </div>
   ) : (

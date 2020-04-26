@@ -4,6 +4,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { RHFInput as InputWrapper } from 'react-hook-form-input'
 import { Checkbox } from '@material-ui/core/'
 import { DropzoneArea } from 'material-ui-dropzone'
+import { makeStyles } from '@material-ui/core/styles'
 
 import Button from '../../../shared/buttons'
 import TextField from '../../../shared/inputs/input'
@@ -11,10 +12,25 @@ import { CustomHall } from 'components/custom/customHall/hallConstructor'
 import { smartActions } from 'store/smart/'
 import { CustomMultiselect } from 'components/custom/customSelect/selectConstructor'
 import models from 'models'
-import {checkMultiSelectModel} from 'utils'
+import { checkMultiSelectModel } from 'utils'
+
+import './style.css'
+
+const useStyles = makeStyles({
+  myDropZone: {
+    minHeight: '200px',
+    backgroundColor: 'white',
+    border: '1px solid #C8C8C8',
+    '&:hover': {
+      border: '1px solid black',
+   }
+  },
+
+})
 
 export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) => {
   const dispatch = useDispatch()
+  const classes = useStyles();
 
   let defaultValueMultiSelect = {}
   const isMultiSelectModel = checkMultiSelectModel(model)
@@ -47,10 +63,9 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
       data = { ...data, structure }
     }
 
-  
     if (isMultiSelectModel) {
       for (let prop in multiSelect) {
-        multiSelect[prop] =  multiSelect[prop].map(el => el._id) 
+        multiSelect[prop] = multiSelect[prop].map((el) => el._id)
       }
       console.log(multiSelect)
       data = { ...data, ...multiSelect }
@@ -70,9 +85,33 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
   const content = modelItem.map((el) => {
     switch (el.type) {
       case 'field':
-        return <TextField type='text' key={el.name} autoComplete="off" name={el.name} label={el.name} inputRef={register} />
+        return (
+          <div className={`field-input-container field-input-container-${model}`}>
+            <TextField
+              className={`field-input field-input-${model}`}
+              type="text"
+              key={el.name}
+              autoComplete="off"
+              name={el.name}
+              label={el.name}
+              inputRef={register}
+            />
+          </div>
+        )
       case 'number':
-          return <TextField type='number' key={el.name} autoComplete="off" name={el.name} label={el.name} inputRef={register} />
+        return (
+          <div className={`number-input-container number-input-container-${model}`}>
+            <TextField
+              className={`number-input number-input-${model}`}
+              type="number"
+              key={el.name}
+              autoComplete="off"
+              name={el.name}
+              label={el.name}
+              inputRef={register}
+            />
+          </div>
+        )
       case 'checkbox':
         return (
           <label key={el.name} htmlFor={el.name}>
@@ -86,16 +125,21 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
         return <CustomHall key={el.name} structure={structure} setHallStructure={setHallStructure} />
       case 'image':
         return (
-          <Controller
-            key={el.name}
-            as={DropzoneArea}
-            filesLimit={1}
-            showAlerts={false}
-            initialFiles={value && value[el.name] ? [value[el.name]] : []}
-            acceptedFiles={['image/*']}
-            name={el.name}
-            control={control}
-          />
+          <div className={`image-dropzone-container image-dropzone-container-${model}`}>
+            <Controller
+              dropzoneClass={classes.myDropZone}
+              key={el.name}
+              as={DropzoneArea}
+              filesLimit={1}
+              showPreviewsInDropzone={false}
+              showPreviews={true}
+              showAlerts={false}
+              acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
+              initialFiles={value && value[el.name] ? [value[el.name]] : []}
+              name={el.name}
+              control={control}
+            />
+          </div>
         )
       case 'multi':
         return <CustomMultiselect key={el.name} multiSelect={multiSelect} setmultiSelect={setmultiSelect} itemsModel={el.arrays} item={value} />
@@ -107,9 +151,12 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        {content}
-        <hr />
-        <Button color="primary" text={value ? 'change' : 'add'} type="submit" />
+        <div className={`constructor-main constructor-main-${model}`}>
+          <span className={`constructor-main-title constructor-main-title-${model}`}>Create new {model}</span>
+          <Button color="primary" text={value ? 'change' : 'add'} type="submit" />
+        </div>
+
+        <div className={`constructor-content constructor-content-${model}`}>{content}</div>
       </form>
     </div>
   )

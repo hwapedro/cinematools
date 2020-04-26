@@ -3,7 +3,6 @@ import DateFnsUtils from '@date-io/date-fns'
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { useDispatch } from 'react-redux'
 import { smartActions } from 'store/smart/'
-import moment from 'moment'
 
 import Select from 'react-select'
 
@@ -14,14 +13,14 @@ export const ShowTimeConstructor = ({ filmId, cinemaId, value, setEditMode, hall
   const optionsHalls = halls.map((hall) => ({ value: hall._id, label: hall.name }))
   const [selectedDate, handleDateChange] = useState(new Date())
   const [selectedHall, setHall] = useState(null)
-    console.log(selectedDate.toISOString())
+
   const onSubmit = () => {
     dispatch(
       smartActions['showtimes'].add({
         film: filmId,
         cinema: cinemaId,
         hall: selectedHall.value,
-        time: moment(selectedDate).format('YYYY-MM-DDThh:mm:ssZ'),
+        time: selectedDate.toISOString()
       })
     )
     setEditMode(false)
