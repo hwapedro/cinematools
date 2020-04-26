@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 import models from 'models'
 
-export const createSmartSlice = model => {
+export const createSmartSlice = (model) => {
   return createSlice({
     name: model,
     initialState: {
       item: {},
       items: [],
       hasMore: false,
-      total: 0
+      total: 0,
     },
     reducers: {
       all: (state, action) => {},
@@ -20,24 +20,24 @@ export const createSmartSlice = model => {
         state.items = payload
       },
       setAdd: (state, { payload }) => {
-        state.items = [payload, ...state.items]
+        state.items = [...state.items, payload]
       },
       setOne: (state, { payload }) => {
-        state.item = {...payload}
+        state.item = { ...payload }
       },
       setDelete: (state, { payload }) => {
-        state.items = state.items.filter(item => item._id !== payload._id)
+        state.items = state.items.filter((item) => item._id !== payload._id)
       },
       setChange: (state, { payload }) => {
-        state.items = state.items.map(item => (item._id === payload._id ? payload : item))
+        state.items = state.items.map((item) => (item._id === payload._id ? payload : item))
       },
       setHasMore: (state, { payload }) => {
         state.hasMore = payload
       },
       setTotal: (state, { payload }) => {
         state.total = payload
-      }
-    }
+      },
+    },
   })
 }
 
@@ -46,7 +46,7 @@ export const smartReducers = {}
 
 const modelsKeys = Object.keys(models)
 const SAGA_ACTIONS = 5
-modelsKeys.forEach(model => {
+modelsKeys.forEach((model) => {
   const { actions, reducer } = createSmartSlice(model)
 
   smartActions[model] = {}
@@ -56,9 +56,9 @@ modelsKeys.forEach(model => {
   const [[alltype, all], [onetype, one], [addtype, add], [changetype, change], [deltype, del]] = arrayOfActions
   smartActions[model][alltype] = (limit, skip, data = {}) => all({ model, limit, skip, ...data })
   smartActions[model][onetype] = (id) => one({ model, id })
-  smartActions[model][addtype] = data => add({ model, ...data })
+  smartActions[model][addtype] = (data) => add({ model, ...data })
   smartActions[model][changetype] = (id, data) => change({ model, id, ...data })
-  smartActions[model][deltype] = id => del({ model, id })
+  smartActions[model][deltype] = (id) => del({ model, id })
 
   arrayOfSetters.forEach(([type, action]) => {
     smartActions[model][type] = action

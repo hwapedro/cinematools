@@ -53,6 +53,7 @@ function* add({ payload }) {
     }
     body.image = url;
   }
+  console.log(body)
   const { data } = yield call(post, body, `${model}/`)
   const singleModel = getSingular(model)
   yield putReducer(smartActions[model].setAdd(data[singleModel]))
