@@ -28,6 +28,14 @@
   margin-bottom: 15px;
 }
 
+.textarea-input {
+  width: 100%;
+}
+
+.textarea-input-container {
+  margin-bottom: 15px;
+}
+
 .number-input {
   width: 100%;
 }

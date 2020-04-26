@@ -3,7 +3,7 @@ import React from 'react'
 export default {
   actors: [
     { name: 'name', type: 'field' },
-    { name: 'bio', type: 'field' },
+    { name: 'bio', type: 'textarea' },
     { name: 'image', type: 'image' },
   ],
   showtimes: [],

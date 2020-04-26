@@ -23,14 +23,13 @@ const useStyles = makeStyles({
     border: '1px solid #C8C8C8',
     '&:hover': {
       border: '1px solid black',
-   }
+    },
   },
-
 })
 
 export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) => {
   const dispatch = useDispatch()
-  const classes = useStyles();
+  const classes = useStyles()
 
   let defaultValueMultiSelect = {}
   const isMultiSelectModel = checkMultiSelectModel(model)
@@ -95,6 +94,23 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
               name={el.name}
               label={el.name}
               inputRef={register}
+            />
+          </div>
+        )
+      case 'textarea':
+        return (
+          <div className={`textarea-input-container textarea-input-container-${model}`}>
+            <TextField
+              className={`textarea-input textarea-input-${model}`}
+              type="text"
+              key={el.name}
+              autoComplete="off"
+              name={el.name}
+              label={el.name}
+              inputRef={register}
+              multiline
+              rows={4}
+              rowsMax={6}
             />
           </div>
         )
