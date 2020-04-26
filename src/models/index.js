@@ -56,16 +56,18 @@ export default {
       name: 'inStock',
       type: 'checkbox'
     },
-  ],
-  halls: [
     {
-      name: 'name',
-      type: 'field'
-    },
+      name: 'image',
+      type: 'image'
+    }
   ],
   hallCells: [
     {
       name: 'name',
+      type: 'field'
+    },
+    {
+      name: 'color',
       type: 'field'
     },
     {
@@ -117,7 +119,6 @@ export default {
       type: 'date'
     },
     {
-      name: 'actors',
       type: 'multi',
       arrays: [
         {
@@ -127,13 +128,7 @@ export default {
             name: (item, history, modelId, itemId) => `${item.name}`,
             key: (item) => item,
           },
-        }
-      ],
-    },
-    {
-      name: 'genres',
-      type: 'multi',
-      arrays: [
+        },
         {
           name: 'genres',
           model: 'genres',
@@ -143,7 +138,7 @@ export default {
           },
         }
       ],
-    },
+    }
   ],
   ageRules: [
     {

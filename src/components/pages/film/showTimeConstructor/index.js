@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import DateFnsUtils from '@date-io/date-fns'
-import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
+
+import { DateTimePicker } from '@material-ui/pickers'
 import { useDispatch } from 'react-redux'
 import { smartActions } from 'store/smart/'
 
@@ -20,7 +20,7 @@ export const ShowTimeConstructor = ({ filmId, cinemaId, value, setEditMode, hall
         film: filmId,
         cinema: cinemaId,
         hall: selectedHall.value,
-        time: selectedDate.toISOString()
+        time: selectedDate.toISOString(),
       })
     )
     setEditMode(false)
@@ -32,18 +32,17 @@ export const ShowTimeConstructor = ({ filmId, cinemaId, value, setEditMode, hall
 
   return (
     <div>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <DateTimePicker
-          autoOk
-          ampm={false}
-          variant="inline"
-          disablePast
-          inputVariant="outlined"
-          value={selectedDate}
-          onChange={handleDateChange}
-          label="choose time"
-        />
-      </MuiPickersUtilsProvider>
+      <DateTimePicker
+        autoOk
+        ampm={false}
+        variant="inline"
+        disablePast
+        inputVariant="outlined"
+        value={selectedDate}
+        onChange={handleDateChange}
+        label="choose time"
+      />
+
       <Select value={selectedHall} onChange={handleChange} options={optionsHalls} />
       <Button color="primary" text={value ? 'change' : 'add'} onClick={() => onSubmit()} />
       <Button color="primary" text="cansel" onClick={() => setEditMode(false)} />

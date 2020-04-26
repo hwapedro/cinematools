@@ -5,6 +5,7 @@ import { RHFInput as InputWrapper } from 'react-hook-form-input'
 import { Checkbox } from '@material-ui/core/'
 import { DropzoneArea } from 'material-ui-dropzone'
 import { makeStyles } from '@material-ui/core/styles'
+import { KeyboardDatePicker } from '@material-ui/pickers'
 
 import Button from '../../../shared/buttons'
 import TextField from '../../../shared/inputs/input'
@@ -56,8 +57,8 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
   }
 
   const { register, handleSubmit, control, setValue } = useForm({ defaultValues })
-
   const onSubmit = (data) => {
+    console.log(data)
     if (model === 'halls') {
       data = { ...data, structure }
     }
@@ -136,7 +137,28 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
           </label>
         )
       case 'date':
-        return <TextField key={el.name} type="date" name={el.name} label={el.name} inputRef={register} />
+        return (
+          <div className={`date-input-container date-input-container-${model}`}>
+            <Controller
+              as={
+                <KeyboardDatePicker
+                  fullWidth
+                  clearable
+                  label={el.name}
+                  format="MM/dd/yyyy"
+                  views={['year', 'month', 'date']}
+                  inputVariant="outlined"
+                  margin="normal"
+                  disablePast
+                  InputAdornmentProps={{ position: 'start' }}
+                />
+              }
+              defaultValue={null}
+              name={el.name}
+              control={control}
+            />
+          </div>
+        )
       case 'hall':
         return <CustomHall key={el.name} structure={structure} setHallStructure={setHallStructure} />
       case 'image':
