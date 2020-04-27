@@ -1,4 +1,5 @@
 .menu {
+  z-index: 302;
   padding: 15px 30px 15px 30px;
   height: 1000px;
   width: 210px;

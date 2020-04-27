@@ -3,25 +3,48 @@
   box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.2);
   margin-right: 10px;
   padding: 10px 20px;
+  position: relative;
 }
 
 .field,
 .number,
-.checkbox {
+.checkbox,
+.textarea {
   margin-bottom: 4px;
 }
+
 .number-title,
 .field-title,
-.checkbox-title {
+.checkbox-title,
+.textarea-title {
   font-size: 13px;
   font-weight: 500;
   margin-right: 5px;
 }
 
 .number-value,
-.field-value {
+.field-value,
+.textarea-value {
   font-size: 18px;
   font-weight: 300;
+}
+
+.image {
+  margin-bottom: 140px;
+}
+
+.image-container {
+  overflow: hidden;
+  height: 140px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.image-value {
+  filter: brightness(70%);
+  margin-bottom: 20px;
+  width: 100%;
 }
 
 .checkbox-value svg {
@@ -30,4 +53,24 @@
 
 .buttons-container {
   float: right;
+}
+
+.constructor-wrapper {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  width: 40%;
+  z-index: 102;
+}
+
+.white-ground {
+  background: white;
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  top: 0;
+  left: 0;
 }

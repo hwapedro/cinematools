@@ -74,10 +74,6 @@ export default {
       name: 'price',
       type: 'number'
     },
-    {
-      name: 'index',
-      type: 'number'
-    },
   ],
   genres: [
     {
@@ -107,10 +103,6 @@ export default {
       },
     },
     {
-      name: 'releaseDate',
-      type: 'date'
-    },
-    {
       name: 'distributionStartDate',
       type: 'date'
     },
@@ -138,7 +130,11 @@ export default {
           },
         }
       ],
-    }
+    },
+    {
+      name: 'image',
+      type: 'image'
+    },
   ],
   ageRules: [
     {

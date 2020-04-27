@@ -190,7 +190,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={`constructor-main constructor-main-${model}`}>
-          <span className={`constructor-main-title constructor-main-title-${model}`}>Create new {model}</span>
+          <span className={`constructor-main-title constructor-main-title-${model}`}>{value ? 'Change old' : 'Create new'} {model}</span>
           <Button color="primary" text={value ? 'change' : 'add'} type="submit" />
         </div>
 

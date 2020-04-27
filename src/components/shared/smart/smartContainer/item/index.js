@@ -21,8 +21,6 @@ export const GeneralItem = ({ item, model }) => {
   const [editMode, setEditMode] = useState(false)
 
   const fieldValues = Object.keys(item).map((field, index) => {
-    console.log(field)
-
     const fieldInModel = models[model].find((modelItem, index) => {
       if (modelItem.name === field) {
         return modelItem
@@ -39,6 +37,13 @@ export const GeneralItem = ({ item, model }) => {
           <div className={`field ${field}-${model}`} key={field}>
             <span className={`field-title field-title-${model}`}>{fieldInModel.name}</span>
             <span className={`field-value field-value-${model}`}>{item[field].toString()}</span>
+          </div>
+        )
+      case 'textarea':
+        return (
+          <div className={`textarea ${field}-${model}`} key={field}>
+            <span className={`textarea-title textarea-title-${model}`}>{fieldInModel.name}</span>
+            <span className={`textarea-value textarea-value-${model}`}>{item[field].toString()}</span>
           </div>
         )
       case 'number':
@@ -65,13 +70,6 @@ export const GeneralItem = ({ item, model }) => {
         )
       case 'hall':
         return <HallItem structure={item.structure} />
-      case 'image':
-        return (
-          <div key={field}>
-            {fieldInModel.name}:<br />
-            <img src={item[field]} alt="image" />
-          </div>
-        )
       default:
         return
     }
@@ -83,8 +81,21 @@ export const GeneralItem = ({ item, model }) => {
     }
   })
 
+  const imageField = models[model].find((modelItem, index) => {
+    if (modelItem.type === 'image') {
+      return modelItem
+    }
+  })
+
   const content = !editMode ? (
     <div className={`container-item container-item-${model}`}>
+      {imageField && (
+        <div className={`image ${imageField.type}-${model}`} key={imageField.type}>
+          <div className={`image-container image-container-${model}`} key={imageField.type}>
+            <img className={`image-value image-value-${model}`} src={item[imageField.type]} alt={`${imageField.name}-${model}`} />
+          </div>
+        </div>
+      )}
       {fieldValues}
       {multiField && <MultiSelectList multiSelectList={multiField.arrays} item={item} />}
       <div className={`buttons-container buttons-container-${model}`}>
@@ -98,7 +109,12 @@ export const GeneralItem = ({ item, model }) => {
       </div>
     </div>
   ) : (
-    <SmartConstructor model={model} id={item._id} value={item} setEditMode={setEditMode} />
+    <>
+      <div className={`constructor-wrapper constructor-wrapper-${model}`}>
+        <SmartConstructor model={model} id={item._id} value={item} setEditMode={setEditMode} />
+      </div>
+      <div className='white-ground'></div>
+    </>
   )
 
   return content
