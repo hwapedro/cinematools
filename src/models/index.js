@@ -73,11 +73,7 @@ export default {
     {
       name: 'price',
       type: 'number'
-    },
-    {
-      name: 'index',
-      type: 'number'
-    },
+    }
   ],
   genres: [
     {
@@ -92,7 +88,7 @@ export default {
     },
     {
       name: 'description',
-      type: 'field'
+      type: 'textarea'
     },
     {
       name: 'duration',
@@ -105,10 +101,6 @@ export default {
         name: (item, history, modelId, itemId) => `${item.name}`,
         key: (item) => item,
       },
-    },
-    {
-      name: 'releaseDate',
-      type: 'date'
     },
     {
       name: 'distributionStartDate',
