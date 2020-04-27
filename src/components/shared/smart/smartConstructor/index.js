@@ -55,7 +55,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
       defaultValues[modelItem[i].name] = value[modelItem[i].name]
     }
   }
-
+ 
   const { register, handleSubmit, control, setValue } = useForm({ defaultValues })
   const onSubmit = (data) => {
     console.log(data)
@@ -153,7 +153,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
                   InputAdornmentProps={{ position: 'start' }}
                 />
               }
-              defaultValue={null}
+              defaultValue={defaultValues[el.name] ? defaultValues[el.name] : null}
               name={el.name}
               control={control}
             />

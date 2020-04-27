@@ -11,13 +11,14 @@ import { green, red } from '@material-ui/core/colors'
 import { SmartConstructor } from 'components/shared/smart/smartConstructor'
 import { HallItem } from 'components/custom/customHall/hallItem'
 import { MultiSelectList } from 'components/custom/customSelect/selectList'
-import Button from 'components/shared/buttons'
 import models from 'models'
 
 import './styles.css'
 
-export const GeneralItem = ({ item, model }) => {
+export const GeneralItem = ({ item, model, hallCells }) => {
   const dispatch = useDispatch()
+  
+
   const [editMode, setEditMode] = useState(false)
 
   const fieldValues = Object.keys(item).map((field, index) => {
@@ -69,7 +70,7 @@ export const GeneralItem = ({ item, model }) => {
           </div>
         )
       case 'hall':
-        return <HallItem structure={item.structure} />
+        return <HallItem hallCells={hallCells} structure={item.structure} />
       default:
         return
     }
@@ -113,7 +114,7 @@ export const GeneralItem = ({ item, model }) => {
       <div className={`constructor-wrapper constructor-wrapper-${model}`}>
         <SmartConstructor model={model} id={item._id} value={item} setEditMode={setEditMode} />
       </div>
-      <div className='white-ground'></div>
+      <div className="white-ground"></div>
     </>
   )
 

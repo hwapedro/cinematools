@@ -1,0 +1,17 @@
+.info-hall-cell-container {
+  margin-bottom: 2px;
+}
+
+.info-hall-cell-color {
+  content: '';
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.info-hall-cell-name {
+  font-weight: 300;
+  font-size: 19px;
+}

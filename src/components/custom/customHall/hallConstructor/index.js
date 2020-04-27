@@ -1,9 +1,26 @@
 import React from 'react'
+import ExpansionPanel from '@material-ui/core/ExpansionPanel'
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
+import Typography from '@material-ui/core/Typography'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import { makeStyles } from '@material-ui/core/styles';
+
 import { HallItem } from 'components/custom/customHall/hallItem'
 import { useHallCellFetcher } from './hooks/useHallCellFetcher'
 
+import './style.css'
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    boxShadow: 'none'
+  },
+
+}));
+
 export const CustomHall = ({ structure, setHallStructure }) => {
-  const hallCells = useHallCellFetcher()
+  const hallCells = useHallCellFetcher('halls')
+  const classes = useStyles();
 
   const MAX_LEVEL = hallCells.length
   const changePlaceLevel = (columnIndex, rowIndex, level) => {
@@ -35,11 +52,21 @@ export const CustomHall = ({ structure, setHallStructure }) => {
 
   return (
     <div>
-      {hallCells.map((el) => (
-        <div>
-          {el.index} {el.name} {el.price}
-        </div>
-      ))}
+      <ExpansionPanel className={classes.root}>
+        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
+          <Typography>color info</Typography>
+        </ExpansionPanelSummary>
+
+        {hallCells.map((el) => (
+          <ExpansionPanelDetails>
+            <div className="info-hall-cell-container">
+              <span style={{ backgroundColor: el.color }} className="info-hall-cell-color"></span>{' '}
+              <span className="info-hall-cell-name">{el.name}</span> {el.price}
+            </div>
+          </ExpansionPanelDetails>
+        ))}
+      </ExpansionPanel>
+
       {
         <div>
           {structure.map((column, columnIndex) =>
@@ -60,7 +87,7 @@ export const CustomHall = ({ structure, setHallStructure }) => {
           <span onClick={() => addColumn()}>+</span>
         </div>
       }
-      <HallItem structure={structure} changePlaceLevel={changePlaceLevel} />
+      <HallItem structure={structure} hallCells={hallCells} changePlaceLevel={changePlaceLevel} />
     </div>
   )
 }

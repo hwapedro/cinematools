@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import Fab from '@material-ui/core/Fab'
 import Box from '@material-ui/core/Box'
 import AddIcon from '@material-ui/icons/Add'
-import ChevronRightRoundedIcon from '@material-ui/icons/ChevronRightRounded';
+import ChevronRightRoundedIcon from '@material-ui/icons/ChevronRightRounded'
 
 import { useSmartFetcherPaginated } from './hooks/useSmartFetcherPaginated'
+import { useHallCellFetcher } from 'components/custom/customHall/hallConstructor/hooks/useHallCellFetcher'
 import { SmartConstructor } from '../smartConstructor'
 import { GeneralItem } from './item'
 import Button from 'components/shared/buttons'
@@ -13,6 +14,7 @@ import './styles.css'
 
 export const GeneralPage = ({ model }) => {
   const limit = 4
+  const hallCells = useHallCellFetcher(model)
   const { items, next, prev, page, hasMore, total, setSkip } = useSmartFetcherPaginated({ model, limit })
   const [editMode, setEditMode] = useState(false)
 
@@ -24,7 +26,7 @@ export const GeneralPage = ({ model }) => {
       </div>
       <div className={`container container-${model}`}>
         {items.map((item) => (
-          <GeneralItem item={item} key={item._id} model={model} />
+          <GeneralItem item={item} key={item._id} model={model} hallCells={hallCells} />
         ))}
       </div>
       {/* трыц тыц пагинатор */}
