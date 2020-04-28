@@ -13,21 +13,7 @@ export default {
     {
       name: 'date',
       type: 'date'
-    },
-    {
-      name: 'comments',
-      type: 'multi',
-      arrays: [
-        {
-          name: 'comments',
-          model: 'comments',
-          extractor: {
-            name: (item, history, modelId, itemId) => `${item.name}`,
-            key: (item) => item,
-          },
-        }
-      ],
-    },
+    }
   ],
   users: [
     {

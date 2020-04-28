@@ -32,6 +32,10 @@
   position: fixed;
 }
 
+.constructor-container-halls {
+  width: 900px;
+}
+
 .close-constructur {
   position: absolute;
   left: -20px;

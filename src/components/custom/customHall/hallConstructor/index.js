@@ -4,8 +4,9 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import Typography from '@material-ui/core/Typography'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles'
 
+import Button from 'components/shared/buttons'
 import { HallItem } from 'components/custom/customHall/hallItem'
 import { useHallCellFetcher } from './hooks/useHallCellFetcher'
 
@@ -13,14 +14,13 @@ import './style.css'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    boxShadow: 'none'
+    boxShadow: 'none',
   },
-
-}));
+}))
 
 export const CustomHall = ({ structure, setHallStructure }) => {
   const hallCells = useHallCellFetcher('halls')
-  const classes = useStyles();
+  const classes = useStyles()
 
   const MAX_LEVEL = hallCells.length
   const changePlaceLevel = (columnIndex, rowIndex, level) => {
@@ -50,6 +50,26 @@ export const CustomHall = ({ structure, setHallStructure }) => {
     })
   }
 
+  const delRow = () => {
+    setHallStructure((prev) => {
+      const copy = [...prev]
+      copy.splice(-1, 1)
+      return copy
+    })
+  }
+
+  const delColumn = () => {
+    setHallStructure((prev) => {
+      const copy = [...prev]
+      const newCol = copy.map((el) => {
+        el.splice(-1, 1)
+        return el
+      })
+
+      return newCol
+    })
+  }
+
   return (
     <div>
       <ExpansionPanel className={classes.root}>
@@ -66,27 +86,13 @@ export const CustomHall = ({ structure, setHallStructure }) => {
           </ExpansionPanelDetails>
         ))}
       </ExpansionPanel>
+      <div className={'info-hall-cell-buttons-container'}>
+        <Button className={'info-hall-cell-button'} color="primary" text="add row" onClick={() => addRow()} />
+        <Button style={{ marginLeft: '15px' }} className={'info-hall-cell-button'} color="primary" text="add column" onClick={() => addColumn()} />
+        <Button style={{ marginLeft: '15px' }} className={'info-hall-cell-button'} color="secondary" text="del row" onClick={() => delRow()} />
+        <Button style={{ marginLeft: '15px' }} className={'info-hall-cell-button'} color="secondary" text="del column" onClick={() => delColumn()} />
+      </div>
 
-      {
-        <div>
-          {structure.map((column, columnIndex) =>
-            structure.length === columnIndex + 1 ? <div key={columnIndex}>-</div> : <div key={columnIndex}>0</div>
-          )}
-          <div onClick={() => addRow()}>+</div>
-        </div>
-      }
-      {
-        <div>
-          {structure.map((column, columnIndex) =>
-            column.map((row, rowIndex) => {
-              if (columnIndex === 0) {
-                return column.length === rowIndex + 1 ? <span key={rowIndex}>-</span> : <span key={rowIndex}>0</span>
-              }
-            })
-          )}
-          <span onClick={() => addColumn()}>+</span>
-        </div>
-      }
       <HallItem structure={structure} hallCells={hallCells} changePlaceLevel={changePlaceLevel} />
     </div>
   )

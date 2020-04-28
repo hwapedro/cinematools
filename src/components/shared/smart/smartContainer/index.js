@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Fab from '@material-ui/core/Fab'
 import Box from '@material-ui/core/Box'
-import AddIcon from '@material-ui/icons/Add'
 import ChevronRightRoundedIcon from '@material-ui/icons/ChevronRightRounded'
 
 import { useSmartFetcherPaginated } from './hooks/useSmartFetcherPaginated'

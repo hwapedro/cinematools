@@ -9,7 +9,7 @@ import CheckIcon from '@material-ui/icons/Check'
 import { green, red } from '@material-ui/core/colors'
 
 import { SmartConstructor } from 'components/shared/smart/smartConstructor'
-import { HallItem } from 'components/custom/customHall/hallItem'
+import { HallPreview } from 'components/custom/customHall/hallPreview'
 import { MultiSelectList } from 'components/custom/customSelect/selectList'
 import models from 'models'
 
@@ -18,7 +18,6 @@ import './styles.css'
 export const GeneralItem = ({ item, model, hallCells }) => {
   const dispatch = useDispatch()
   
-
   const [editMode, setEditMode] = useState(false)
 
   const fieldValues = Object.keys(item).map((field, index) => {
@@ -37,21 +36,21 @@ export const GeneralItem = ({ item, model, hallCells }) => {
         return (
           <div className={`field ${field}-${model}`} key={field}>
             <span className={`field-title field-title-${model}`}>{fieldInModel.name}</span>
-            <span className={`field-value field-value-${model}`}>{item[field].toString()}</span>
+            <span className={`field-value field-value-${model}`}>{item[field] && item[field].toString()}</span>
           </div>
         )
       case 'textarea':
         return (
           <div className={`textarea ${field}-${model}`} key={field}>
             <span className={`textarea-title textarea-title-${model}`}>{fieldInModel.name}</span>
-            <span className={`textarea-value textarea-value-${model}`}>{item[field].toString()}</span>
+            <span className={`textarea-value textarea-value-${model}`}>{item[field] && item[field].toString()}</span>
           </div>
         )
       case 'number':
         return (
           <div className={`number ${field}-${model}`} key={field}>
             <span className={`number-title number-title-${model}`}>{fieldInModel.name}</span>
-            <span className={`number-value number-value-${model}`}>{item[field].toString()}</span>
+            <span className={`number-value number-value-${model}`}>{item[field] && item[field].toString()}</span>
           </div>
         )
       case 'checkbox':
@@ -66,11 +65,11 @@ export const GeneralItem = ({ item, model, hallCells }) => {
       case 'date':
         return (
           <div key={field}>
-            {fieldInModel.name}: {item[field].toString()}
+            {fieldInModel.name}: {item[field] && item[field].toString()}
           </div>
         )
       case 'hall':
-        return <HallItem hallCells={hallCells} structure={item.structure} />
+        return <HallPreview hallCells={hallCells} structure={item.structure} />
       default:
         return
     }

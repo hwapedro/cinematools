@@ -15,3 +15,11 @@
   font-weight: 300;
   font-size: 19px;
 }
+
+.info-hall-cell-buttons-container {
+  margin: 20px 0;
+}
+
+.info-hall-cell-button {
+  margin-left: 15px;
+}

@@ -3,12 +3,12 @@ import { get, post, put, del } from '../../global/api'
 
 import { smartActions } from '../smart'
 
-const getSingular = model => (model === 'news' ? model : model.slice(0, -1))
+const getSingular = (model) => (model === 'news' ? model : model.slice(0, -1))
 
 function* fetchAll({ payload }) {
-  const { model, limit, skip, ...conditions} = payload
-  
-  const { data } = yield call(post, {limit, skip, conditions}, `${model}/query`)
+  const { model, limit, skip, ...conditions } = payload
+
+  const { data } = yield call(post, { limit, skip, conditions }, `${model}/query`)
   yield putReducer(smartActions[model].setAll(data[model]))
   yield putReducer(smartActions[model].setHasMore(data.hasMore))
   yield putReducer(smartActions[model].setTotal(data.total))
@@ -22,10 +22,20 @@ function* fetchOne({ payload }) {
   yield putReducer(smartActions[model].setOne(data[singleModel]))
 }
 
-
 function* change({ payload }) {
   const { id, model } = payload
   const body = payload
+  if (body.image) {
+    const imageUploadBody = new FormData()
+    imageUploadBody.append('file', body.image[0])
+    const {
+      data: { _id, url },
+    } = yield call(post, imageUploadBody, `images/upload`)
+    if (!url) {
+      throw new Error('Error on image upload')
+    }
+    body.image = url
+  }
   const { data } = yield call(put, body, `${model}/${id}`)
   const singleModel = getSingular(model)
   yield putReducer(smartActions[model].setChange(data[singleModel]))
@@ -45,15 +55,16 @@ function* add({ payload }) {
 
   // modify body in case there are images
   if (body.image) {
-    const imageUploadBody = new FormData();
-    imageUploadBody.append('file', body.image[0]);
-    const { data: { _id, url } } = yield call(post, imageUploadBody, `images/upload`);
+    const imageUploadBody = new FormData()
+    imageUploadBody.append('file', body.image[0])
+    const {
+      data: { _id, url },
+    } = yield call(post, imageUploadBody, `images/upload`)
     if (!url) {
-      throw new Error('Error on image upload');
+      throw new Error('Error on image upload')
     }
-    body.image = url;
+    body.image = url
   }
-  console.log(body)
   const { data } = yield call(post, body, `${model}/`)
   const singleModel = getSingular(model)
   yield putReducer(smartActions[model].setAdd(data[singleModel]))

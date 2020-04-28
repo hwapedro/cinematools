@@ -55,7 +55,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
       defaultValues[modelItem[i].name] = value[modelItem[i].name]
     }
   }
- 
+
   const { register, handleSubmit, control, setValue } = useForm({ defaultValues })
   const onSubmit = (data) => {
     console.log(data)
@@ -190,8 +190,11 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={`constructor-main constructor-main-${model}`}>
-          <span className={`constructor-main-title constructor-main-title-${model}`}>{value ? 'Change old' : 'Create new'} {model}</span>
+          <span className={`constructor-main-title constructor-main-title-${model}`}>
+            {value ? 'Change old' : 'Create new'} {model}
+          </span>
           <Button color="primary" text={value ? 'change' : 'add'} type="submit" />
+          {value && <Button style={{ marginLeft: '10px' }} color="primary" text="back" onClick={() => setEditMode(false)} />}
         </div>
 
         <div className={`constructor-content constructor-content-${model}`}>{content}</div>
