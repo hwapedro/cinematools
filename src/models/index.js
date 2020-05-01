@@ -1,84 +1,109 @@
 import React from 'react'
+import FastfoodIcon from '@material-ui/icons/Fastfood'
+import StorefrontIcon from '@material-ui/icons/Storefront'
+import FiberNewIcon from '@material-ui/icons/FiberNew'
+import GavelIcon from '@material-ui/icons/Gavel'
+import LiveTvIcon from '@material-ui/icons/LiveTv'
+import PersonIcon from '@material-ui/icons/Person'
+import PeopleIcon from '@material-ui/icons/People'
+import EventSeatIcon from '@material-ui/icons/EventSeat'
+import TagFacesIcon from '@material-ui/icons/TagFaces'
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance'
+import WeekendIcon from '@material-ui/icons/Weekend'
 
+export const modelRouter = {
+  news: { level: 1, icon: <FiberNewIcon /> },
+  users: { level: 2, icon: <PersonIcon /> },
+  shopItems: { level: 1, icon: <FastfoodIcon /> },
+  hallCells: { level: 1, icon: <EventSeatIcon /> },
+  genres: { level: 1, icon: <TagFacesIcon /> },
+  films: { level: 2, icon: <LiveTvIcon /> },
+  ageRules: { level: 1, icon: <GavelIcon /> },
+  actors: { level: 2, icon: <PeopleIcon /> },
+  showtimes: { level: 0, icon: <FastfoodIcon /> },
+  cinemas: { level: 2, icon: <AccountBalanceIcon /> },
+  shops: { level: 1, icon: <StorefrontIcon /> },
+  halls: { level: 2, icon: <WeekendIcon /> },
+}
 export default {
   news: [
     {
       name: 'title',
-      type: 'field'
+      type: 'field',
     },
     {
       name: 'text',
-      type: 'field'
+      type: 'field',
     },
     {
       name: 'date',
-      type: 'date'
-    }
+      type: 'date',
+    },
   ],
   users: [
     {
       name: 'name',
-      type: 'field'
+      type: 'field',
     },
     {
       name: 'email',
-      type: 'field'
+      type: 'field',
     },
     {
       name: 'password',
-      type: 'field'
+      type: 'field',
     },
   ],
   shopItems: [
     {
       name: 'name',
-      type: 'field'
+      type: 'field',
     },
     {
       name: 'price',
-      type: 'number'
+      type: 'number',
     },
     {
       name: 'inStock',
-      type: 'checkbox'
+      type: 'checkbox',
     },
     {
       name: 'image',
-      type: 'image'
-    }
+      type: 'image',
+    },
   ],
   hallCells: [
     {
       name: 'name',
-      type: 'field'
+      type: 'field',
     },
     {
       name: 'color',
-      type: 'field'
+      type: 'field',
     },
     {
       name: 'price',
-      type: 'number'
+      type: 'number',
     },
   ],
   genres: [
     {
       name: 'name',
-      type: 'field'
+      type: 'field',
     },
   ],
   films: [
     {
       name: 'name',
-      type: 'field'
+      type: 'field',
     },
     {
       name: 'description',
-      type: 'field'
+      type: 'field',
     },
     {
       name: 'duration',
-      type: 'number'
+      type: 'number',
     },
     {
       name: 'ageRule',
@@ -90,11 +115,11 @@ export default {
     },
     {
       name: 'distributionStartDate',
-      type: 'date'
+      type: 'date',
     },
     {
       name: 'distributionEndDate',
-      type: 'date'
+      type: 'date',
     },
     {
       type: 'multi',
@@ -114,32 +139,32 @@ export default {
             name: (item, history, modelId, itemId) => `${item.name}`,
             key: (item) => item,
           },
-        }
+        },
       ],
     },
     {
       name: 'image',
-      type: 'image'
+      type: 'image',
     },
   ],
   ageRules: [
     {
       name: 'name',
-      type: 'field'
+      type: 'field',
     },
   ],
   actors: [
     {
       name: 'name',
-      type: 'field'
+      type: 'field',
     },
     {
       name: 'bio',
-      type: 'textarea'
+      type: 'textarea',
     },
     {
       name: 'image',
-      type: 'image'
+      type: 'image',
     },
   ],
   showtimes: [],
@@ -196,5 +221,5 @@ export default {
   halls: [
     { name: 'name', type: 'field' },
     { name: 'structure', type: 'hall' },
-  ]
+  ],
 }

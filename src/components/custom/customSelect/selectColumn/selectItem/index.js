@@ -1,12 +1,23 @@
 import React from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 
-export const SelectItem = ({ id, items, index }) => {
+import { GeneralItem } from '../../../../shared/smart/smartContainer/item'
+
+import './style.css'
+
+export const SelectItem = ({ id, item, index, itemsModelName }) => {
   return (
     <Draggable draggableId={id} index={index + 1}>
       {(provided, snapshot) => (
-        <div {...provided.dragHandleProps} {...provided.draggableProps} ref={provided.innerRef} isDragging={snapshot.isDragging}>
-          <div>{items.name}</div>
+        <div
+          className="multiselect-item-container"
+          {...provided.dragHandleProps}
+          {...provided.draggableProps}
+          style={{ ...provided.draggableProps.style, margin: '0 0 10px' }}
+          ref={provided.innerRef}
+          isDragging={snapshot.isDragging}
+        >
+          <GeneralItem style={{ margin: '0' }} item={item} key={item._id} model={itemsModelName} isMultiSelect />
         </div>
       )}
     </Draggable>

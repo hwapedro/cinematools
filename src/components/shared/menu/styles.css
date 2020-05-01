@@ -1,9 +1,9 @@
 .menu {
-  z-index: 302;
+  z-index: 22;
   padding: 15px 30px 15px 30px;
   height: 1000px;
   width: 210px;
-  background-color: rgb(7, 71, 166);
+  background-color: rgb(9, 81, 189);
 }
 
 .menu a {
@@ -22,14 +22,21 @@
 }
 
 .tab-active:hover {
-  background-color: rgb(5, 54, 127);
+  background-color: rgb(9, 81, 189);
 }
 .tab-active {
-  background-color: rgb(5, 54, 127);
+  background-color: rgb(9, 81, 189);
 }
 
 .menu-title {
-  font-size: 20px;
+  font-size: 35px;
   color: white;
-  margin-bottom: 30px;
+  margin-top: 25px;
+  margin-bottom: 20px;
+}
+
+.menu-item-icon{
+  vertical-align:top;
+  margin: auto;
+  margin-right: 5px;
 }

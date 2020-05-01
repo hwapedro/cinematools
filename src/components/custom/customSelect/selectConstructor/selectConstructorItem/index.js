@@ -1,15 +1,13 @@
 import React, { useState } from 'react'
-import Fab from '@material-ui/core/Fab'
-import AddIcon from '@material-ui/icons/Add'
 import { DragDropContext } from 'react-beautiful-dnd'
 import { differenceWith, isEqual } from 'lodash'
 
 import { SelectColumn } from '../../selectColumn'
-import { useItemMultiSelectFetcher } from './../hooks/useItemMultiSelectFetcher'
 
 import './../smartMultiselectEditor.css'
+import './style.css'
 
-const SmartMultiselectEditor = ({ items, allItems, setmultiSelect, itemsModelName }) => {
+export const SmartMultiselectEditor = ({ items, allItems, setmultiSelect, itemsModelName, setIsEditing }) => {
   const shadowItems = { ...items }
   const shadowItemsCopy = [...shadowItems[itemsModelName]]
   const [allItemsWithoutSelected, setAllItemsWithoutSelected] = useState(differenceWith(allItems, shadowItemsCopy, isEqual))
@@ -17,10 +15,10 @@ const SmartMultiselectEditor = ({ items, allItems, setmultiSelect, itemsModelNam
   console.log(allItems)
 
   return (
-    <>
+    <div className="multiselect-container">
       <DragDropContext
         onDragEnd={(result) => {
-          if(!result.destination){
+          if (!result.destination) {
             return
           }
           if (result.source.droppableId === result.destination.droppableId) {
@@ -58,28 +56,10 @@ const SmartMultiselectEditor = ({ items, allItems, setmultiSelect, itemsModelNam
           console.log(result)
         }}
       >
-        <SelectColumn items={allItemsWithoutSelected} droppableId="column-1" />
-        <SelectColumn items={items[itemsModelName]} droppableId="column-2" />
+        <SelectColumn items={allItemsWithoutSelected} droppableId="column-1" itemsModelName={itemsModelName} number={1} />
+        <SelectColumn items={items[itemsModelName]} droppableId="column-2" itemsModelName={itemsModelName} number={2} setIsEditing={setIsEditing} />
       </DragDropContext>
-    </>
-  )
-}
-
-export const CustomMultiselectItem = ({ itemsModel, itemsModelName, multiSelect, setmultiSelect, multiSelectList, item, ...props }) => {
-  const [isEditing, setIsEditing] = useState(false)
-  const allItems = useItemMultiSelectFetcher(itemsModel)
-
-  return (
-    <div {...props}>
-      <div>
-        <Fab color="primary" aria-label="add" onClick={() => setIsEditing(true)}>
-          <AddIcon />
-        </Fab>
-      </div>
-
-      {isEditing && (
-        <SmartMultiselectEditor allItems={allItems} items={multiSelect} itemsModelName={itemsModelName} setmultiSelect={setmultiSelect} />
-      )}
     </div>
   )
 }
+

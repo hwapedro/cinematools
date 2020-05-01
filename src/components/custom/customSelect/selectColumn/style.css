@@ -1,0 +1,22 @@
+.multiselect-column-2 {
+  background-color: white;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+.multiselect-column-1 {
+  background-color: white;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+.multiselect-column {
+  width: 50%;
+  padding: 10px;
+}
+
+.multiselect-column-title{
+    font-size: 22px;
+    font-weight: 300;
+    margin-bottom: 10px;
+}

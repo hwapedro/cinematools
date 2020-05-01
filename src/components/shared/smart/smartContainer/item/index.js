@@ -15,9 +15,9 @@ import models from 'models'
 
 import './styles.css'
 
-export const GeneralItem = ({ item, model, hallCells }) => {
+export const GeneralItem = ({ item, model, hallCells, isMultiSelect = false, ...props }) => {
   const dispatch = useDispatch()
-  
+
   const [editMode, setEditMode] = useState(false)
 
   const fieldValues = Object.keys(item).map((field, index) => {
@@ -69,7 +69,7 @@ export const GeneralItem = ({ item, model, hallCells }) => {
           </div>
         )
       case 'hall':
-        return <HallPreview hallCells={hallCells} structure={item.structure} />
+        return <HallPreview hallCells={hallCells} structure={item.structure} isMultiSelect={isMultiSelect}/>
       default:
         return
     }
@@ -88,7 +88,7 @@ export const GeneralItem = ({ item, model, hallCells }) => {
   })
 
   const content = !editMode ? (
-    <div className={`container-item container-item-${model}`}>
+    <div {...props} className={`container-item container-item-${model}`}>
       {imageField && (
         <div className={`image ${imageField.type}-${model}`} key={imageField.type}>
           <div className={`image-container image-container-${model}`} key={imageField.type}>
@@ -99,13 +99,16 @@ export const GeneralItem = ({ item, model, hallCells }) => {
       {fieldValues}
       {multiField && <MultiSelectList multiSelectList={multiField.arrays} item={item} />}
       <div className={`buttons-container buttons-container-${model}`}>
-        <IconButton type="button" color="primary" text="edit" onClick={() => setEditMode(true)}>
-          <CreateIcon />
-        </IconButton>
-
-        <IconButton type="button" color="secondary" onClick={() => dispatch(smartActions[model].delete(item._id))}>
-          <DeleteIcon />
-        </IconButton>
+        {!isMultiSelect && (
+          <>
+            <IconButton type="button" color="primary" text="edit" onClick={() => setEditMode(true)}>
+              <CreateIcon />
+            </IconButton>
+            <IconButton type="button" color="secondary" onClick={() => dispatch(smartActions[model].delete(item._id))}>
+              <DeleteIcon />
+            </IconButton>
+          </>
+        )}
       </div>
     </div>
   ) : (

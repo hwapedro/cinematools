@@ -7,6 +7,8 @@ export const createSmartSlice = (model) => {
     initialState: {
       item: {},
       items: [],
+      loading: true,
+      error: false,
       hasMore: false,
       total: 0,
     },
@@ -18,6 +20,12 @@ export const createSmartSlice = (model) => {
       delete: (state, action) => {},
       setAll: (state, { payload }) => {
         state.items = payload
+      },
+      setLoading: (state, { payload }) => {
+        state.loading = payload
+      },
+      setError: (state, { payload }) => {
+        state.error = payload
       },
       setAdd: (state, { payload }) => {
         state.items = [...state.items, payload]

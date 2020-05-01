@@ -7,13 +7,13 @@ import { HallItem } from '../hallItem'
 
 import './style.css'
 
-export const HallPreview = ({ structure, hallCells }) => {
+export const HallPreview = ({ structure, hallCells, isMultiSelect = false }) => {
   const [preview, setPreview] = useState(false)
 
   return (
     <>
       <div className="hall-item-title" onClick={() => setPreview(true)}>
-        SHOW PREVIEW{' '}
+        SHOW PREVIEW
         <span className="hall-item-icon">
           <VisibilityIcon color="primary" />
         </span>
