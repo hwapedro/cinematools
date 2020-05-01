@@ -9,7 +9,7 @@ import { useItemMultiSelectFetcher } from './hooks/useItemMultiSelectFetcher'
 
 import './smartMultiselectEditor.css'
 
-const Item = ({ item, el, multiSelect, setmultiSelect, ...props }) => {
+const Item = ({ item, el, multiSelect, setmultiSelect, isChangeMode, ...props }) => {
   const [isEditing, setIsEditing] = useState(false)
   const allItems = useItemMultiSelectFetcher(el.model)
   const isNotEmpty = !!allItems.length
@@ -51,7 +51,9 @@ const Item = ({ item, el, multiSelect, setmultiSelect, ...props }) => {
       </div>
       {isEditing && (
         <div>
+          {isChangeMode && <div className={`dark-ground`} />}
           <SmartMultiselectEditor
+            isChangeMode={isChangeMode}
             setIsEditing={setIsEditing}
             isEditing={isEditing}
             itemsModel={el.model}

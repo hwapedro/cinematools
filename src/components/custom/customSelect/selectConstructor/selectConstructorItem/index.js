@@ -7,15 +7,13 @@ import { SelectColumn } from '../../selectColumn'
 import './../smartMultiselectEditor.css'
 import './style.css'
 
-export const SmartMultiselectEditor = ({ items, allItems, setmultiSelect, itemsModelName, setIsEditing }) => {
+export const SmartMultiselectEditor = ({ items, allItems, setmultiSelect, itemsModelName, setIsEditing, isChangeMode }) => {
   const shadowItems = { ...items }
   const shadowItemsCopy = [...shadowItems[itemsModelName]]
   const [allItemsWithoutSelected, setAllItemsWithoutSelected] = useState(differenceWith(allItems, shadowItemsCopy, isEqual))
-
-  console.log(allItems)
-
+  
   return (
-    <div className="multiselect-container">
+    <div className={isChangeMode ? 'multiselect-container-change-mode' : 'multiselect-container'}>
       <DragDropContext
         onDragEnd={(result) => {
           if (!result.destination) {
@@ -62,4 +60,3 @@ export const SmartMultiselectEditor = ({ items, allItems, setmultiSelect, itemsM
     </div>
   )
 }
-

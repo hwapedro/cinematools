@@ -180,7 +180,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
           </div>
         )
       case 'multi':
-        return <CustomMultiselect key={el.name} multiSelect={multiSelect} setmultiSelect={setmultiSelect} itemsModel={el.arrays} item={value} />
+        return <CustomMultiselect key={el.name} multiSelect={multiSelect} setmultiSelect={setmultiSelect} itemsModel={el.arrays} item={value} isChangeMode={!!value}/>
       default:
         return null
     }
