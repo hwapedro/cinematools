@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { smartActions } from 'store/smart'
+import { useHistory } from 'react-router-dom'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
 import CreateIcon from '@material-ui/icons/Create'
+import AddIcon from '@material-ui/icons/Add'
 import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
 import { green, red } from '@material-ui/core/colors'
@@ -17,6 +19,7 @@ import './styles.css'
 
 export const GeneralItem = ({ item, model, hallCells, isMultiSelect = false, ...props }) => {
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const [editMode, setEditMode] = useState(false)
 
@@ -102,6 +105,11 @@ export const GeneralItem = ({ item, model, hallCells, isMultiSelect = false, ...
       <div className={`buttons-container buttons-container-${model}`}>
         {!isMultiSelect && (
           <>
+            {model === 'cinemas' && (
+              <IconButton style={{ fontSize: '18px' }} type="button" color="primary" text="edit" onClick={() => history.push(`/cinema/${item._id}/`)}>
+                <AddIcon /> showtimes
+              </IconButton>
+            )}
             <IconButton type="button" color="primary" text="edit" onClick={() => setEditMode(true)}>
               <CreateIcon />
             </IconButton>

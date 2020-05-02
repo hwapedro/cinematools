@@ -13,7 +13,8 @@
 
 .constructor-content {
   width: 90%;
-  margin: 0 auto;
+  height: 100%;
+  margin: 0 auto 55px;
 }
 
 .constructor-button {
@@ -45,7 +46,7 @@
 }
 
 .image-dropzone-container {
-  height: 100px;
+  /* height: 100px; */
 }
 
 .date-input-container{

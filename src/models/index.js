@@ -194,7 +194,7 @@ export default {
           name: 'films',
           model: 'films',
           extractor: {
-            name: (item, history, modelId, itemId) => <div onClick={() => history.push(`/film/${modelId}/${itemId}`)}>`${item.name}`</div>,
+            name: (item, history, modelId, itemId) => <span onClick={() => history.push(`/film/${modelId}/${itemId}`)}>{`${item.name}`}</span>,
             key: (item) => item,
           },
         },
