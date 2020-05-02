@@ -11,6 +11,7 @@ export const createSmartSlice = (model) => {
       error: false,
       hasMore: false,
       total: 0,
+      limit: 4
     },
     reducers: {
       all: (state, action) => {},
@@ -28,6 +29,11 @@ export const createSmartSlice = (model) => {
         state.error = payload
       },
       setAdd: (state, { payload }) => {
+        state.total =  state.total + 1
+        if(state.total > state.limit){
+          state.hasMore = true
+          return 
+        }
         state.items = [...state.items, payload]
       },
       setOne: (state, { payload }) => {
@@ -35,6 +41,7 @@ export const createSmartSlice = (model) => {
       },
       setDelete: (state, { payload }) => {
         state.items = state.items.filter((item) => item._id !== payload._id)
+        state.total =  state.total - 1
       },
       setChange: (state, { payload }) => {
         state.items = state.items.map((item) => (item._id === payload._id ? payload : item))

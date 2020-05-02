@@ -5,10 +5,12 @@
   padding: 10px 20px;
   overflow: auto;
   background-color: rgba(255, 255, 255, 0.842);
+  margin-top: 15px;
 }
 
 .container-item-actors,
-.container-item-films {
+.container-item-films,
+.container-item-shopItems {
   position: relative;
 }
 

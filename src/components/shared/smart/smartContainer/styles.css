@@ -74,3 +74,7 @@
   animation: gradient 2s ease infinite;
   background-size: 300% 300%;
 }
+
+.main-pages-count{
+  margin: 0 10px;
+}

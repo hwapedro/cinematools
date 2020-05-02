@@ -41,8 +41,8 @@ const Item = ({ item, el, multiSelect, setmultiSelect, isChangeMode, ...props })
       )}
       {!isNotEmpty && (
         <span>
-          <IconButton type="button" color="secondary">
-            <WarningIcon color="secondary" />
+          <IconButton type="button" >
+            <WarningIcon htmlColor="#ffca28"/>
           </IconButton>
           <span>{el.name} is empty, add simple element first</span>
         </span>

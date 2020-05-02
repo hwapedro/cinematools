@@ -12,7 +12,6 @@ export const useFilmFetcher = ({ model, filmId, cinemaId }) => {
   useEffect(() => {
     dispatch(smartActions[model].one(filmId))
     dispatch(smartActions['halls'].all(100, 0))
-    dispatch(smartActions['showtimes'].all(100, 0, { film: filmId, cinema: cinemaId }))
   }, [])
 
   return { film, showtimes, halls }

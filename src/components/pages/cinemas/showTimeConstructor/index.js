@@ -6,9 +6,11 @@ import { DateTimePicker } from '@material-ui/pickers'
 import { useDispatch } from 'react-redux'
 import WarningIcon from '@material-ui/icons/Warning'
 import IconButton from '@material-ui/core/IconButton'
+import Box from '@material-ui/core/Box'
 
 import { smartActions } from 'store/smart/'
 import { useFilmFetcher } from '../hooks/useFilmFetcher'
+import { useShowTimePaginateFetcher } from '../hooks/useShowTimePaginateFetcher'
 import { ShowTimeItem } from '../showTimeItem'
 import Button from '../../../shared/buttons'
 import { getLoading } from 'store/smart/selectors'
@@ -44,8 +46,9 @@ const customStyles = {
 
 export const ShowTimeConstructor = ({ selectedFilm, cinemaId, value, setEditMode }) => {
   const dispatch = useDispatch()
-  const { film, showtimes, halls } = useFilmFetcher({ model: 'films', filmId: selectedFilm._id, cinemaId: cinemaId })
-  const loadingShowtimes = useSelector((state) => getLoading(state, 'showtimes'))
+  const { showtimes, next, prev, page, hasMore, total, setSkip, limit } = useShowTimePaginateFetcher({ filmId: selectedFilm._id, cinemaId: cinemaId })
+  const { film, halls } = useFilmFetcher({ model: 'films', filmId: selectedFilm._id, cinemaId: cinemaId })
+
   const loadingHalls = useSelector((state) => getLoading(state, 'halls'))
 
   const [selectedDate, handleDateChange] = useState(new Date())
@@ -104,8 +107,17 @@ export const ShowTimeConstructor = ({ selectedFilm, cinemaId, value, setEditMode
       <div className="showtime-constructor-datetimepicker-main">
         <span className="showtime-constructor-datetimepicker-title">Create show time for {film.name} 👾</span>
         <span className="showtime-constructor-datetimepicker-buttons">
-          <Button style={{ marginRight: '10px' }} color="primary" text={value ? 'change' : 'add'} onClick={() => onSubmit()} />
-          <Button color="primary" text="cansel" onClick={() => setEditMode(false)} />
+          <Button style={{ marginRight: '10px' }} color="primary" text="add" onClick={() => onSubmit()} />
+          <Button  style={{ marginRight: '15px' }} color="primary" text="cansel" onClick={() => setEditMode(false)} />
+          {!!total && (
+            <Box component="div" display="inline">
+              <Button type="button" color="primary" text="<" disabled={page === 1} onClick={prev} />
+              <span className="main-pages-count">
+                {page} / {Math.ceil(total / limit)}
+              </span>
+              <Button type="button" color="primary" text=">" disabled={!hasMore} onClick={next} />
+            </Box>
+          )}
         </span>
       </div>
       <div className="showtime-constructor-datetimepicker-select">

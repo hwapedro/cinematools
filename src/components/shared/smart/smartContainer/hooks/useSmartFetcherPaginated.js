@@ -12,7 +12,7 @@ export const useSmartFetcherPaginated = ({ model, limit }) => {
 
   useEffect(() => {
     dispatch(smartActions[model].all(limit, skip))
-  }, [skip])
+  }, [skip, total])
 
   const next = useCallback(() => {
     setSkip(skip + limit)

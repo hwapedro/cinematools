@@ -203,12 +203,12 @@ export default {
   ],
   shops: [
     { name: 'name', type: 'field' },
-    { name: 'description', type: 'field' },
+    { name: 'description', type: 'textarea' },
     {
       type: 'multi',
       arrays: [
         {
-          name: 'items',
+          name: 'shopItems',
           model: 'shopItems',
           extractor: {
             name: (item) => `${item.name}, $${(item.price / 100).toFixed(2)}`,
@@ -220,6 +220,10 @@ export default {
   ],
   halls: [
     { name: 'name', type: 'field' },
+    {
+      name: 'color',
+      type: 'field',
+    },
     { name: 'structure', type: 'hall' },
   ],
 }

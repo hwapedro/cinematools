@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Fab from '@material-ui/core/Fab'
 import Box from '@material-ui/core/Box'
@@ -9,7 +9,7 @@ import { useSmartFetcherPaginated } from './hooks/useSmartFetcherPaginated'
 import { useHallCellFetcher } from 'components/custom/customHall/hallConstructor/hooks/useHallCellFetcher'
 import { SmartConstructor } from '../smartConstructor'
 import { GeneralItem } from './item'
-import { getLoading, getError } from 'store/smart/selectors'
+import { getLoading, getError, getLimit } from 'store/smart/selectors'
 import Button from 'components/shared/buttons'
 
 import './styles.css'
@@ -19,12 +19,19 @@ function Alert(props) {
 }
 
 export const GeneralPage = ({ model }) => {
-  const limit = 4
+  const limit = useSelector((state) => getLimit(state, model))
   const hallCells = useHallCellFetcher(model)
   const { items, next, prev, page, hasMore, total, setSkip } = useSmartFetcherPaginated({ model, limit })
   const [editMode, setEditMode] = useState(false)
+
   const loading = useSelector((state) => getLoading(state, model))
   const error = useSelector((state) => getError(state, model))
+
+  useEffect(() => {
+    if (!items.length && page !== 1) {
+      prev()
+    }
+  }, [items])
 
   return (
     <>
@@ -33,6 +40,7 @@ export const GeneralPage = ({ model }) => {
         <div className={`main main-${model}`}>
           <span className={`main-title main-title-${model}`}>{model}</span>
           <Button
+            style={{ marginRight: '15px' }}
             className={`main-button main-button-${model}`}
             type="button"
             color="primary"
@@ -42,23 +50,25 @@ export const GeneralPage = ({ model }) => {
               setEditMode(true)
             }}
           />
+          {!!total && (
+            <Box component="div" display="inline">
+              <Button type="button" color="primary" text="<" disabled={page === 1} onClick={prev} />
+              <span className="main-pages-count">
+                {page} / { Math.ceil(total / limit)}
+              </span>
+              <Button type="button" color="primary" text=">" disabled={!hasMore} onClick={next} />
+            </Box>
+          )}
         </div>
         <div className={`container container-${model}`}>
           {items.map((item) => (
             <GeneralItem item={item} key={item._id} model={model} hallCells={hallCells} />
           ))}
-          {!items.length && !loading && !error && <div className={`main-nothing main-nothing-${model}`}>nothing here yet, let's add {model}</div>}
+          {!items.length && !loading && !error && (
+            <div className={`main-nothing main-nothing-${model}`}>nothing here yet, let's add {model}</div>
+          )}
         </div>
-        {/* трыц тыц пагинатор */}
-        <hr />
-        <Box component="div" display="inline">
-          <Button type="button" color="primary" text="<" disabled={page === 1} onClick={prev} />
-          <span>
-            {page} of {Math.ceil(total / limit)}
-          </span>
-          <Button type="button" color="primary" text=">" disabled={!hasMore} onClick={next} />
-        </Box>
-        <hr />
+
         {editMode && (
           <>
             <div className={`constructor-container constructor-container-${model}`}>
