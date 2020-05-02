@@ -21,7 +21,7 @@ function App() {
         {autoRoutes.map((route) => (
           <Route exact key={route.name} path={route.route} render={route.render} />
         ))}
-        <Route path="/film/:cinemaId/:filmId" exact component={FilmPage} />
+        <Route path="/cinemas/:cinemaId/" exact component={FilmPage} />
         <Route component={Page404} />
       </Switch>
     </div>

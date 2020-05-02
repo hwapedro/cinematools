@@ -30,7 +30,7 @@ const useStyles = makeStyles({
   },
 })
 
-const validationSchema = yup.object().shape({
+const validationSchema = {
   name: yup.string().required(),
   title: yup.string().required(),
   color: yup.string().required(),
@@ -58,7 +58,7 @@ const validationSchema = yup.object().shape({
     .required()
     .max('1000')
     .nullable(),
-})
+}
 
 export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) => {
   const dispatch = useDispatch()
@@ -81,6 +81,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
 
   const modelItem = models[model]
   let defaultValues = {}
+  let modelValidation = {}
 
   if (value) {
     for (let i = 0; i < modelItem.length; i++) {
@@ -88,8 +89,16 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
     }
   }
 
-  const { register, handleSubmit, control, setValue, errors } = useForm({ defaultValues, validationSchema })
-  console.log('@@12312', errors)
+  for (let i = 0; i < modelItem.length; i++) {
+    modelValidation[modelItem[i].name] = validationSchema[modelItem[i].name]
+  }
+
+  const { register, handleSubmit, control, setValue, errors } = useForm({
+    defaultValues,
+    validationSchema: yup.object().shape({ ...modelValidation }),
+  })
+
+  console.log('@@12312', errors, validationSchema, modelValidation)
 
   const onSubmit = (data) => {
     if (model === 'halls') {
