@@ -33,7 +33,7 @@ export default {
     },
     {
       name: 'text',
-      type: 'field',
+      type: 'textarea',
     },
     {
       name: 'date',
@@ -99,7 +99,7 @@ export default {
     },
     {
       name: 'description',
-      type: 'field',
+      type: 'textarea',
     },
     {
       name: 'duration',

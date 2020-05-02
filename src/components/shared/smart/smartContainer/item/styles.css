@@ -7,17 +7,24 @@
   background-color: rgba(255, 255, 255, 0.842);
 }
 
+.container-item-actors,
+.container-item-films {
+  position: relative;
+}
+
 .field,
 .number,
 .checkbox,
-.textarea {
+.textarea,
+.date {
   margin-bottom: 4px;
 }
 
 .number-title,
 .field-title,
 .checkbox-title,
-.textarea-title {
+.textarea-title,
+.date-title {
   font-size: 13px;
   font-weight: 500;
   margin-right: 5px;
@@ -25,7 +32,8 @@
 
 .number-value,
 .field-value,
-.textarea-value {
+.textarea-value,
+.date-value {
   font-size: 18px;
   font-weight: 300;
 }

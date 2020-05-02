@@ -4,7 +4,7 @@ import { smartActions } from 'store/smart/'
 import { getItems } from 'store/smart/selectors'
 
 export const useHallCellFetcher =  (model) => {
-  console.log(model === 'halls', model)
+
   const dispatch = useDispatch()
   const items = useSelector((state) => getItems(state, 'hallCells'))
 

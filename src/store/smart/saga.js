@@ -96,6 +96,7 @@ function* add({ payload }) {
     yield putReducer(smartActions[model].setLoading(true))
     const { data } = yield call(post, body, `${model}/`)
     const singleModel = getSingular(model)
+    yield putReducer(smartActions[model].setLoading(false))
     yield putReducer(smartActions[model].setAdd(data[singleModel]))
   } catch (error) {
     yield putReducer(smartActions[model].setError(true))

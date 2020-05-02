@@ -6,6 +6,8 @@ import { Checkbox } from '@material-ui/core/'
 import { DropzoneArea } from 'material-ui-dropzone'
 import { makeStyles } from '@material-ui/core/styles'
 import { KeyboardDatePicker } from '@material-ui/pickers'
+import PerfectScrollbar from 'react-perfect-scrollbar'
+import * as yup from 'yup'
 
 import Button from '../../../shared/buttons'
 import TextField from '../../../shared/inputs/input'
@@ -26,6 +28,36 @@ const useStyles = makeStyles({
       border: '1px solid black',
     },
   },
+})
+
+const validationSchema = yup.object().shape({
+  name: yup.string().required(),
+  title: yup.string().required(),
+  color: yup.string().required(),
+  address: yup.string().required(),
+  password: yup.string().required(),
+  distributionStartDate: yup.string().required().nullable(),
+  distributionEndDate: yup.string().required().nullable(),
+
+  email: yup.string().email().required(),
+
+  description: yup.string().required().min(100),
+  bio: yup.string().required().min(100),
+  text: yup.string().required().min(100),
+
+  price: yup
+    .number()
+    .transform((value) => (isNaN(value) ? undefined : value))
+    .required()
+    .min('100')
+    .nullable(),
+
+  duration: yup
+    .number()
+    .transform((value) => (isNaN(value) ? undefined : value))
+    .required()
+    .max('1000')
+    .nullable(),
 })
 
 export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) => {
@@ -56,9 +88,10 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
     }
   }
 
-  const { register, handleSubmit, control, setValue } = useForm({ defaultValues })
+  const { register, handleSubmit, control, setValue, errors } = useForm({ defaultValues, validationSchema })
+  console.log('@@12312', errors)
+
   const onSubmit = (data) => {
-    console.log(data)
     if (model === 'halls') {
       data = { ...data, structure }
     }
@@ -67,7 +100,6 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
       for (let prop in multiSelect) {
         multiSelect[prop] = multiSelect[prop].map((el) => el._id)
       }
-      console.log(multiSelect)
       data = { ...data, ...multiSelect }
     }
 
@@ -76,6 +108,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
     } else {
       dispatch(smartActions[model].add(data))
     }
+    document.getElementsByTagName('body')[0].style.overflow = 'scroll'
     setEditMode(false)
     if (resetPage) {
       resetPage()
@@ -88,6 +121,8 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
         return (
           <div className={`field-input-container field-input-container-${model}`}>
             <TextField
+              error={errors[el.name] && errors[el.name].message}
+              helperText={errors[el.name] && errors[el.name].message}
               className={`field-input field-input-${model}`}
               type="text"
               key={el.name}
@@ -102,6 +137,8 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
         return (
           <div className={`textarea-input-container textarea-input-container-${model}`}>
             <TextField
+              error={errors[el.name] && errors[el.name].message}
+              helperText={errors[el.name] && errors[el.name].message}
               className={`textarea-input textarea-input-${model}`}
               type="text"
               key={el.name}
@@ -119,6 +156,8 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
         return (
           <div className={`number-input-container number-input-container-${model}`}>
             <TextField
+              error={errors[el.name] && errors[el.name].message}
+              helperText={errors[el.name] && errors[el.name].message}
               className={`number-input number-input-${model}`}
               type="number"
               key={el.name}
@@ -142,6 +181,8 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
             <Controller
               as={
                 <KeyboardDatePicker
+                  error={errors[el.name] && errors[el.name].message}
+                  helperText={errors[el.name] && errors[el.name].message}
                   fullWidth
                   clearable
                   label={el.name}
@@ -153,7 +194,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
                   InputAdornmentProps={{ position: 'start' }}
                 />
               }
-              defaultValue={defaultValues[el.name] ? defaultValues[el.name] : null}
+              defaultValue={defaultValues[el.name] ? defaultValues[el.name] : new Date()}
               name={el.name}
               control={control}
             />
@@ -165,6 +206,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
         return (
           <div className={`image-dropzone-container image-dropzone-container-${model}`}>
             <Controller
+              error={'lol'}
               dropzoneClass={classes.myDropZone}
               key={el.name}
               as={DropzoneArea}
@@ -180,14 +222,23 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
           </div>
         )
       case 'multi':
-        return <CustomMultiselect key={el.name} multiSelect={multiSelect} setmultiSelect={setmultiSelect} itemsModel={el.arrays} item={value} isChangeMode={!!value}/>
+        return (
+          <CustomMultiselect
+            key={el.name}
+            multiSelect={multiSelect}
+            setmultiSelect={setmultiSelect}
+            itemsModel={el.arrays}
+            item={value}
+            isChangeMode={!!value}
+          />
+        )
       default:
         return null
     }
   })
 
   return (
-    <div>
+    <PerfectScrollbar>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={`constructor-main constructor-main-${model}`}>
           <span className={`constructor-main-title constructor-main-title-${model}`}>
@@ -199,6 +250,6 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
 
         <div className={`constructor-content constructor-content-${model}`}>{content}</div>
       </form>
-    </div>
+    </PerfectScrollbar>
   )
 }

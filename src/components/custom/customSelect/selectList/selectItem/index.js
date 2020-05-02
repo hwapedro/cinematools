@@ -4,15 +4,16 @@ import ClearIcon from '@material-ui/icons/Clear'
 
 import './style.css'
 
-export const MultiSelectItem = ({ extractor, item, modelId, edit = false, setmultiSelect, index, itemsModelName}) => {
+export const MultiSelectItem = ({ extractor, item, modelId, edit = false, setmultiSelect, index, itemsModelName }) => {
   const history = useHistory()
-  console.log('@', extractor.name(item))
 
   const deleteItem = () => {
     setmultiSelect((prev) => {
-      const copy = {...prev}
-      copy[itemsModelName].splice(index, 1)
-      return copy
+      const copy = { ...prev }
+      const copyArray = [...copy[itemsModelName]]
+
+      copyArray.splice(index, 1)
+      return { ...copy, [itemsModelName]: copyArray }
     })
   }
 

@@ -64,12 +64,13 @@ export const GeneralItem = ({ item, model, hallCells, isMultiSelect = false, ...
         )
       case 'date':
         return (
-          <div key={field}>
-            {fieldInModel.name}: {item[field] && item[field].toString()}
+          <div className={`date ${field}-${model}`} key={field}>
+            <span className={`date-title date-title-${model}`}>{fieldInModel.name}</span>
+            <span className={`date-value date-value-${model}`}>{item[field] && item[field].toString()}</span>
           </div>
         )
       case 'hall':
-        return <HallPreview hallCells={hallCells} structure={item.structure} isMultiSelect={isMultiSelect}/>
+        return <HallPreview hallCells={hallCells} structure={item.structure} isMultiSelect={isMultiSelect} />
       default:
         return
     }

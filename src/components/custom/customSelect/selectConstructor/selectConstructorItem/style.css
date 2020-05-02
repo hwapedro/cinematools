@@ -4,7 +4,8 @@
   width: 100%;
   height: 100%;
   left: 0;
-  background-color: white;
+  bottom: 0;
+  background-color: rgb(231, 231, 231);
   z-index: 303;
   top: 0;
 }
@@ -15,7 +16,8 @@
   width: 36%;
   height: 100%;
   right: 0;
-  background-color: white;
+  bottom: 0;
+  background-color: rgb(231, 231, 231);
   z-index: 703;
   top: 0;
 }

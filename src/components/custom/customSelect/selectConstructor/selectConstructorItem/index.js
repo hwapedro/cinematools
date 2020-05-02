@@ -37,7 +37,6 @@ export const SmartMultiselectEditor = ({ items, allItems, setmultiSelect, itemsM
           if (result.source.droppableId === 'column-2' && result.destination.droppableId === 'column-1') {
             const shadowItemsArray = [...shadowItems[itemsModelName]]
             const dragCard = shadowItemsArray[result.source.index - 1]
-            console.log(dragCard, result.destination.index)
             shadowItemsArray.splice(result.source.index - 1, 1)
 
             allItemsWithoutSelected.splice(result.destination.index - 1, 0, dragCard)
@@ -51,7 +50,6 @@ export const SmartMultiselectEditor = ({ items, allItems, setmultiSelect, itemsM
             shadowItemsArray.splice(result.destination.index - 1, 0, dragCard)
             setmultiSelect({ ...shadowItems, [itemsModelName]: shadowItemsArray })
           }
-          console.log(result)
         }}
       >
         <SelectColumn items={allItemsWithoutSelected} droppableId="column-1" itemsModelName={itemsModelName} number={1} />

@@ -11,7 +11,6 @@ export const FilmPage = () => {
   const { film, showtimes, halls } = useFilmFetcher({ model: 'films', filmId: params.filmId, cinemaId: params.cinemaId })
   const [editMode, setEditMode] = useState(false)
 
-  console.log(film, showtimes, halls)
   const content = showtimes.map((showtime) => <ShowTimeItem showtime={showtime} />)
 
   return (

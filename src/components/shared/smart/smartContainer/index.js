@@ -32,7 +32,16 @@ export const GeneralPage = ({ model }) => {
       <div className="content-container">
         <div className={`main main-${model}`}>
           <span className={`main-title main-title-${model}`}>{model}</span>
-          <Button className={`main-button main-button-${model}`} type="button" color="primary" text="add" onClick={() => setEditMode(true)} />
+          <Button
+            className={`main-button main-button-${model}`}
+            type="button"
+            color="primary"
+            text="add"
+            onClick={() => {
+              document.getElementsByTagName('body')[0].style.overflow = 'hidden'
+              setEditMode(true)
+            }}
+          />
         </div>
         <div className={`container container-${model}`}>
           {items.map((item) => (
@@ -55,15 +64,33 @@ export const GeneralPage = ({ model }) => {
             <div className={`constructor-container constructor-container-${model}`}>
               <SmartConstructor resetPage={() => setSkip(0)} model={model} setEditMode={setEditMode} />
               <div className={`close-constructur close-constructur-${model}`}>
-                <Fab onClick={() => setEditMode(false)} size="small" color="primary" aria-label="add">
+                <Fab
+                  onClick={() => {
+                    document.getElementsByTagName('body')[0].style.overflow = 'scroll'
+                    setEditMode(false)
+                  }}
+                  size="small"
+                  color="primary"
+                  aria-label="add"
+                >
                   <ChevronRightRoundedIcon />
                 </Fab>
               </div>
             </div>
-            <div onClick={() => setEditMode(false)} className={`dark-ground`}></div>
+            <div
+              onClick={() => {
+                document.getElementsByTagName('body')[0].style.overflow = 'scroll'
+                setEditMode(false)
+              }}
+              className={`dark-ground`}
+            ></div>
           </>
         )}
-        {error && <Alert severity="error">{error.toString()} with {model}</Alert>}
+        {error && (
+          <Alert severity="error">
+            {error.toString()} with {model}
+          </Alert>
+        )}
       </div>
     </>
   )

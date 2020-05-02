@@ -1,17 +1,15 @@
 .multiselect-column-2 {
-  background-color: white;
-  overflow-y: scroll;
-  height: 100vh;
+  min-height: 100vh;
+
 }
 
 .multiselect-column-1 {
-  background-color: white;
-  overflow-y: scroll;
-  height: 100vh;
+  min-height: 100vh;
+
 }
 
 .multiselect-column {
-  width: 50%;
+  width: 47%;
   padding: 20px;
 }
 
