@@ -22,7 +22,8 @@ export const GeneralPage = ({ model }) => {
   const limit = useSelector((state) => getLimit(state, model))
   const hallCells = useHallCellFetcher(model)
   const { items, next, prev, page, hasMore, total, setSkip } = useSmartFetcherPaginated({ model, limit })
-  const [editMode, setEditMode] = useState(false)
+  const [addMode, setAddMode] = useState(false)
+  const [editItem, setEditItem] = useState(null)
 
   const loading = useSelector((state) => getLoading(state, model))
   const error = useSelector((state) => getError(state, model))
@@ -37,47 +38,55 @@ export const GeneralPage = ({ model }) => {
     <>
       {loading && <div className="content-loader" />}
       <div className="content-container">
-        <div className={`main main-${model}`}>
-          <span className={`main-title main-title-${model}`}>{model}</span>
-          <Button
-            style={{ marginRight: '15px' }}
-            className={`main-button main-button-${model}`}
-            type="button"
-            color="primary"
-            text="add"
-            onClick={() => {
-              document.getElementsByTagName('body')[0].style.overflowY = 'hidden'
-              setEditMode(true)
-            }}
-          />
-          {!!total && (
-            <Box component="div" display="inline">
-              <Button type="button" color="primary" text="<" disabled={page === 1} onClick={prev} />
-              <span className="main-pages-count">
-                {page} / { Math.ceil(total / limit)}
-              </span>
-              <Button type="button" color="primary" text=">" disabled={!hasMore} onClick={next} />
-            </Box>
-          )}
-        </div>
-        <div className={`container container-${model}`}>
-          {items.map((item) => (
-            <GeneralItem item={item} key={item._id} model={model} hallCells={hallCells} />
-          ))}
-          {!items.length && !loading && !error && (
-            <div className={`main-nothing main-nothing-${model}`}>nothing here yet, let's add {model}</div>
-          )}
-        </div>
-
-        {editMode && (
+        {!editItem && (
+          <>
+            <div className={`main main-${model}`}>
+              <span className={`main-title main-title-${model}`}>{model}</span>
+              <Button
+                style={{ marginRight: '15px' }}
+                className={`main-button main-button-${model}`}
+                type="button"
+                color="primary"
+                text="add"
+                onClick={() => {
+                  document.getElementsByTagName('body')[0].style.overflowY = 'hidden'
+                  setAddMode(true)
+                }}
+              />
+              {!!total && (
+                <Box component="div" display="inline">
+                  <Button type="button" color="primary" text="<" disabled={page === 1} onClick={prev} />
+                  <span className="main-pages-count">
+                    {page} / {Math.ceil(total / limit)}
+                  </span>
+                  <Button type="button" color="primary" text=">" disabled={!hasMore} onClick={next} />
+                </Box>
+              )}
+            </div>
+            <div className={`container container-${model}`}>
+              {items.map((item) => (
+                <GeneralItem item={item} key={item._id} model={model} hallCells={hallCells} setEditItem={setEditItem} />
+              ))}
+              {!items.length && !loading && !error && <div className={`main-nothing main-nothing-${model}`}>nothing here yet, let's add {model}</div>}
+            </div>
+          </>
+        )}
+        {editItem && (
+          <>
+            <div className={`constructor-wrapper constructor-wrapper-${model}`}>
+              <SmartConstructor model={model} id={editItem._id} value={editItem} setEditMode={setAddMode} setEditItem={setEditItem} />
+            </div>
+          </>
+        )}
+        {addMode && (
           <>
             <div className={`constructor-container constructor-container-${model}`}>
-              <SmartConstructor resetPage={() => setSkip(0)} model={model} setEditMode={setEditMode} />
+              <SmartConstructor resetPage={() => setSkip(0)} model={model} setEditMode={setAddMode} />
               <div className={`close-constructur close-constructur-${model}`}>
                 <Fab
                   onClick={() => {
                     document.getElementsByTagName('body')[0].style.overflowY = 'scroll'
-                    setEditMode(false)
+                    setAddMode(false)
                   }}
                   size="small"
                   color="primary"
@@ -90,7 +99,7 @@ export const GeneralPage = ({ model }) => {
             <div
               onClick={() => {
                 document.getElementsByTagName('body')[0].style.overflowY = 'scroll'
-                setEditMode(false)
+                setAddMode(false)
               }}
               className={`dark-ground`}
             ></div>

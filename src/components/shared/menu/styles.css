@@ -3,7 +3,7 @@
   padding: 15px 30px 15px 30px;
   min-height: 96.9vh;
   width: 210px;
-  background-color: rgb(9, 81, 189);
+  background-color: rgb(5, 96, 231);
 }
 
 .menu a {
@@ -29,7 +29,7 @@
 }
 
 .menu-title {
-  font-size: 35px;
+  font-size: 27px;
   color: white;
   margin-top: 25px;
   margin-bottom: 20px;

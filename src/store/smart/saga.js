@@ -99,7 +99,7 @@ function* add({ payload }) {
     yield putReducer(smartActions[model].setLoading(false))
     yield putReducer(smartActions[model].setAdd(data[singleModel]))
   } catch (error) {
-    yield putReducer(smartActions[model].setError(true))
+    yield putReducer(smartActions[model].setError(error))
     yield putReducer(smartActions[model].setLoading(false))
   }
 }

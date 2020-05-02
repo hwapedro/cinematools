@@ -1,5 +1,5 @@
-import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Switch, Route, useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import { Auth } from './pages/auth'
@@ -13,12 +13,22 @@ import '../assets/fonts/roboto.css'
 import '../assets/css/layout.css'
 
 function App() {
+  const history = useHistory()
   const isLogin = useSelector(getIsLogin)
 
+  useEffect(() => {
+    if (!isLogin) {
+      history.replace('/')
+    }
+  }, [isLogin])
+
+  if (!isLogin) {
+    return <Route path="/" exact component={Auth} />
+  }
   return (
     <div className="App">
       <Switch>
-        <Route path="/login" component={Auth} />
+        <Route path="/" exact component={Auth} />
         {autoRoutes.map((route) => (
           <Route exact key={route.name} path={route.route} render={route.render} />
         ))}

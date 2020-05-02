@@ -7,20 +7,24 @@ import { useDispatch } from 'react-redux'
 import WarningIcon from '@material-ui/icons/Warning'
 import IconButton from '@material-ui/core/IconButton'
 import Box from '@material-ui/core/Box'
+import MuiAlert from '@material-ui/lab/Alert'
 
 import { smartActions } from 'store/smart/'
 import { useFilmFetcher } from '../hooks/useFilmFetcher'
 import { useShowTimePaginateFetcher } from '../hooks/useShowTimePaginateFetcher'
 import { ShowTimeItem } from '../showTimeItem'
 import Button from '../../../shared/buttons'
-import { getLoading } from 'store/smart/selectors'
+import { getLoading, getError } from 'store/smart/selectors'
 
 import './style.css'
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />
+}
 
 const customStyles = {
   option: (provided, state) => ({
     ...provided,
-    color: 'black',
     fontWeight: '400',
   }),
   control: (base, state) => ({
@@ -46,12 +50,14 @@ const customStyles = {
 
 export const ShowTimeConstructor = ({ selectedFilm, cinemaId, value, setEditMode }) => {
   const dispatch = useDispatch()
-  const { showtimes, next, prev, page, hasMore, total, setSkip, limit } = useShowTimePaginateFetcher({ filmId: selectedFilm._id, cinemaId: cinemaId })
+
+  const { showtimes, next, prev, page, hasMore, total, limit } = useShowTimePaginateFetcher({ filmId: selectedFilm._id, cinemaId: cinemaId })
   const { film, halls } = useFilmFetcher({ model: 'films', filmId: selectedFilm._id, cinemaId: cinemaId })
 
+  const error = useSelector((state) => getError(state, 'showtimes'))
   const loadingHalls = useSelector((state) => getLoading(state, 'halls'))
 
-  const [selectedDate, handleDateChange] = useState(new Date())
+  const [selectedDate, setSelectedDate] = useState(new Date())
   const [selectedHall, setHall] = useState(null)
 
   const optionsHalls = halls.map((hall) => ({ value: hall._id, label: hall.name }))
@@ -59,10 +65,14 @@ export const ShowTimeConstructor = ({ selectedFilm, cinemaId, value, setEditMode
   const content = showtimes.map((showtime) => <ShowTimeItem showtime={showtime} />)
 
   useEffect(() => {
+    if (!showtimes.length && page !== 1) {
+      prev()
+    }
     if (halls.length) {
       setHall({ value: halls[0]._id, label: halls[0].name })
     }
-  }, [halls])
+  }, [halls, showtimes])
+
 
   const onSubmit = () => {
     dispatch(
@@ -73,6 +83,11 @@ export const ShowTimeConstructor = ({ selectedFilm, cinemaId, value, setEditMode
         time: selectedDate.toISOString(),
       })
     )
+  }
+
+  const handleDateChange = (date) => {
+    dispatch(smartActions['showtimes'].setError(false))
+    setSelectedDate(date)
   }
 
   const handleChange = (selectedOption) => {
@@ -100,15 +115,13 @@ export const ShowTimeConstructor = ({ selectedFilm, cinemaId, value, setEditMode
     )
   }
 
-  console.log(selectedHall)
-
   return (
     <div className="showtime-constructor-container-datetimepicker">
       <div className="showtime-constructor-datetimepicker-main">
         <span className="showtime-constructor-datetimepicker-title">Create show time for {film.name} 👾</span>
         <span className="showtime-constructor-datetimepicker-buttons">
           <Button style={{ marginRight: '10px' }} color="primary" text="add" onClick={() => onSubmit()} />
-          <Button  style={{ marginRight: '15px' }} color="primary" text="cansel" onClick={() => setEditMode(false)} />
+          <Button style={{ marginRight: '15px' }} color="primary" text="cansel" onClick={() => setEditMode(false)} />
           {!!total && (
             <Box component="div" display="inline">
               <Button type="button" color="primary" text="<" disabled={page === 1} onClick={prev} />
@@ -137,6 +150,7 @@ export const ShowTimeConstructor = ({ selectedFilm, cinemaId, value, setEditMode
           label="choose time"
         />
       </div>
+      {error && <Alert severity="error">Error: Time overlap found, please select another time.</Alert>}
       <div className="showtime-items-container">{content}</div>
     </div>
   )

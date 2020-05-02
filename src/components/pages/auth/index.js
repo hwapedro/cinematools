@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Form } from 'react-final-form'
 import * as yup from 'yup'
 import { setIn } from 'final-form'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
-import { getLoading } from '../../../sagas/auth/selectors'
+import { getLoading, getIsLogin } from '../../../sagas/auth/selectors'
 import { Input } from '../../shared/inputs'
 import { login } from '../../../sagas/auth/actions'
 
@@ -16,11 +17,8 @@ const onSubmit = async (values, dispatch) => {
 }
 
 const schema = yup.object().shape({
-  email: yup
-    .string()
-    .required('required')
-    .email('email format is incorrect'),
-  password: yup.string().required('required')
+  email: yup.string().required('required').email('email format is incorrect'),
+  password: yup.string().required('required'),
 })
 
 function mutateObjectHook(values) {
@@ -33,7 +31,7 @@ function validate({ values, schema }) {
     schema.validateSync(mutateObjectHook(values), {
       abortEarly: false,
       stripUnknown: true,
-      context: values
+      context: values,
     })
   } catch (e) {
     castedValues = e.inner.reduce((errors, error) => setIn(errors, error.path, error.message), {})
@@ -43,7 +41,15 @@ function validate({ values, schema }) {
 }
 export const Auth = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const loading = useSelector(getLoading)
+  const isLogin = useSelector(getIsLogin)
+
+  useEffect(() => {
+    if (isLogin) {
+      history.push('/users')
+    }
+  }, [isLogin])
 
   return (
     <div className="container-auth">
@@ -52,8 +58,8 @@ export const Auth = () => {
       </div>
       <div className="form-container">
         <Form
-          onSubmit={values => onSubmit(values, dispatch)}
-          validate={values => validate({ values, schema })}
+          onSubmit={(values) => onSubmit(values, dispatch)}
+          validate={(values) => validate({ values, schema })}
           render={({ handleSubmit, submitting, values }) => {
             return (
               <form onSubmit={handleSubmit}>

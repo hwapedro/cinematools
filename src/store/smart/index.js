@@ -11,7 +11,7 @@ export const createSmartSlice = (model) => {
       error: false,
       hasMore: false,
       total: 0,
-      limit: 4
+      limit: 10
     },
     reducers: {
       all: (state, action) => {},

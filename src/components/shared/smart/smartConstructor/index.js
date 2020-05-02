@@ -60,7 +60,7 @@ const validationSchema = {
     .nullable(),
 }
 
-export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) => {
+export const SmartConstructor = ({ id, value, model, setEditMode, setEditItem, resetPage }) => {
   const dispatch = useDispatch()
   const classes = useStyles()
 
@@ -98,8 +98,6 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
     validationSchema: yup.object().shape({ ...modelValidation }),
   })
 
-  console.log('@@12312', errors, validationSchema, modelValidation)
-
   const onSubmit = (data) => {
     if (model === 'halls') {
       data = { ...data, structure }
@@ -119,6 +117,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
     }
     document.getElementsByTagName('body')[0].style.overflow = 'scroll'
     setEditMode(false)
+    setEditItem(null)
     if (resetPage) {
       resetPage()
     }
@@ -254,7 +253,17 @@ export const SmartConstructor = ({ id, value, model, setEditMode, resetPage }) =
             {value ? 'Change old' : 'Create new'} {model}
           </span>
           <Button color="primary" text={value ? 'change' : 'add'} type="submit" />
-          {value && <Button style={{ marginLeft: '10px' }} color="primary" text="back" onClick={() => setEditMode(false)} />}
+          {value && (
+            <Button
+              style={{ marginLeft: '10px' }}
+              color="primary"
+              text="back"
+              onClick={() => {
+                setEditItem(null)
+                setEditMode(false)
+              }}
+            />
+          )}
         </div>
 
         <div className={`constructor-content constructor-content-${model}`}>{content}</div>

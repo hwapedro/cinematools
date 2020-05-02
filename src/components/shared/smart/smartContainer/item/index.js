@@ -17,11 +17,9 @@ import models from 'models'
 
 import './styles.css'
 
-export const GeneralItem = ({ item, model, hallCells, isMultiSelect = false, ...props }) => {
+export const GeneralItem = ({ item, model, hallCells, isMultiSelect = false, setEditItem, ...props }) => {
   const dispatch = useDispatch()
   const history = useHistory()
-
-  const [editMode, setEditMode] = useState(false)
 
   const fieldValues = Object.keys(item).map((field, index) => {
     const fieldInModel = models[model].find((modelItem, index) => {
@@ -91,7 +89,7 @@ export const GeneralItem = ({ item, model, hallCells, isMultiSelect = false, ...
     }
   })
 
-  const content = !editMode ? (
+  return (
     <div {...props} className={`container-item container-item-${model}`}>
       {imageField && (
         <div className={`image ${imageField.type}-${model}`} key={imageField.type}>
@@ -110,7 +108,14 @@ export const GeneralItem = ({ item, model, hallCells, isMultiSelect = false, ...
                 <AddIcon /> showtimes
               </IconButton>
             )}
-            <IconButton type="button" color="primary" text="edit" onClick={() => setEditMode(true)}>
+            <IconButton
+              type="button"
+              color="primary"
+              text="edit"
+              onClick={() => {
+                setEditItem(item)
+              }}
+            >
               <CreateIcon />
             </IconButton>
             <IconButton type="button" color="secondary" onClick={() => dispatch(smartActions[model].delete(item._id))}>
@@ -120,14 +125,5 @@ export const GeneralItem = ({ item, model, hallCells, isMultiSelect = false, ...
         )}
       </div>
     </div>
-  ) : (
-    <>
-      <div className={`constructor-wrapper constructor-wrapper-${model}`}>
-        <SmartConstructor model={model} id={item._id} value={item} setEditMode={setEditMode} />
-      </div>
-      <div className="white-ground"></div>
-    </>
   )
-
-  return content
 }

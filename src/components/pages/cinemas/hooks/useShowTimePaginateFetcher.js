@@ -12,7 +12,7 @@ export const useShowTimePaginateFetcher = ({ filmId, cinemaId }) => {
   const [skip, setSkip] = useState(0)
 
   useEffect(() => {
-    dispatch(smartActions['showtimes'].all(skip, limit, { film: filmId, cinema: cinemaId }))
+    dispatch(smartActions['showtimes'].all(limit, skip, { film: filmId, cinema: cinemaId }))
   }, [skip, total])
 
   const next = useCallback(() => {

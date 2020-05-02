@@ -12,7 +12,6 @@ export const CinemaPage = () => {
   const cinema = useCinemaFetcher({ model: 'cinemas', cinemaId: params.cinemaId })
   const [selectedFilm, setFilm] = useState()
   const [editMode, setEditMode] = useState(false)
-  console.log(editMode)
 
   const filmList = cinema.films && cinema.films.map((film) => <FilmItem film={film} setEditMode={setEditMode} setFilm={setFilm} />)
 
