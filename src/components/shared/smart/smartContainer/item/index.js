@@ -101,7 +101,7 @@ export const GeneralItem = ({ item, model, hallCells, isMultiSelect = false, ...
         </div>
       )}
       {fieldValues}
-      {multiField && <MultiSelectList multiSelectList={multiField.arrays} item={item} />}
+      {multiField && !isMultiSelect && <MultiSelectList multiSelectList={multiField.arrays} item={item} />}
       <div className={`buttons-container buttons-container-${model}`}>
         {!isMultiSelect && (
           <>

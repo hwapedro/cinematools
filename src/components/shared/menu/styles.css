@@ -1,7 +1,7 @@
 .menu {
   z-index: 22;
   padding: 15px 30px 15px 30px;
-  height: 1000px;
+  min-height: 96.9vh;
   width: 210px;
   background-color: rgb(9, 81, 189);
 }

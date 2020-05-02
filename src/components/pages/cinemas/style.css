@@ -1,0 +1,22 @@
+.showtime-cinema-container {
+  margin: 40px auto;
+  width: 70%;
+  position: relative;
+}
+
+.showtime-cinema-title {
+  font-size: 50px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.showtime-cinema-address {
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 30px;
+}
+
+.showtime-cinema-container-items{
+    display: flex;
+    flex-wrap: wrap;
+}

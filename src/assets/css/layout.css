@@ -3,4 +3,9 @@ body {
   font-weight: 300;
   background-color: #f4f4f4;
   margin: 0;
+  height: 100%;
+}
+
+html {
+  height: 100%;
 }

@@ -1,0 +1,41 @@
+.showtime-constructor-container-datetimepicker {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.showtime-constructor-datetimepicker-select {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 15px;
+  background-color: white;
+  border-radius: 5px;
+  height: 55px;
+  padding: 15px 10px;
+  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.2);
+}
+
+.showtime-select-container {
+  width: 88%;
+  margin-right: 5px;
+}
+
+.showtime-constructor-datetimepicker-main {
+  margin-bottom: 20px;
+}
+
+.showtime-constructor-datetimepicker-title {
+  font-size: 27px;
+  font-weight: 300;
+  margin-right: 15px;
+  display: inline-block;
+}
+
+.showtime-loader-container {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.showtime-halls-isempty {
+  font-size: 28px;
+  margin-right: 15px;
+}

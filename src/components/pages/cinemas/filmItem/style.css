@@ -1,0 +1,51 @@
+.showtime-film-item {
+  position: relative;
+  background-color: white;
+  width: 49%;
+  margin-top: 25px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.2);
+}
+
+.showtime-image-container {
+  overflow: hidden;
+  height: 340px;
+  width: 340px;
+  margin-right: 35px;
+}
+
+.showtime-image-container img {
+  width: 340px;
+  height: auto;
+}
+
+.showtime-image-info-container {
+  padding: 15px;
+  margin-top: 25px;
+  width: 100%;
+}
+
+.showtime-info-name-value {
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.showtime-info-description-title {
+  font-size: 13px;
+  font-weight: 500;
+  margin-right: 5px;
+}
+
+.showtime-info-description-value {
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.showtime-button-container {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+}

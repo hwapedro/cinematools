@@ -38,7 +38,7 @@ export const GeneralPage = ({ model }) => {
             color="primary"
             text="add"
             onClick={() => {
-              document.getElementsByTagName('body')[0].style.overflow = 'hidden'
+              document.getElementsByTagName('body')[0].style.overflowY = 'hidden'
               setEditMode(true)
             }}
           />
@@ -66,7 +66,7 @@ export const GeneralPage = ({ model }) => {
               <div className={`close-constructur close-constructur-${model}`}>
                 <Fab
                   onClick={() => {
-                    document.getElementsByTagName('body')[0].style.overflow = 'scroll'
+                    document.getElementsByTagName('body')[0].style.overflowY = 'scroll'
                     setEditMode(false)
                   }}
                   size="small"
@@ -79,7 +79,7 @@ export const GeneralPage = ({ model }) => {
             </div>
             <div
               onClick={() => {
-                document.getElementsByTagName('body')[0].style.overflow = 'scroll'
+                document.getElementsByTagName('body')[0].style.overflowY = 'scroll'
                 setEditMode(false)
               }}
               className={`dark-ground`}

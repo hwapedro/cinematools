@@ -30,7 +30,7 @@ const Item = ({ item, el, multiSelect, setmultiSelect, isChangeMode, ...props })
   }
 
   return (
-    <div className='multi-select-container'>
+    <div className="multi-select-container">
       {isNotEmpty && (
         <span>
           <IconButton type="button" color="primary" onClick={() => setIsEditing(true)}>

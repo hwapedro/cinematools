@@ -10,7 +10,21 @@ import './style.css'
 export const SmartMultiselectEditor = ({ items, allItems, setmultiSelect, itemsModelName, setIsEditing, isChangeMode }) => {
   const shadowItems = { ...items }
   const shadowItemsCopy = [...shadowItems[itemsModelName]]
-  const [allItemsWithoutSelected, setAllItemsWithoutSelected] = useState(differenceWith(allItems, shadowItemsCopy, isEqual))
+ 
+
+  let allItemsCopy = [...allItems]
+  allItemsCopy = allItemsCopy.filter(el => {
+    for(let i = 0; i < shadowItemsCopy.length; i++){
+      console.log(shadowItemsCopy[i]._id, el._id, shadowItemsCopy[i]._id === el._id)
+      if(shadowItemsCopy[i]._id === el._id){
+        console.log(123123123)
+        return null
+      }
+    }
+    return el
+  })
+
+  const [allItemsWithoutSelected, setAllItemsWithoutSelected] = useState(allItemsCopy)
   
   return (
     <div className={isChangeMode ? 'multiselect-container-change-mode' : 'multiselect-container'}>

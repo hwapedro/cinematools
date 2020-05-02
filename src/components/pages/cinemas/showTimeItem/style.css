@@ -1,0 +1,38 @@
+.showtime-item-container {
+  width: 22.3%;
+  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.2);
+  background-color: white;
+  margin-right: 3px;
+  margin-left: 3px;
+  margin-bottom: 15px;
+  padding: 15px;
+  position: relative;
+  height: 100px;
+}
+
+.showtime-items-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.showtime-button-delete-container {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+}
+
+.showtime-item-hall-title,
+.showtime-item-start-title {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.showtime-item-hall-value,
+.showtime-item-start-value {
+    font-size: 15px;
+}
+
+.showtime-item-info{
+    margin-bottom: 5px;
+}
