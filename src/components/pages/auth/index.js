@@ -35,7 +35,6 @@ function validate({ values, schema, error }) {
     })
   } catch (e) {
     castedValues = e.inner.reduce((errors, error) => {
-      console.log(errors, error.path, error.message)
       return setIn(errors, error.path, error.message)
     }, {})
   }
@@ -49,7 +48,6 @@ export const Auth = () => {
   const error = useSelector(getError)
   const loading = useSelector(getLoading)
   const isLogin = useSelector(getIsLogin)
-  console.log(error)
   useEffect(() => {
     if (isLogin) {
       history.push('/users')
