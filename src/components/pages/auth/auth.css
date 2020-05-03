@@ -87,3 +87,9 @@
     background-position: 0% 50%;
   }
 }
+
+.auth-error{
+  color: #ff6673;
+  font-size: 17px;
+  text-align: center;
+}

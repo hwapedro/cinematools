@@ -5,7 +5,7 @@ import { setIn } from 'final-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
-import { getLoading, getIsLogin } from '../../../sagas/auth/selectors'
+import { getLoading, getIsLogin, getError } from '../../../sagas/auth/selectors'
 import { Input } from '../../shared/inputs'
 import { login } from '../../../sagas/auth/actions'
 
@@ -25,7 +25,7 @@ function mutateObjectHook(values) {
   return values
 }
 
-function validate({ values, schema }) {
+function validate({ values, schema, error }) {
   let castedValues = {}
   try {
     schema.validateSync(mutateObjectHook(values), {
@@ -34,48 +34,57 @@ function validate({ values, schema }) {
       context: values,
     })
   } catch (e) {
-    castedValues = e.inner.reduce((errors, error) => setIn(errors, error.path, error.message), {})
+    castedValues = e.inner.reduce((errors, error) => {
+      console.log(errors, error.path, error.message)
+      return setIn(errors, error.path, error.message)
+    }, {})
   }
 
   return castedValues
 }
+
 export const Auth = () => {
   const dispatch = useDispatch()
   const history = useHistory()
+  const error = useSelector(getError)
   const loading = useSelector(getLoading)
   const isLogin = useSelector(getIsLogin)
-
+  console.log(error)
   useEffect(() => {
     if (isLogin) {
       history.push('/users')
     }
-  }, [isLogin])
+  }, [isLogin, history])
 
   return (
-    <div className="container-auth">
-      <div>
-        <h1 className="title">icinematools</h1>
+    <>
+      <div className="container-auth">
+        <div>
+          <h1 className="title">icinematools</h1>
+        </div>
+        <div className="form-container">
+          <Form
+            onSubmit={(values) => onSubmit(values, dispatch)}
+            validate={(values) => validate({ values, schema, error })}
+            render={({ handleSubmit, submitting, values }) => {
+              return (
+                <form onSubmit={handleSubmit}>
+                  <Input disabled={loading} label="email" name="email" />
+                  <Input disabled={loading} label="password" name="password" />
+                  {error && <div className="auth-error">invalid password or email</div>}
+                  <div className="button-container">
+                    <button className="button" type="submit" disabled={loading}>
+                      sign in
+                    </button>
+                  </div>
+                </form>
+              )
+            }}
+          />
+        </div>
+        
       </div>
-      <div className="form-container">
-        <Form
-          onSubmit={(values) => onSubmit(values, dispatch)}
-          validate={(values) => validate({ values, schema })}
-          render={({ handleSubmit, submitting, values }) => {
-            return (
-              <form onSubmit={handleSubmit}>
-                <Input disabled={loading} label="email" name="email" />
-                <Input disabled={loading} label="password" name="password" />
-
-                <div className="button-container">
-                  <button className="button" type="submit" disabled={loading}>
-                    sign in
-                  </button>
-                </div>
-              </form>
-            )
-          }}
-        />
-      </div>
-    </div>
+   
+    </>
   )
 }

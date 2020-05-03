@@ -6,6 +6,7 @@ import { Auth } from './pages/auth'
 import { CinemaPage } from './pages/cinemas'
 import { Menu } from './shared/menu'
 import { Page404 } from './pages/404'
+import { ReportPage } from './pages/reports'
 import { getIsLogin } from '../sagas/auth/selectors'
 import { autoRoutes } from '../global/routes'
 
@@ -20,7 +21,7 @@ function App() {
     if (!isLogin) {
       history.replace('/')
     }
-  }, [isLogin])
+  }, [isLogin, history])
 
   if (!isLogin) {
     return <Route path="/" exact component={Auth} />
@@ -32,6 +33,16 @@ function App() {
         {autoRoutes.map((route) => (
           <Route exact key={route.name} path={route.route} render={route.render} />
         ))}
+        <Route
+          path="/get/reports"
+          exact
+          component={() => (
+            <div className="root">
+              <Menu routeLevel={2} />
+              <ReportPage />
+            </div>
+          )}
+        />
         <Route
           path="/cinema/:cinemaId/"
           exact

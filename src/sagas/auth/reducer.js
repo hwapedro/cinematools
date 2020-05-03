@@ -1,8 +1,9 @@
-import { SET_LOADING_LOGIN, LOGIN, SET_LOGIN} from './constants'
+import { SET_LOADING_LOGIN, LOGIN, SET_LOGIN, SET_ERROR } from './constants'
 
 const initialState = {
   loading: false,
-  isLogin: localStorage.getItem('token') ? true : false
+  error: false,
+  isLogin: localStorage.getItem('token') ? true : false,
 }
 
 export default (state = initialState, { type, payload }) => {
@@ -17,6 +18,10 @@ export default (state = initialState, { type, payload }) => {
 
     case SET_LOGIN: {
       return { ...state, isLogin: payload }
+    }
+
+    case SET_ERROR: {
+      return { ...state, error: payload }
     }
 
     default:

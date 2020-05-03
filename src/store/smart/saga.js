@@ -1,4 +1,4 @@
-import { call, takeLatest, put as putReducer, all, fork } from 'redux-saga/effects'
+import { call, takeLatest, put as putReducer } from 'redux-saga/effects'
 import { get, post, put, del } from '../../global/api'
 
 import { smartActions } from '../smart'
@@ -31,7 +31,6 @@ function* fetchOne({ payload }) {
     yield putReducer(smartActions[model].setOne(data[singleModel]))
     yield putReducer(smartActions[model].setLoading(false))
   } catch (error) {
-
     yield putReducer(smartActions[model].setError(error))
     yield putReducer(smartActions[model].setLoading(false))
   }
@@ -45,7 +44,7 @@ function* change({ payload }) {
       const imageUploadBody = new FormData()
       imageUploadBody.append('file', body.image[0])
       const {
-        data: { _id, url },
+        data: { url },
       } = yield call(post, imageUploadBody, `images/upload`)
       if (!url) {
         throw new Error('Error on image upload')
@@ -86,7 +85,7 @@ function* add({ payload }) {
       const imageUploadBody = new FormData()
       imageUploadBody.append('file', body.image[0])
       const {
-        data: { _id, url },
+        data: { url },
       } = yield call(post, imageUploadBody, `images/upload`)
       if (!url) {
         throw new Error('Error on image upload')

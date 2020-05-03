@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { DragDropContext } from 'react-beautiful-dnd'
-import { differenceWith, isEqual } from 'lodash'
 
 import { SelectColumn } from '../../selectColumn'
 
@@ -22,7 +21,7 @@ export const SmartMultiselectEditor = ({ items, allItems, setmultiSelect, itemsM
     return el
   })
 
-  const [allItemsWithoutSelected, setAllItemsWithoutSelected] = useState(allItemsCopy)
+  const [allItemsWithoutSelected] = useState(allItemsCopy)
   
   return (
     <div className={isChangeMode ? 'multiselect-container-change-mode' : 'multiselect-container'}>

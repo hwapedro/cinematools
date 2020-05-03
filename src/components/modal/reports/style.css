@@ -1,0 +1,35 @@
+.reports-profit-container {
+  width: 100%;
+  margin-top: 35px;
+}
+
+.reports-profit-title {
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+
+.pdf-profit {
+  margin-top: 25px;
+  padding: 25px;
+}
+
+.pdf-profit-cinema {
+  font-size: 20px;
+  margin-right: 20px;
+}
+
+.pdf-profit-income {
+  font-size: 25px;
+  font-weight: 400;
+  margin-right: 20px;
+}
+
+.pdf-profit-date {
+  margin-right: 20px;
+  font-size: 20px;
+}
+
+.profit-date-empty {
+    margin-top: 25px;
+    font-size: 14px;
+}

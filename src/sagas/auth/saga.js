@@ -1,6 +1,6 @@
 import { call, takeLatest, put } from 'redux-saga/effects'
 import { post } from '../../global/api'
-import { setLoading, setLogin } from './actions'
+import { setLoading, setLogin, setError } from './actions'
 
 import { LOGIN, LOGOUT } from './constants'
 
@@ -13,7 +13,7 @@ function* login({ payload }) {
       localStorage.setItem('token', data.token)
     }
   } catch (error) {
-    console.log(error)
+    yield put(setError(true))
   }
 
   yield put(setLoading(false))

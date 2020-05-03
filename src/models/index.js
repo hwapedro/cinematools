@@ -21,6 +21,7 @@ export const modelRouter = {
   ageRules: { level: 1, icon: <GavelIcon /> },
   actors: { level: 2, icon: <PeopleIcon /> },
   showtimes: { level: 0, icon: <FastfoodIcon /> },
+  reports: { level: 0, icon: <FastfoodIcon /> },
   cinemas: { level: 2, icon: <AccountBalanceIcon /> },
   shops: { level: 1, icon: <StorefrontIcon /> },
   halls: { level: 2, icon: <WeekendIcon /> },

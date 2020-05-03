@@ -4,13 +4,13 @@ import { MultiSelectItem } from './selectItem'
 import './style.css'
 
 export const MultiSelectList = ({ multiSelectList, item }) => {
-  const [showElements, setShowElements] = useState(3)
+  const [showElements] = useState(3)
 
   return (
     <div className="multiselect">
       {multiSelectList.map((fieldInModel) => {
         return (
-          <div>
+          <div style={{marginTop: '10px'}}>
             <span className="multiselect-title">{fieldInModel.name}</span>
             {item &&
               item[fieldInModel.name].map((el, index) => {

@@ -72,8 +72,10 @@ export const SmartConstructor = ({ id, value, model, setEditMode, setEditItem, r
       if (el.type === 'multi') {
         el.arrays.map((el) => {
           defaultValueMultiSelect = value ? { ...defaultValueMultiSelect, [el.name]: value[el.name] } : { ...defaultValueMultiSelect, [el.name]: [] }
+          return el
         })
       }
+      return el
     })
   }
   const [multiSelect, setmultiSelect] = useState(defaultValueMultiSelect)
@@ -174,6 +176,7 @@ export const SmartConstructor = ({ id, value, model, setEditMode, setEditItem, r
               label={el.name}
               inputRef={register}
             />
+            {el.name === 'price' && <div className="field-price-help">please enter decimal part without $10.99 —> 1099</div>}
           </div>
         )
       case 'checkbox':

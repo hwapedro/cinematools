@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { smartActions } from 'store/smart'
 import { useHistory } from 'react-router-dom'
@@ -10,7 +10,6 @@ import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
 import { green, red } from '@material-ui/core/colors'
 
-import { SmartConstructor } from 'components/shared/smart/smartConstructor'
 import { HallPreview } from 'components/custom/customHall/hallPreview'
 import { MultiSelectList } from 'components/custom/customSelect/selectList'
 import models from 'models'
@@ -26,11 +25,12 @@ export const GeneralItem = ({ item, model, hallCells, isMultiSelect = false, set
       if (modelItem.name === field) {
         return modelItem
       }
+      return null
     })
 
     if (!fieldInModel) {
-      return
-    }
+      return null
+    } 
 
     switch (fieldInModel.type) {
       case 'field':
@@ -73,7 +73,7 @@ export const GeneralItem = ({ item, model, hallCells, isMultiSelect = false, set
       case 'hall':
         return <HallPreview hallCells={hallCells} structure={item.structure} isMultiSelect={isMultiSelect} />
       default:
-        return
+        return null
     }
   })
 
@@ -81,12 +81,14 @@ export const GeneralItem = ({ item, model, hallCells, isMultiSelect = false, set
     if (modelItem.type === 'multi') {
       return modelItem
     }
+    return null
   })
 
   const imageField = models[model].find((modelItem, index) => {
     if (modelItem.type === 'image') {
       return modelItem
     }
+    return null
   })
 
   return (
