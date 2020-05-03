@@ -53,6 +53,9 @@ export const CustomHall = ({ structure, setHallStructure }) => {
   const delRow = () => {
     setHallStructure((prev) => {
       const copy = [...prev]
+      if(copy.length === 1){
+        return prev
+      }
       copy.splice(-1, 1)
       return copy
     })
@@ -61,7 +64,13 @@ export const CustomHall = ({ structure, setHallStructure }) => {
   const delColumn = () => {
     setHallStructure((prev) => {
       const copy = [...prev]
+      if(copy.length === 1){
+        return prev
+      }
       const newCol = copy.map((el) => {
+        if(el.length === 1){
+          return el
+        }
         el.splice(-1, 1)
         return el
       })
