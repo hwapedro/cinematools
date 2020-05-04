@@ -12,7 +12,7 @@ import theme from './theme/color'
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
+    <Router basename="/admin">
       <ThemeProvider theme={theme}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <App />

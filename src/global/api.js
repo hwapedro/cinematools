@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:5300/api/v1/'
+const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:5300/api/v1/' : 'http://germangorodnev.com:5300/api/v1/';
 
 const getToken = async () => {
   const token = await localStorage.getItem('token')
