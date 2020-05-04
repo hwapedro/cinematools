@@ -5,7 +5,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton'
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import IconButton from '@material-ui/core/IconButton'
-import AssessmentIcon from '@material-ui/icons/Assessment';
+import AssessmentIcon from '@material-ui/icons/Assessment'
 
 import { autoRoutes } from 'global/routes'
 import { logout } from 'sagas/auth/actions'
@@ -58,11 +58,16 @@ export const Menu = ({ routeLevel }) => {
         }
         return null
       })}
-      <Link key={'reports'} to={'/get/reports'}>
-        <div className={`tab ${'/get/reports' === history.location.pathname ? 'tab-active' : ''}`}>
-          <span className="menu-item-icon"><AssessmentIcon /></span> reports
-        </div>
-      </Link>
+      {level === 2 && (
+        <Link key={'reports'} to={'/get/reports'}>
+          <div className={`tab ${'/get/reports' === history.location.pathname ? 'tab-active' : ''}`}>
+            <span className="menu-item-icon">
+              <AssessmentIcon />
+            </span>{' '}
+            reports
+          </div>
+        </Link>
+      )}
     </div>
   )
 }

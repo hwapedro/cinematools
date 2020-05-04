@@ -6,6 +6,7 @@
   overflow: auto;
   background-color: rgba(255, 255, 255, 0.842);
   margin-top: 15px;
+  border-radius: 2px;
 }
 
 .container-item-actors,
@@ -38,21 +39,24 @@
 .date-value {
   font-size: 18px;
   font-weight: 300;
+  overflow-wrap: break-word;
 }
 
 .image {
-  margin-bottom: 140px;
+  margin-bottom: 175px;
 }
 
 .image-container {
   overflow: hidden;
-  height: 140px;
+  height: 170px;
+  width: 100%;
   position: absolute;
   left: 0;
   top: 0;
 }
 
 .image-value {
+  margin-top: -100px;
   filter: brightness(70%);
   margin-bottom: 20px;
   width: 100%;
