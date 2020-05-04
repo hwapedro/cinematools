@@ -60,7 +60,7 @@ const validationSchema = {
     .nullable(),
 }
 
-export const SmartConstructor = ({ id, value, model, setEditMode, setEditItem, resetPage }) => {
+export const SmartConstructor = ({ id, value, model, setEditMode, setEditItem = () => {}, resetPage }) => {
   const dispatch = useDispatch()
   const classes = useStyles()
 

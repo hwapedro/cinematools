@@ -141,6 +141,14 @@ export default {
             key: (item) => item,
           },
         },
+        {
+          name: 'news',
+          model: 'news',
+          extractor: {
+            name: (item, history, modelId, itemId) => `${item.title}`,
+            key: (item) => item,
+          },
+        },
       ],
     },
     {
