@@ -64,9 +64,6 @@ export const CustomHall = ({ structure, setHallStructure }) => {
   const delColumn = () => {
     setHallStructure((prev) => {
       const copy = [...prev]
-      if(copy.length === 1){
-        return prev
-      }
       const newCol = copy.map((el) => {
         if(el.length === 1){
           return el

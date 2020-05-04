@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Switch, Route, useHistory } from 'react-router-dom'
+import { Switch, Route, useHistory, Redirect } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 import { Auth } from './pages/auth'
@@ -18,14 +18,21 @@ function App() {
   const isLogin = useSelector(getIsLogin)
 
   useEffect(() => {
+    console.log(isLogin)
     if (!isLogin) {
       history.replace('/')
     }
   }, [isLogin, history])
 
   if (!isLogin) {
-    return <Route path="/" exact component={Auth} />
+    return (
+      <Switch>
+        <Route path="/" exact component={Auth} />
+        <Redirect to="/" />
+      </Switch>
+    )
   }
+  
   return (
     <div className="App">
       <Switch>
