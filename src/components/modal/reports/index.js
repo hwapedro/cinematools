@@ -16,19 +16,19 @@ export const ReportsSummModal = () => {
   const ref = createRef()
 
   const handleDateChange1 = async (date) => {
-    const data = { from: date.toISOString(), to: selectedDate1.toISOString() }
+    const data = { from: date.toISOString(), to: selectedDate2.toISOString() }
     await post(data, 'reports/generate').then(({ data }) => setReports(data.income))
     setSelectedDate1(date)
   }
 
   const handleDateChange2 = async (date) => {
-    const data = { from: selectedDate1.toISOString(), to: date.toISOString() }
+    const data = { from: selectedDate1.toISOString(), to: selectedDate2.toISOString() }
     await post(data, 'reports/generate').then(({ data }) => setReports(data.income))
     setSelectedDate2(date)
   }
 
   const onClick = async () => {
-    const data = { from: selectedDate1.toISOString(), to: selectedDate1.toISOString() }
+    const data = { from: selectedDate1.toISOString(), to: selectedDate2.toISOString() }
     await post(data, 'reports/generate').then(({ data }) => setReports(data.income))
   }
 
