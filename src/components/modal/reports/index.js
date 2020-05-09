@@ -92,7 +92,7 @@ export const ReportsSummModal = () => {
                 {reports.map((el) => (
                   <>
                     <span className="pdf-profit-cinema">{el.cinema}</span>
-                    <span className="pdf-profit-income">{el.income} руб</span>
+                    <span className="pdf-profit-income">{el.income/100} руб</span>
                     <span className="pdf-profit-date">{selectedDate1.toISOString()} </span>
                     <span className="pdf-profit-date">{selectedDate2.toISOString()} </span>
                   </>
