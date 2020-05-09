@@ -59,7 +59,6 @@ export const ReportsSummModal = () => {
           ampm={false}
           variant="inline"
           maxDate={selectedDate2}
-          disablePast
           inputVariant="outlined"
           value={selectedDate1}
           onChange={handleDateChange1}
