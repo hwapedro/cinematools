@@ -15,7 +15,7 @@
     "axios": "^0.19.2",
     "date-fns": "^2.12.0",
     "final-form": "^4.18.7",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "material-ui-dropzone": "^2.4.9",
     "moment": "^2.24.0",
     "react": "^16.13.0",
